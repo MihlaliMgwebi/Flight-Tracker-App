@@ -17,8 +17,46 @@
 
   </head>
   <body>
+    <!-- B__E--M e.g container-dropdown__button--hover -->
     <div id="app">
-      <div id="map"></div>
+      <header>
+      <!-- Web site Logo Name, and Landing text-->
+      </header>
+
+      <main>
+        <div class="time-input">  
+          <label for="time-input__input">Choose a time for your flight:</label>
+          <input type="time" id="time-input__input" name="time-input__input"
+                 min="09:00" max="18:00" required>
+        </div>
+
+        <div class="country-dropdown">
+          <button class="country-dropdown__button">Select Orign Country</button>
+          <ul class="country-dropdown__ordered-list">
+            <li class="country-dropdown__list-item">
+              <button class="country-dropdown__li-button">South Africa</button>
+            </li>
+            <li class="country-dropdown__list-item">
+              <button class="country-dropdown__li-button">Egypt</button>
+            </li>
+            <li class="country-dropdown__list-item">
+              <button class="country-dropdown__li-button">Nigeria</button>
+            </li>
+            <li class="country-dropdown__list-item">
+              <button class="country-dropdown__li-button">Namibia</button>
+            </li>
+            <li class="country-dropdown__list-item">
+              <button class="country-dropdown__li-button">Lesotho</button>
+            </li>
+          </ul>
+        </div>
+
+        <div id="map"></div>
+
+      </main>
+      <footer>
+        <!-- Socials or something -->
+      </footer>
     </div>
 
     <script type="module" src="/main.js"></script>

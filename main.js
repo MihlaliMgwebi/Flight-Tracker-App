@@ -18,6 +18,9 @@ export function getMap( LatLngArray = [-26.107567, 28.056702], zoomLevel = 13){
 }
 
 getMap()
+
+
+
 // import javascriptLogo from './javascript.svg'
 // import { setupCounter } from './counter.js'
 

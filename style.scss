@@ -1,3 +1,44 @@
 #map { 
     height: 180px; 
 }
+// font, color, background, containers
+// [The @media at-rule may be placed at the top level of your code or nested inside any other](https://developer.mozilla.org/en-US/docs/Web/CSS/@media)
+
+// @media screen and (min-width: 30em) and (orientation: landscape) {
+//     /* … */
+//   }
+
+// @media screen and (max-width: 600px) {
+//     .container {
+//       flex-direction: column;
+//     }
+//     .item {
+//       flex: 1 1 auto;
+//       color: red;
+//     }
+// }
+
+// @media screen and (orientation: portrait) {
+//     .menu-item {
+//       width: 100%;
+//     }
+//   }
+
+/* Mobile-first styles */
+.some-element {
+    font-size: 14px;
+  }
+  
+  /* Tablet styles */
+  @media (min-width: 768px) {
+    .some-element {
+      font-size: 16px;
+    }
+  }
+  
+  /* Desktop styles */
+  @media (min-width: 1024px) {
+    .some-element {
+      font-size: 18px;
+    }
+  }

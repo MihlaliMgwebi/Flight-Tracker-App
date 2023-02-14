@@ -15,9 +15,17 @@ The time in seconds since epoch is basically just counting how many seconds have
 # Get data with baseURL
 # Data returned is undefined
 
+### Which font size to use for media queries with the mobile first approach if:
+
+
+
 ### Action and Result.
 ## Website Converter
  I researched and used a website to mock input for parameters.
+- px: good for spacing and layout. If a user changes the default font-size of browser the elemen't font size will stay the same. So.. no pixels.
+- em: font size based off PARENT element. Great for sidebar menu if I want submenu items to have smaller font-size gradually. Also chnages based on user preference, So... yes for sidebar and footers.
+- rem: font size based off ROOT element. Root font-size defaults to default font size of browser (usually 16px). So yes for everything else.
+- container query length units: some browsers don't support it. Use grid or flex rather.
 
 ##
 # Using the correct link
@@ -53,3 +61,9 @@ The forEach() method iterates over each element of an array whereas map() method
 TOTAL: 30
 Extra: 15
 TOTAL PERCENT: 150%
+
+#### References
+- [CSS units for font-size: px | em | rem](https://medium.com/@dixita0607/css-units-for-font-size-px-em-rem-79f7e592bb97)
+- [PX, EM or REM Media Queries?](https://zellwk.com/blog/media-query-units/)
+- [CSS Container Queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries)
+- [5 simple tips to making responsive layouts the easy way](https://www.youtube.com/watch?v=VQraviuwbzU)
