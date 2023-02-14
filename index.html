@@ -21,6 +21,8 @@
     <div id="app">
       <header>
       <!-- Web site Logo Name, and Landing text-->
+      <h1>TM FIT |  Track My Flights In Time</h1>
+      <h3>Track my flights. Anywhere. Anytime.</h3>
       </header>
 
       <main>
@@ -30,7 +32,7 @@
                  min="09:00" max="18:00" required>
         </div>
 
-        <div class="country-dropdown">
+        <!-- <div class="country-dropdown">
           <button class="country-dropdown__button">Select Orign Country</button>
           <ul class="country-dropdown__ordered-list">
             <li class="country-dropdown__list-item">
@@ -49,10 +51,14 @@
               <button class="country-dropdown__li-button">Lesotho</button>
             </li>
           </ul>
+        </div> -->
+
+        <div id="map-container"></div>
+
+        <!-- click on this, pass details to leaflet -->
+        <div class="flights__container">
+
         </div>
-
-        <div id="map"></div>
-
       </main>
       <footer>
         <!-- Socials or something -->

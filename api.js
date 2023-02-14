@@ -18,7 +18,7 @@ export function getAllStateVectors(method, url){
     .then((data) => console.log(getFlightsOfOriginCountry(data.states, "South Africa")))//console.log(json));
 }
 
-export function getFlightsOfOriginCountry(data, origin) {
+export function getListOf20OriginCountries(data, origin) {
     const originCountries = Object.values(data).map(val => {
         return val[2]
     });
@@ -27,7 +27,13 @@ export function getFlightsOfOriginCountry(data, origin) {
     const sortedFirst20NonEmptyDistinctCountries = nonEmptyDistinctCountries.slice(0, 20).sort()
     return sortedFirst20NonEmptyDistinctCountries;
 }
-  
+
+export function getFlightDetailsByTime(time){
+    
+}
+export function getFlightsOfTimeAndOriginCountry(time, country){
+    
+}
 
 // export function setupCounter(element) {
 //   let counter = 0
