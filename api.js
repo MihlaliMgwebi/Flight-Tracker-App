@@ -23,8 +23,9 @@ export function getFlightsOfOriginCountry(data, origin) {
         return val[2]
     });
     const distinctCountries = [...new Set(originCountries)]; //Set removes duplicates and spread operator converts set to array
-
-    return distinctCountries;
+    const nonEmptyDistinctCountries = distinctCountries.filter((element) => element !== '')
+    const sortedFirst20NonEmptyDistinctCountries = nonEmptyDistinctCountries.slice(0, 20).sort()
+    return sortedFirst20NonEmptyDistinctCountries;
 }
     
 // export function setupCounter(element) {
