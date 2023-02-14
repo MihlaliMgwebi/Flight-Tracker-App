@@ -1,5 +1,5 @@
 // DOM Manipulation
-import './style.css'
+import './style.scss'
 import { getAllStateVectors }  from './api.js'
 
 const BASE_URL = "https://opensky-network.org/api/states/all?time="
@@ -9,6 +9,15 @@ getAllStateVectors( // Get all flights for input time and origin SA https://open
     BASE_URL + "1677164400" // Thu Feb 23 2023 15:00:00 GMT+0000
 )
 
+export function getMap( LatLngArray = [-26.107567, 28.056702], zoomLevel = 13){
+    var map = L.map('map').setView(LatLngArray, zoomLevel);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+}
+
+getMap()
 // import javascriptLogo from './javascript.svg'
 // import { setupCounter } from './counter.js'
 

@@ -27,7 +27,8 @@ export function getFlightsOfOriginCountry(data, origin) {
     const sortedFirst20NonEmptyDistinctCountries = nonEmptyDistinctCountries.slice(0, 20).sort()
     return sortedFirst20NonEmptyDistinctCountries;
 }
-    
+  
+
 // export function setupCounter(element) {
 //   let counter = 0
 //   const setCounter = (count) => {
