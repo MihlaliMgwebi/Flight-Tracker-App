@@ -8,6 +8,7 @@ I was tasked with creating a flight tracking app. I must:
 ### Tension:
 ## Understanding the [Epoch Unix Timestamp](https://www.unixtimestamp.com/index.php):
 The time in seconds since epoch is basically just counting how many seconds have gone by since January 1, 1970, 00:00:00 UTC. It's a way for computers to keep track of time and know exactly when things happened or need to happen.
+JavaScript Date objects represent a single moment in time in a platform-independent format. Date objects encapsulate an integral number that represents milliseconds since the midnight at the beginning of January 1, 1970, UTC ([the epoch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)).
 
 ## REST API Implementation
 # How to use API
@@ -17,7 +18,8 @@ The time in seconds since epoch is basically just counting how many seconds have
 
 ### Which font size to use for media queries with the mobile first approach if:
 
-
+### How to get the input time
+Kept returning NaN
 
 ### Action and Result.
 ## Website Converter
@@ -31,6 +33,8 @@ The time in seconds since epoch is basically just counting how many seconds have
 # Using the correct link
 # Using map instead of forEach.
 
+### How to get the input time
+Add event listener
 
 ### Learning
 ##

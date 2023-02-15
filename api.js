@@ -4,7 +4,7 @@ import axios from "axios";
 
 
 
-export function getAllStateVectors(method, url){
+export function getAllStateVectorsByTime(method, url){
     // axios({
     //     method: method,
     //     url: url
@@ -18,22 +18,29 @@ export function getAllStateVectors(method, url){
     .then((data) => console.log(getFlightsOfOriginCountry(data.states, "South Africa")))//console.log(json));
 }
 
-export function getListOf20OriginCountries(data, origin) {
-    const originCountries = Object.values(data).map(val => {
-        return val[2]
-    });
-    const distinctCountries = [...new Set(originCountries)]; //Set removes duplicates and spread operator converts set to array
-    const nonEmptyDistinctCountries = distinctCountries.filter((element) => element !== '')
-    const sortedFirst20NonEmptyDistinctCountries = nonEmptyDistinctCountries.slice(0, 20).sort()
-    return sortedFirst20NonEmptyDistinctCountries;
+export function getMap( LatLngArray = [-26.107567, 28.056702], zoomLevel = 13){
+    var map = L.map('map-container').setView(LatLngArray, zoomLevel);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
 }
 
-export function getFlightDetailsByTime(time){
+
+// export function getListOf20OriginCountries(data, origin) {
+//     const originCountries = Object.values(data).map(val => {
+//         return val[2]
+//     });
+//     const distinctCountries = [...new Set(originCountries)]; //Set removes duplicates and spread operator converts set to array
+//     const nonEmptyDistinctCountries = distinctCountries.filter((element) => element !== '')
+//     const sortedFirst20NonEmptyDistinctCountries = nonEmptyDistinctCountries.slice(0, 20).sort()
+//     return sortedFirst20NonEmptyDistinctCountries;
+// }
+
+
+// export function getFlightsOfTimeAndOriginCountry(time, country){
     
-}
-export function getFlightsOfTimeAndOriginCountry(time, country){
-    
-}
+// }
 
 // export function setupCounter(element) {
 //   let counter = 0
