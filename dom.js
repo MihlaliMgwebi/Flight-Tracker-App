@@ -24,13 +24,13 @@ function loadFlights() {
     flights.forEach((flight) => {
       const FlightDetails = {
         ID: flight[0],
-        CALLSIGN: "POST",
-        ORIGIN_COUNTRY: "PUT",
-        LONGITUDE: "DELETE",
-        LATITUDE: "GET",
-        IS_ON_GROUND: "POST",
-        TRUE_TRACK_COMPASS: "PUT",
-        CATEGORY: "DELETE",
+        CALLSIGN: [1],
+        ORIGIN_COUNTRY: [2],
+        LONGITUDE: [5],
+        LATITUDE: [6],
+        IS_ON_GROUND: [8],
+        TRUE_TRACK_COMPASS: [10],
+        CATEGORY: [17],
       };
       createFlightCard(FlightDetails);
     });
