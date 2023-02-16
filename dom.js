@@ -38,7 +38,38 @@ function loadFlights() {
 }
 
 function createFlightCard(FlightDetails) {
-  console.log(FlightDetails.ID);
+  const card = document.createElement("div");
+  card.classList.add("flight");
+  card.id = FlightDetails.ID;
+  card.setAttribute("data-callsign", FlightDetails.CALLSIGN);
+  card.setAttribute("data-origin-country", FlightDetails.ORIGIN_COUNTRY);
+  card.setAttribute("data-longitude", FlightDetails.LONGITUDE);
+  card.setAttribute("data-is-on-ground", FlightDetails.LATITUDE);
+  card.setAttribute("data-callsign", FlightDetails.IS_ON_GROUND);
+  card.setAttribute(
+    "data-true-track-compass",
+    FlightDetails.TRUE_TRACK_COMPASS
+  );
+  card.setAttribute("aircraft-category", FlightDetails.CATEGORY);
+
+  card.innerHTML = `
+  <div class="flight-property flight__origin-country">
+    <p>Origin Country:<p>
+    </div>
+  <div class="flight-property flight__callsign"> 
+    <p>Call Sign:<p>
+    </div>
+  </div>
+  <div class="flight-property flight__is-on-ground">
+    <p>Is On Ground:<p>
+    </div></div>
+  <div class="flight-property flight__aircraft-category">
+    <p>Aircraft Category:<p>
+    </div>
+  </div>
+  `;
+  document.getElementById("flights").appendChild(card);
+  // console.log(FlightDetails.ID);
 }
 // Click the time
 // Call API and load results
