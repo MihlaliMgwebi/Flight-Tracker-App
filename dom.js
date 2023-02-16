@@ -1,14 +1,15 @@
+import * as api from "./api";
+
 //[Setting the value using JavaScript](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/time#setting_the_value_using_javascript)
 export function setUnixTimestampInMilliseconds() {
   const timeControl = document.getElementById("time-input__input");
   // [Anonymous functions to pass parameters](https://www.w3schools.com/js/js_htmldom_eventlistener.asp)
-  timeControl.addEventListener(
-    "input",
-    () =>
-      (timeControl.dataset.epoch = convert24HrTimeToUnixTimestampInMilliseconds(
-        timeControl.value
-      ))
-  );
+  timeControl.addEventListener("input", () => {
+    timeControl.dataset.epoch = convert24HrTimeToUnixTimestampInMilliseconds(
+      timeControl.value
+    );
+    loadFlights();
+  });
 }
 
 function convert24HrTimeToUnixTimestampInMilliseconds(timeControlValue) {
@@ -16,6 +17,10 @@ function convert24HrTimeToUnixTimestampInMilliseconds(timeControlValue) {
   const date = new Date(timeControlValue);
   const seconds = Math.floor(date / 1000);
   return seconds;
+}
+
+function loadFlights() {
+  api.getAllFlightDetailsByTimeInSeconds().then((data) => console.log(data));
 }
 // Click the time
 // Call API and load results

@@ -22,30 +22,23 @@ const RequestMethods = {
 
 const BASE_URL = "https://opensky-network.org/api/states/all?extend=1&time=";
 
-export function loadFlights(milliseconds) {
-  console.log(milliseconds);
-  getAllFlightDetailsByTimeInSeconds(
-    RequestMethods.GET,
-    `${BASE_URL}${milliseconds}`
-  );
-}
-function getAllFlightDetailsByTimeInSeconds(method, url) {
+export function getAllFlightDetailsByTimeInSeconds() {
+  // const timeControl = document.querySelector("#time-input__input");
+  // const milliseconds = timeControl.dataset.epoch;
   // axios({
-  //     method: method,
-  //     url: url
+  //     method: RequestMethods.GET,
+  //     url: `${BASE_URL}${milliseconds}`
   //   })
   //     .then((responseJSON) => getFlightsOfOriginCountry(responseJSON.data.states, "South Africa")) //console.log(responseJSON.data.states))
   //     .catch((error) => console.error(error))
   //     .finally(() => console.log('hideSpinner'));//hideSpinner()
 
-  fetch("./data.json")
+  return fetch("./data.json")
     .then(console.log("showSpinner"))
     .then((response) => response.json())
-    .then(
-      (data) =>
-        console.log(getListOf20OriginCountries(data.states, "South Africa")) //console.log(json));
-    )
-    .then(console.log("hideSpinner")); //finally
+    .then((data) => data.states)
+    .then(console.log("hideSpinner")) //finally
+    .catch((error) => console.error(error));
 }
 
 export function getListOf20OriginCountries(data, origin) {
