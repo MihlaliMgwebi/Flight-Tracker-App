@@ -1,62 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Track My Flights In Time</title>
-    <!-- Include Leaflet CSS file in the head section of your document: -->
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-     crossorigin=""/>
-    <!-- Include Leaflet JavaScript file after Leaflet’s CSS: -->
+<head>
+  <meta charset="UTF-8" />
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Track My Flights In Time</title>
+  <!-- Include Leaflet CSS file in the head section of your document: -->
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <!-- Include Leaflet JavaScript file after Leaflet’s CSS: -->
   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-      crossorigin=""></script>
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 
-  </head>
-  <body>
-    <!-- B__E--M e.g container-dropdown__button--hover -->
-    <div id="app">
-      <header>
+</head>
+
+<body>
+  <!-- B__E--M e.g container-dropdown__button--hover -->
+  <div id="app">
+    <header>
       <!-- Web site Logo Name, and Landing text-->
-      <h1>TM FIT |  Track My Flights In Time</h1>
+      <h1>TM FIT | Track My Flights In Time</h1>
       <h3>Track my flights. Anywhere. Anytime.</h3>
-      </header>
+    </header>
 
-      <main>
-        
-        <div class="time-input">  
-          <label for="time-input__input">Choose a time for your flight:</label>
-          <input type="datetime-local" id="time-input__input" name="time-input__input" required>
+    <main>
+
+      <div class="time-input">
+        <label for="time-input__input">Choose a time for your flight:</label>
+        <input type="datetime-local" id="time-input__input" name="time-input__input" required>
+      </div>
+
+      <div id="map-container"></div>
+      <div class="country-search-bar">
+        <div class="country-search-bar-menu">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <input class="country-search-bar__input" type="text" placeholder="Filter Flight by Origin Country">
+        <button class="country-search-bar__button">Search</button>
+      </div>
+      <!-- click on this, pass details to leaflet -->
+      <div class="flights-details">
+        <div class="flights-details-properties">
+
         </div>
 
-        <div id="map-container"></div>
-        <div class="country-search-bar">
-          <div class="country-search-bar-menu">
-              <div></div>
-              <div></div>
-              <div></div>
-          </div>
-          <input class="country-search-bar__input" type="text" placeholder="Filter Flight by Origin Country">
-          <button class="country-search-bar__button">Search</button>
-        </div>
-        <!-- click on this, pass details to leaflet -->
-        <div class="flights__container">
-
-        </div>
-      </main>
-      <!-- <footer>
+      </div>
+    </main>
+    <!-- <footer>
         Socials or something
       </footer> -->
-    </div>
+  </div>
 
-    <script type="module" src="/main.js"></script>
-  </body>
+  <script type="module" src="/main.js"></script>
+</body>
+
 </html>
 
-          <!-- <button class="country-dropdown__button">Select Orign Country</button>
+<!-- <button class="country-dropdown__button">Select Orign Country</button>
           <ul class="country-dropdown__ordered-list">
             <li class="country-dropdown__list-item">
               South Africa
