@@ -1,7 +1,11 @@
 import * as api from "./api";
+import * as map from "./map";
+export function loadLandingPage() {
+  setUnixTimestampInMilliseconds();
+}
 
 //[Setting the value using JavaScript](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/time#setting_the_value_using_javascript)
-export function setUnixTimestampInMilliseconds() {
+function setUnixTimestampInMilliseconds() {
   const timeControl = document.getElementById("time-input__input");
   // [Anonymous functions to pass parameters](https://www.w3schools.com/js/js_htmldom_eventlistener.asp)
   timeControl.addEventListener("input", () => {
@@ -9,6 +13,7 @@ export function setUnixTimestampInMilliseconds() {
       timeControl.value
     );
     loadFlights();
+    map.showMap();
   });
 }
 
@@ -40,9 +45,14 @@ function loadFlights() {
 }
 
 function createFlightCard(FlightDetails) {
+  // if lat and lng not null
   const card = document.createElement("div");
   card.classList.add("flight");
   card.id = FlightDetails.ID;
+  card.addEventListener(
+    "click",
+    map.addMarkerToMap([FlightDetails.LONGITUDE, FlightDetails.LATITUDE])
+  );
   card.setAttribute("data-callsign", FlightDetails.CALLSIGN);
   card.setAttribute("data-origin-country", FlightDetails.ORIGIN_COUNTRY);
   card.setAttribute("data-longitude", FlightDetails.LONGITUDE);

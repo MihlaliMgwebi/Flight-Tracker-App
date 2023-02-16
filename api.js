@@ -67,7 +67,7 @@ export function getFirst20FlightDetailsByTimeInSeconds() {
   return fetch("./data.json")
     .then(console.log("showSpinner"))
     .then((response) => response.json())
-    .then((data) => data.states.slice(0, 20))
+    .then((data) => data.states.slice(0, 9))
     .then(console.log("hideSpinner")) //finally
     .catch((error) => console.error(error));
 }
@@ -87,7 +87,7 @@ export function getListOf20OriginCountries(data, origin) {
     (element) => element !== ""
   );
   const sortedFirst20NonEmptyDistinctCountries = nonEmptyDistinctCountries
-    .slice(0, 20)
+    .slice(0, 10)
     .sort();
   return sortedFirst20NonEmptyDistinctCountries;
 }
