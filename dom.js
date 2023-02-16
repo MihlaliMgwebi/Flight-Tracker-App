@@ -39,7 +39,7 @@ function loadFlights() {
         // CATEGORY: flight[16],
       };
       createFlightCard(FlightDetails);
-      // console.log(FlightDetails);
+      map.addMarkerToMap([FlightDetails.LONGITUDE, FlightDetails.LATITUDE]);
     });
   });
 }
@@ -49,10 +49,7 @@ function createFlightCard(FlightDetails) {
   const card = document.createElement("div");
   card.classList.add("flight");
   card.id = FlightDetails.ID;
-  card.addEventListener(
-    "click",
-    map.addMarkerToMap([FlightDetails.LONGITUDE, FlightDetails.LATITUDE])
-  );
+  card.addEventListener("click", () => console.log("flight"));
   card.setAttribute("data-callsign", FlightDetails.CALLSIGN);
   card.setAttribute("data-origin-country", FlightDetails.ORIGIN_COUNTRY);
   card.setAttribute("data-longitude", FlightDetails.LONGITUDE);

@@ -1,5 +1,5 @@
 let map;
-export function showMap(LatLngArray = [-26.089863, 28.135071], zoomLevel = 13) {
+export function showMap(LatLngArray = [-26.089863, 28.135071], zoomLevel = 2) {
   map = L.map("map-container").setView(LatLngArray, zoomLevel);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
