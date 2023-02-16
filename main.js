@@ -2,7 +2,7 @@
 import * as dom from "./dom";
 import "./style.scss";
 
-dom.getUnixTimestampInMilliseconds();
+dom.setUnixTimestampInMilliseconds();
 
 // getMap();
 

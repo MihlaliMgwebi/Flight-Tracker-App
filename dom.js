@@ -1,11 +1,21 @@
-import * as api from "./api";
 //[Setting the value using JavaScript](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/time#setting_the_value_using_javascript)
-export function getUnixTimestampInMilliseconds() {
+export function setUnixTimestampInMilliseconds() {
   const timeControl = document.getElementById("time-input__input");
-  timeControl.addEventListener("input", function () {
-    // [Anonymous functions to pass parameters](https://www.w3schools.com/js/js_htmldom_eventlistener.asp)
-    api.convert24HrTimeToUnixTimestampInMilliseconds(timeControl.value);
-  });
+  // [Anonymous functions to pass parameters](https://www.w3schools.com/js/js_htmldom_eventlistener.asp)
+  timeControl.addEventListener(
+    "input",
+    () =>
+      (timeControl.dataset.epoch = convert24HrTimeToUnixTimestampInMilliseconds(
+        timeControl.value
+      ))
+  );
+}
+
+function convert24HrTimeToUnixTimestampInMilliseconds(timeControlValue) {
+  console.log(timeControlValue);
+  const date = new Date(timeControlValue);
+  const seconds = Math.floor(date / 1000);
+  return seconds;
 }
 // Click the time
 // Call API and load results
