@@ -1,10 +1,10 @@
 // DOM Manipulation
-import { getMap } from "./map.js";
+import * as dom from "./dom";
 import "./style.scss";
 
-const BASE_URL = "https://opensky-network.org/api/states/all?extend=1&time=";
+dom.getUnixTimestampInMilliseconds();
 
-getMap();
+// getMap();
 
 // import javascriptLogo from './javascript.svg'
 // import { setupCounter } from './counter.js'
