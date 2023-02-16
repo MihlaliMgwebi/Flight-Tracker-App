@@ -13,7 +13,7 @@ export function setUnixTimestampInMilliseconds() {
 }
 
 function convert24HrTimeToUnixTimestampInMilliseconds(timeControlValue) {
-  console.log(timeControlValue);
+  // console.log(timeControlValue);
   const date = new Date(timeControlValue);
   const seconds = Math.floor(date / 1000);
   return seconds;
@@ -22,17 +22,19 @@ function convert24HrTimeToUnixTimestampInMilliseconds(timeControlValue) {
 function loadFlights() {
   api.getFirst20FlightDetailsByTimeInSeconds().then((flights) => {
     flights.forEach((flight) => {
+      // console.log(flight);
       const FlightDetails = {
         ID: flight[0],
-        CALLSIGN: [1],
-        ORIGIN_COUNTRY: [2],
-        LONGITUDE: [5],
-        LATITUDE: [6],
-        IS_ON_GROUND: [8],
-        TRUE_TRACK_COMPASS: [10],
-        CATEGORY: [17],
+        CALLSIGN: flight[1],
+        ORIGIN_COUNTRY: flight[2],
+        LONGITUDE: flight[5],
+        LATITUDE: flight[6],
+        IS_ON_GROUND: flight[8],
+        TRUE_TRACK_COMPASS: flight[10],
+        // CATEGORY: flight[16],
       };
       createFlightCard(FlightDetails);
+      // console.log(FlightDetails);
     });
   });
 }
@@ -54,20 +56,24 @@ function createFlightCard(FlightDetails) {
 
   card.innerHTML = `
   <div class="flight-property flight__origin-country">
-    <p>Origin Country:<p>
+    <span>Origin Country:</span>
+    <div>${FlightDetails.ORIGIN_COUNTRY}</div>
     </div>
   <div class="flight-property flight__callsign"> 
-    <p>Call Sign:<p>
+    <span>Call Sign:</span>
+    <div>${FlightDetails.CALLSIGN}</div>
     </div>
   </div>
   <div class="flight-property flight__is-on-ground">
-    <p>Is On Ground:<p>
+    <div class="isOnGround-icon__${FlightDetails.IS_ON_GROUND}"></div>
+    <span class="isOnGround-icon__${FlightDetails.IS_ON_GROUND}"></span>
     </div></div>
-  <div class="flight-property flight__aircraft-category">
-    <p>Aircraft Category:<p>
-    </div>
   </div>
   `;
+  // <div class="flight-property flight__aircraft-category">
+  // <p>Aircraft Category:<p>
+  // <div>${api.getAircraftCategory(FlightDetails.CATEGORY)}</div>
+  // </div>
   document.getElementById("flights").appendChild(card);
   // console.log(FlightDetails.ID);
 }

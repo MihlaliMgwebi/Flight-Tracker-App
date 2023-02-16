@@ -1,26 +1,57 @@
 // [API Calls](https://openskynetwork.github.io/opensky-api/rest.html#all-state-vectors)
 // [Example](https://opensky-network.org/api/states/all?time=1677164400)
 
-// information about the current location and movement of aircraft
-// enum Aircraft {
-//     Id = "3c6444", //0
-//     Callsign = "DLH9LF  ", //1
-//     OriginCountry = "Germany",//2
-//     Longitude = 6.1546,//5
-//     Latitude = 50.1964,//6
-//     IsOnGround = false,//8
-//     TrueTrackCompass = 98.26,//10
-//     Category = 1,//17
-// }
-
 const RequestMethods = {
   GET: "GET",
   POST: "POST",
   PUT: "PUT",
   DELETE: "DELETE",
 };
+// const AircraftCategory = {
+//   0: "No information at all",
 
-const BASE_URL = "https://opensky-network.org/api/states/all?extend=1&time=";
+//   1: "No ADS-B Emitter Category Information",
+
+//   2: "Light (< 15500 lbs)",
+
+//   3: "Small (15500 to 75000 lbs)",
+
+//   4: "Large (75000 to 300000 lbs)",
+
+//   5: "High Vortex Large (aircraft such as B-757)",
+
+//   6: "Heavy (> 300000 lbs)",
+
+//   7: " High Performance (> 5g acceleration and 400 kts)",
+
+//   8: "Rotorcraft",
+
+//   9: "Glider / sailplane",
+
+//   10: "Lighter-than-air",
+
+//   11: "Parachutist / Skydiver",
+
+//   12: "Ultralight / hang-glider / paraglider",
+
+//   13: "Reserved",
+
+//   14: "Unmanned Aerial Vehicle",
+
+//   15: "Space / Trans-atmospheric vehicle",
+
+//   16: "Surface Vehicle – Emergency Vehicle",
+
+//   17: "Surface Vehicle – Service Vehicle",
+
+//   18: "Point Obstacle (includes tethered balloons)",
+
+//   19: "Cluster Obstacle",
+
+//   20: "Line Obstacle",
+// };
+
+const BASE_URL = "https://opensky-network.org/api/states/all?extended=1&time=";
 
 export function getFirst20FlightDetailsByTimeInSeconds() {
   // const timeControl = document.querySelector("#time-input__input");
@@ -40,6 +71,12 @@ export function getFirst20FlightDetailsByTimeInSeconds() {
     .then(console.log("hideSpinner")) //finally
     .catch((error) => console.error(error));
 }
+
+// export function getAircraftCategory(categoryNumeric) {
+//   return categoryNumeric === undefined
+//     ? AircraftCategory[0]
+//     : AircraftCategory[categoryNumeric];
+// }
 
 export function getListOf20OriginCountries(data, origin) {
   const originCountries = Object.values(data).map((val) => {
