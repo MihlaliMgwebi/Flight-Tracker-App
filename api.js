@@ -22,11 +22,14 @@ const RequestMethods = {
 
 const BASE_URL = "https://opensky-network.org/api/states/all?extend=1&time=";
 
-// getAllFlightDetailsByTimeInSeconds(
-//   RequestMethods.GET,
-//   `${BASE_URL}${seconds}`
-// );
-export function getAllFlightDetailsByTimeInSeconds(method, url) {
+export function loadFlights(milliseconds) {
+  console.log(milliseconds);
+  getAllFlightDetailsByTimeInSeconds(
+    RequestMethods.GET,
+    `${BASE_URL}${milliseconds}`
+  );
+}
+function getAllFlightDetailsByTimeInSeconds(method, url) {
   // axios({
   //     method: method,
   //     url: url

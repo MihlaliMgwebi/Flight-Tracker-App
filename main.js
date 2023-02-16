@@ -1,9 +1,12 @@
 // DOM Manipulation
+import * as api from "./api";
 import * as dom from "./dom";
 import "./style.scss";
 
 dom.setUnixTimestampInMilliseconds();
-
+const timeControl = document.querySelector("#time-input__input");
+const timeInput = timeControl.dataset.epoch;
+api.loadFlights(timeInput);
 // getMap();
 
 // import javascriptLogo from './javascript.svg'
