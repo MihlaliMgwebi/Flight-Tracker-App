@@ -4,7 +4,7 @@ import { getAllStateVectorsByTime, getMap }  from './api.js'
 
 
 
-const BASE_URL = "https://opensky-network.org/api/states/all?time="
+const BASE_URL = "https://opensky-network.org/api/states/all?extend=1&time="
 
 const timeControl = document.getElementById('time-input__input')
 //[Setting the value using JavaScript](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/time#setting_the_value_using_javascript)
