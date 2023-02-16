@@ -20,7 +20,25 @@ function convert24HrTimeToUnixTimestampInMilliseconds(timeControlValue) {
 }
 
 function loadFlights() {
-  api.getAllFlightDetailsByTimeInSeconds().then((data) => console.log(data));
+  api.getFirst20FlightDetailsByTimeInSeconds().then((flights) => {
+    flights.forEach((flight) => {
+      const FlightDetails = {
+        ID: flight[0],
+        CALLSIGN: "POST",
+        ORIGIN_COUNTRY: "PUT",
+        LONGITUDE: "DELETE",
+        LATITUDE: "GET",
+        IS_ON_GROUND: "POST",
+        TRUE_TRACK_COMPASS: "PUT",
+        CATEGORY: "DELETE",
+      };
+      createFlightCard(FlightDetails);
+    });
+  });
+}
+
+function createFlightCard(FlightDetails) {
+  console.log(FlightDetails.ID);
 }
 // Click the time
 // Call API and load results

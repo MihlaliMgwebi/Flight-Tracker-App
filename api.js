@@ -22,7 +22,7 @@ const RequestMethods = {
 
 const BASE_URL = "https://opensky-network.org/api/states/all?extend=1&time=";
 
-export function getAllFlightDetailsByTimeInSeconds() {
+export function getFirst20FlightDetailsByTimeInSeconds() {
   // const timeControl = document.querySelector("#time-input__input");
   // const milliseconds = timeControl.dataset.epoch;
   // axios({
@@ -36,7 +36,7 @@ export function getAllFlightDetailsByTimeInSeconds() {
   return fetch("./data.json")
     .then(console.log("showSpinner"))
     .then((response) => response.json())
-    .then((data) => data.states)
+    .then((data) => data.states.slice(0, 20))
     .then(console.log("hideSpinner")) //finally
     .catch((error) => console.error(error));
 }
