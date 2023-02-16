@@ -2,10 +2,10 @@
 
 // font, color, background, containers
 // [Kevin Powell Media Queries](https://www.youtube.com/watch?v=BvB8kSmgMcM)
-@mixin theme($theme: #fff) {
+@mixin theme($theme: #fff, $font-color: #333) {
     background: $theme;
     // box-shadow: 0 0 1px rgba($theme, 0.25);
-    color: #333;
+    color: $font-color;
 }
 
 html, body{
@@ -30,6 +30,8 @@ html, body{
             @include theme ($theme: DarkOrange);
             display: flex;
             flex-direction: column;
+
+            
             #map-container { 
                 height: 12rem; 
             }
