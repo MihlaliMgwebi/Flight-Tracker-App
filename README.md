@@ -16,10 +16,12 @@ JavaScript Date objects represent a single moment in time in a platform-independ
 # Get data with baseURL
 # Data returned is undefined
 
-### Which font size to use for media queries with the mobile first approach if:
+## Which font size to use for media queries with the mobile first approach if:
 
-### How to get the input time
+## How to get the input time
 Kept returning NaN
+
+## Mediaqueries understanding and approach
 
 ### Action and Result.
 ## Website Converter
@@ -28,13 +30,15 @@ Kept returning NaN
 - em: font size based off PARENT element. Great for sidebar menu if I want submenu items to have smaller font-size gradually. Also chnages based on user preference, So... yes for sidebar and footers.
 - rem: font size based off ROOT element. Root font-size defaults to default font size of browser (usually 16px). So yes for everything else.
 - container query length units: some browsers don't support it. Use grid or flex rather.
-
+- vw or %: the rest are based on pixels and the amount of pixels you use stay the same.
 ##
 # Using the correct link
 # Using map instead of forEach.
 
-### How to get the input time
+## How to get the input time
 Add event listener
+
+## [Bootstrap breakpoints]()
 
 ### Learning
 ##

@@ -2,8 +2,6 @@
 // [Example](https://opensky-network.org/api/states/all?time=1677164400)
 import axios from "axios";
 
-
-
 export function getAllStateVectorsByTime(method, url){
     // axios({
     //     method: method,
@@ -27,15 +25,15 @@ export function getMap( LatLngArray = [-26.107567, 28.056702], zoomLevel = 13){
 }
 
 
-// export function getListOf20OriginCountries(data, origin) {
-//     const originCountries = Object.values(data).map(val => {
-//         return val[2]
-//     });
-//     const distinctCountries = [...new Set(originCountries)]; //Set removes duplicates and spread operator converts set to array
-//     const nonEmptyDistinctCountries = distinctCountries.filter((element) => element !== '')
-//     const sortedFirst20NonEmptyDistinctCountries = nonEmptyDistinctCountries.slice(0, 20).sort()
-//     return sortedFirst20NonEmptyDistinctCountries;
-// }
+export function getListOf20OriginCountries(data, origin) {
+    const originCountries = Object.values(data).map(val => {
+        return val[2]
+    });
+    const distinctCountries = [...new Set(originCountries)]; //Set removes duplicates and spread operator converts set to array
+    const nonEmptyDistinctCountries = distinctCountries.filter((element) => element !== '')
+    const sortedFirst20NonEmptyDistinctCountries = nonEmptyDistinctCountries.slice(0, 20).sort()
+    return sortedFirst20NonEmptyDistinctCountries;
+}
 
 
 // export function getFlightsOfTimeAndOriginCountry(time, country){
