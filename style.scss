@@ -52,8 +52,23 @@ body {
 
     .flights-details {
       @include theme(#f4f4f4);
+      height: 100%;
+      padding: 0rem 1rem;
 
       .flights-details-properties {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        div {
+          @include theme(white);
+          height: 8rem;
+          margin-top: 1rem;
+
+          // border: 1px solid #333;
+          border-radius: 1rem;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); // box-shadow: [horizontal offset] [vertical offset] [blur radius] [optional spread radius] [color];
+        }
       }
     }
   }
