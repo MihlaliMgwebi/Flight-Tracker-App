@@ -87,21 +87,7 @@ export function getListOf20OriginCountries(data, origin) {
     (element) => element !== ""
   );
   const sortedFirst20NonEmptyDistinctCountries = nonEmptyDistinctCountries
-    .slice(0, 10)
+    .slice(0, 20)
     .sort();
   return sortedFirst20NonEmptyDistinctCountries;
 }
-
-// export function getFlightsOfTimeAndOriginCountry(time, country){
-
-// }
-
-// export function setupCounter(element) {
-//   let counter = 0
-//   const setCounter = (count) => {
-//     counter = count
-//     element.innerHTML = `count is ${counter}`
-//   }
-//   element.addEventListener('click', () => setCounter(counter + 1))
-//   setCounter(0)
-// }
