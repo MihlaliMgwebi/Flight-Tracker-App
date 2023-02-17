@@ -53,7 +53,7 @@ function createFlightCard(FlightDetails) {
   card.id = FlightDetails.ID;
   card.addEventListener("click", () => {
     map.showMapAtMarker([FlightDetails.LONGITUDE, FlightDetails.LATITUDE]);
-    displayPopUpCardWithMoreFlight();
+    showMoreFlightInfo();
   });
   card.setAttribute("data-callsign", FlightDetails.CALLSIGN);
   card.setAttribute("data-origin-country", FlightDetails.ORIGIN_COUNTRY);
@@ -67,6 +67,7 @@ function createFlightCard(FlightDetails) {
   card.setAttribute("aircraft-category", FlightDetails.CATEGORY);
   card.innerHTML = `
     <div class="">Flight ${FlightDetails.CALLSIGN} from ${FlightDetails.ORIGIN_COUNTRY}</div>
+    <div class="">Flight</div>
   `;
   // card.innerHTML = `
   // <div class="flight-property flight__origin-country">
@@ -88,8 +89,16 @@ function createFlightCard(FlightDetails) {
   // <p>Aircraft Category:<p>
   // <div>${api.getAircraftCategory(FlightDetails.CATEGORY)}</div>
   // </div>
+  hideMoreFlightInfo();
   return card;
+
   // console.log(FlightDetails.ID);
 }
 
-function displayPopUpCardWithMoreFlight() {}
+function showMoreFlightInfo() {
+  console.log("show flights");
+}
+
+function hideMoreFlightInfo() {
+  console.log("hide flights");
+}
