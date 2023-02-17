@@ -50,10 +50,14 @@ function createFlightCard(FlightDetails) {
   // if lat and lng not null
   const card = document.createElement("div");
   card.classList.add("flight");
-  card.id = FlightDetails.ID;
-  card.addEventListener("click", () => {
+  card.id = `id-${FlightDetails.ID}`;
+
+  card.addEventListener("click", (event) => {
     map.showMapAtMarker([FlightDetails.LONGITUDE, FlightDetails.LATITUDE]);
-    toggleFlightDetailsVisibility();
+    const clickedId = event.target.id;
+    console.log(clickedId);
+    // toggleFlightDetailsVisibility(FlightDetails.ID);
+    // console.log(card.id);
   });
   card.setAttribute("data-callsign", FlightDetails.CALLSIGN);
   card.setAttribute("data-origin-country", FlightDetails.ORIGIN_COUNTRY);
@@ -67,7 +71,7 @@ function createFlightCard(FlightDetails) {
   card.setAttribute("aircraft-category", FlightDetails.CATEGORY);
   card.innerHTML = `
     <div class="flight__summary">Flight ${FlightDetails.CALLSIGN} from ${FlightDetails.ORIGIN_COUNTRY}</div>
-    <div class="flight__details" style="display:none">Flight</div>
+    <div class="flight__details" style="display:none">Flight Deets Laties</div>
   `;
   // card.innerHTML = `
   // <div class="flight-property flight__origin-country">
@@ -94,10 +98,13 @@ function createFlightCard(FlightDetails) {
   // console.log(FlightDetails.ID);
 }
 
-function toggleFlightDetailsVisibility() {
+function toggleFlightDetailsVisibility(cardId) {
+  const contentContainer = document.querySelector(`#id-${cardId}`);
   const content = document.querySelector(".flight__details");
   if (content.style.display === "none") {
     content.style.display = "block";
+    contentContainer.style.height = "8rem";
+    contentContainer.style.flexDirection = "column";
   } else {
     content.style.display = "none";
   }
