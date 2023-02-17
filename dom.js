@@ -53,6 +53,7 @@ function createFlightCard(FlightDetails) {
   card.id = FlightDetails.ID;
   card.addEventListener("click", () => {
     map.showMapAtMarker([FlightDetails.LONGITUDE, FlightDetails.LATITUDE]);
+    displayPopUpCardWithMoreFlight();
   });
   card.setAttribute("data-callsign", FlightDetails.CALLSIGN);
   card.setAttribute("data-origin-country", FlightDetails.ORIGIN_COUNTRY);
@@ -90,3 +91,5 @@ function createFlightCard(FlightDetails) {
   return card;
   // console.log(FlightDetails.ID);
 }
+
+function displayPopUpCardWithMoreFlight() {}

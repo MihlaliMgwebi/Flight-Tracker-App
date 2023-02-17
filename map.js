@@ -10,9 +10,10 @@ export function showMap(
     attribution:
       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }).addTo(map);
+  map.flyTo(LatLngArray, zoomLevel); //smoothly pan and zoom to a specific coordinate on the map.
 }
 export function showMapAtMarker(LatLngArray) {
-  map.flyTo(LatLngArray, 13);
+  map.flyTo(LatLngArray, 13); //smoothly pan and zoom to a specific coordinate on the map.
 }
 export function addMarkerToMap(FlightDetails) {
   // [Custom Icons](https://leafletjs.com/examples/custom-icons/)
