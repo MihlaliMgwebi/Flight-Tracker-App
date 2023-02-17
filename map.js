@@ -11,7 +11,9 @@ export function showMap(
       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }).addTo(map);
 }
-
+export function showMapAtMarker(LatLngArray) {
+  map.flyTo(LatLngArray, 13);
+}
 export function addMarkerToMap(FlightDetails) {
   // [Custom Icons](https://leafletjs.com/examples/custom-icons/)
   // create a custom icon

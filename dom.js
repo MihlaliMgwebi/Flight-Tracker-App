@@ -51,7 +51,9 @@ function createFlightCard(FlightDetails) {
   const card = document.createElement("div");
   card.classList.add("flight");
   card.id = FlightDetails.ID;
-  card.addEventListener("click", () => console.log("flight"));
+  card.addEventListener("click", () => {
+    map.showMapAtMarker([FlightDetails.LONGITUDE, FlightDetails.LATITUDE]);
+  });
   card.setAttribute("data-callsign", FlightDetails.CALLSIGN);
   card.setAttribute("data-origin-country", FlightDetails.ORIGIN_COUNTRY);
   card.setAttribute("data-longitude", FlightDetails.LONGITUDE);
