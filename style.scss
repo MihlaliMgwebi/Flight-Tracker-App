@@ -97,6 +97,10 @@ body {
         }
       }
     }
+
+    .flight__details {
+      display: none;
+    }
   }
   footer {
     @include theme($theme: DarkBlue);
@@ -108,21 +112,21 @@ body {
 @media only screen and (min-width: 600px) {
   //37.5rem
   #app {
-    /* inline, #, ., :, */
-    header {
-      @include theme($theme: DarkRed);
+    /* SPECIFICITY: inline, #, ., :, */
+    main {
+      @include theme($theme: DarkOrange);
+      .time-input {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .flight__details {
+        display: none;
+      }
     }
-  }
-  main {
-    @include theme($theme: DarkOrange);
-    .time-input {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    footer {
+      @include theme($theme: DarkBlue);
     }
-  }
-  footer {
-    @include theme($theme: DarkBlue);
   }
 }
 
