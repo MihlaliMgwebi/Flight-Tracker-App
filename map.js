@@ -26,7 +26,7 @@ export function addMarkerToMap(FlightDetails) {
     icon: myIcon,
   })
     .addTo(map)
-    .bindPopup("hey");
+    .bindPopup(
+      `Flight ${FlightDetails.CALLSIGN} from ${FlightDetails.ORIGIN_COUNTRY}`
+    );
 }
-
-function createFlightPopUp(FlightDetails) {}
