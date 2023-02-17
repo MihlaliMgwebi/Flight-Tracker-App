@@ -62,23 +62,25 @@ function createFlightCard(FlightDetails) {
     FlightDetails.TRUE_TRACK_COMPASS
   );
   card.setAttribute("aircraft-category", FlightDetails.CATEGORY);
-
   card.innerHTML = `
-  <div class="flight-property flight__origin-country">
-    <span>Origin Country:</span>
-    <div>${FlightDetails.ORIGIN_COUNTRY}</div>
-    </div>
-  <div class="flight-property flight__callsign"> 
-    <span>Call Sign:</span>
-    <div>${FlightDetails.CALLSIGN}</div>
-    </div>
-  </div>
-  <div class="flight-property flight__is-on-ground">
-    <div class="isOnGround-icon__${FlightDetails.IS_ON_GROUND}"></div>
-    <span class="isOnGround-icon__${FlightDetails.IS_ON_GROUND}"></span>
-    </div></div>
-  </div>
+    <div class="">Flight ${FlightDetails.CALLSIGN} from ${FlightDetails.ORIGIN_COUNTRY}</div>
   `;
+  // card.innerHTML = `
+  // <div class="flight-property flight__origin-country">
+  //   <span>Origin Country:</span>
+  //   <div>${FlightDetails.ORIGIN_COUNTRY}</div>
+  //   </div>
+  // <div class="flight-property flight__callsign">
+  //   <span>Call Sign:</span>
+  //   <div>${FlightDetails.CALLSIGN}</div>
+  //   </div>
+  // </div>
+  // <div class="flight-property flight__is-on-ground">
+  //   <div class="isOnGround-icon__${FlightDetails.IS_ON_GROUND}"></div>
+  //   <span class="isOnGround-icon__${FlightDetails.IS_ON_GROUND}"></span>
+  //   </div></div>
+  // </div>
+  // `;
   // <div class="flight-property flight__aircraft-category">
   // <p>Aircraft Category:<p>
   // <div>${api.getAircraftCategory(FlightDetails.CATEGORY)}</div>

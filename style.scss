@@ -84,28 +84,16 @@ body {
         justify-content: space-between;
         .flight {
           @include theme(white);
-          height: 8rem;
+          background: white;
+          color: #333;
+          height: 2rem;
           margin-top: 1rem;
-
           border-radius: 1rem;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); // box-shadow: [horizontal offset] [vertical offset] [blur radius] [optional spread radius] [color];
-
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
           display: flex;
           flex-wrap: wrap;
-          justify-content: space-between;
-
-          .flight__callsign {
-            width: 30%;
-          }
-          .flight__is-on-ground {
-            width: 30%;
-
-            div.false {
-            }
-          }
-          .flight__origin-country {
-            width: 30%;
-          }
+          justify-content: center;
+          align-items: center;
         }
       }
     }
