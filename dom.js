@@ -38,8 +38,10 @@ function loadFlights() {
         TRUE_TRACK_COMPASS: flight[10],
         // CATEGORY: flight[16],
       };
-      createFlightCard(FlightDetails);
-      map.addMarkerToMap([FlightDetails.LONGITUDE, FlightDetails.LATITUDE]);
+      const card = createFlightCard(FlightDetails);
+      document.getElementById("flights").appendChild(card);
+
+      map.addMarkerToMap(FlightDetails);
     });
   });
 }
@@ -53,8 +55,8 @@ function createFlightCard(FlightDetails) {
   card.setAttribute("data-callsign", FlightDetails.CALLSIGN);
   card.setAttribute("data-origin-country", FlightDetails.ORIGIN_COUNTRY);
   card.setAttribute("data-longitude", FlightDetails.LONGITUDE);
-  card.setAttribute("data-is-on-ground", FlightDetails.LATITUDE);
-  card.setAttribute("data-callsign", FlightDetails.IS_ON_GROUND);
+  card.setAttribute("data-latitude", FlightDetails.LATITUDE);
+  card.setAttribute("data-is-on-ground", FlightDetails.IS_ON_GROUND);
   card.setAttribute(
     "data-true-track-compass",
     FlightDetails.TRUE_TRACK_COMPASS
@@ -81,7 +83,7 @@ function createFlightCard(FlightDetails) {
   // <p>Aircraft Category:<p>
   // <div>${api.getAircraftCategory(FlightDetails.CATEGORY)}</div>
   // </div>
-  document.getElementById("flights").appendChild(card);
+  return card;
   // console.log(FlightDetails.ID);
 }
 // Click the time
