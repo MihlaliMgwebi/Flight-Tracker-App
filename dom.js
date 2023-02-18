@@ -27,58 +27,33 @@ function loadFlightDetails(flight) {
   flightSummaryCollapsibleButton.id = flightSummaryCollapsibleButtonId;
   flightSummaryCollapsibleButton.className = `flight__summary--collapsible`;
   flightSummaryCollapsibleButton.innerHTML = `Flight ${flight.CALLSIGN} from orgin country ${flight.ORIGIN_COUNTRY}`;
+  flightSummaryCollapsibleButton.addEventListener("click", (event) => {
+    event.target.nextElementSibling.classList.toggle("hide");
+    console.log(event.target.nextElementSibling);
+  });
 
-  const flightDetailsCard = document.createElement("div");
-  flightDetailsCard.id = flightDetailsCardId;
-  flightDetailsCard.className = `flight__details`;
+  const flightDetailsCard = createFlightDetailsCard(flight.ICAO24);
 
   const flightSummaryAndDetailsContainer =
     document.getElementById("app-main__flights");
   flightSummaryAndDetailsContainer.appendChild(flightSummaryCollapsibleButton);
   flightSummaryAndDetailsContainer.appendChild(flightDetailsCard);
-
-  createFlightDetailContainer(flight.ICAO24);
 }
 
-function createFlightDetailContainer(flightIcao24) {
-  const flightDetailsContainer = document.createElement("div");
-  flightDetailsContainer.id = `flight__details-${flightIcao24}`;
+function createFlightDetailsCard(flightIcao24) {
+  const flightDetailsCard = document.createElement("div");
+  flightDetailsCard.id = `flight__details-${flightIcao24}`;
+  flightDetailsCard.classList = `flight__details hide`;
 
   Object.entries(getSVGs()).forEach((entry) => {
     const [flightDetail, svg] = entry;
-    console.log(svg, flightDetail);
     const flightDetailsText = document.createElement("p");
     flightDetailsText.innerHTML = `${flightDetail}: hello`; //add data
     const flightDetailsSVG = document.createElement("p");
     flightDetailsSVG.innerHTML = svg;
-    flightDetailsContainer.appendChild(flightDetailsSVG);
-    flightDetailsContainer.appendChild(flightDetailsText);
+    flightDetailsCard.appendChild(flightDetailsSVG);
+    flightDetailsCard.appendChild(flightDetailsText);
   });
-  // container
-  // svg in container
-  // p in container
 
-  // const flightDetailsCardPropertySVG = svg;
-  // const flightDetailsCardPropertyText = document.createElement("p");
-  // flightDetailsCardPropertyText.innerHTML = propertyValue;
-
-  const flightDetailsCard = document.getElementById(
-    `flight__details-${flightIcao24}`
-  );
-  flightDetailsCard.appendChild(flightDetailsContainer);
+  return flightDetailsCard;
 }
-
-// TIME_POSITION: null,
-// LAST_CONTACT: null,
-// LONGITUDE: null,
-// BARO_ALTITUDE: null,
-// ON_GROUND: null,
-// VELOCITY: null,
-// TRUE_TRACK: null,
-// VERTICAL_RATE: null,
-// SENSORS: null,
-// GEO_ALTITUDE: null,
-// SQUAWK: null,
-// SPI: null,
-// POSITION_SOURCE: null,
-// CATEGORY: null,
