@@ -1,12 +1,8 @@
 // SASS: nesting, var in mixins, functions
-
+$base-color: rgb(77 153 231);
 // font, color, background, containers
 // [Kevin Powell Media Queries](https://www.youtube.com/watch?v=BvB8kSmgMcM)
-@mixin theme(
-  $primary-color: rgb(77 153 231),
-  $font-color: #333,
-  $font-size: 1rem
-) {
+@mixin theme($primary-color: $base-color, $font-color: #333, $font-size: 1rem) {
   background: $primary-color;
   color: $font-color;
   font-size: $font-size;
@@ -35,6 +31,7 @@
 }
 
 @mixin background(
+  $color: $base-color,
   $image: $image,
   $repeat: no-repeat,
   $size: cover,
@@ -42,10 +39,8 @@
   $border-radius: 1rem 1rem 0rem 0rem,
   $box-shadow: 0 0 1rem black
 ) {
-  background-image: $image;
-  background-repeat: $repeat;
+  background: $color $image $repeat $position;
   background-size: $size;
-  background-position: $position;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
 }
