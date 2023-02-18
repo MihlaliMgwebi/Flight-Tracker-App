@@ -37,25 +37,33 @@ function loadFlightDetails(flight) {
   flightSummaryAndDetailsContainer.appendChild(flightSummaryCollapsibleButton);
   flightSummaryAndDetailsContainer.appendChild(flightDetailsCard);
 
-  createFlightDetailContainer(flightDetailsCardId);
+  createFlightDetailContainer(flight.ICAO24);
 }
 
-function createFlightDetailContainer(flightDetailsCardId) {
+function createFlightDetailContainer(flightIcao24) {
+  const flightDetailsContainer = document.createElement("div");
+  flightDetailsContainer.id = `flight__details-${flightIcao24}`;
+
   Object.entries(getSVGs()).forEach((entry) => {
-    const [key, value] = entry;
-    console.log(value, key, flightDetailsCardId);
+    const [flightDetail, svg] = entry;
+    console.log(svg, flightDetail);
+
+    const flightDetailsSVG = document.createElement("div");
+    flightDetailsSVG.innerHTML = svg;
+    flightDetailsContainer.appendChild(flightDetailsSVG);
   });
   // container
   // svg in container
   // p in container
-  const flightDetailsCardProperty = document.createElement("div");
-  // flightDetailsCardProperty.id = `flight__property-${propertyKey}`;
+
   // const flightDetailsCardPropertySVG = svg;
   // const flightDetailsCardPropertyText = document.createElement("p");
   // flightDetailsCardPropertyText.innerHTML = propertyValue;
 
-  const flightDetailsCard = document.getElementById(flightDetailsCardId);
-  flightDetailsCard.appendChild(flightDetailsCardProperty);
+  const flightDetailsCard = document.getElementById(
+    `flight__details-${flightIcao24}`
+  );
+  flightDetailsCard.appendChild(flightDetailsContainer);
 }
 
 // TIME_POSITION: null,
