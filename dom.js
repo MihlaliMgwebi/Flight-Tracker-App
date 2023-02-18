@@ -47,10 +47,12 @@ function createFlightDetailContainer(flightIcao24) {
   Object.entries(getSVGs()).forEach((entry) => {
     const [flightDetail, svg] = entry;
     console.log(svg, flightDetail);
-
-    const flightDetailsSVG = document.createElement("div");
+    const flightDetailsText = document.createElement("p");
+    flightDetailsText.innerHTML = `${flightDetail}: hello`; //add data
+    const flightDetailsSVG = document.createElement("p");
     flightDetailsSVG.innerHTML = svg;
     flightDetailsContainer.appendChild(flightDetailsSVG);
+    flightDetailsContainer.appendChild(flightDetailsText);
   });
   // container
   // svg in container
