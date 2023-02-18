@@ -104,6 +104,13 @@ body {
       box-shadow: 1px 0 1rem white;
       border-radius: 1rem 1rem 0rem 0rem;
       margin: 0rem 1rem;
+
+      .flight__summary--collapsible {
+        @include theme(#e7e7e7);
+        width: 100%;
+        border: none;
+        padding: 1rem;
+      }
     }
 
     .app-main__text {
