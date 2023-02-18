@@ -90,7 +90,29 @@ body {
   }
   .app-main {
     @include theme();
+    @include flex-layout(
+      $flex-direction: column,
+      $justify-content: space-between,
+      $height: 100%
+    );
+
     @include background($image: url(/assets/bg.avif));
+
+    .app-main__flights {
+      height: 29rem;
+      background: transparent;
+      box-shadow: 1px 0 1rem white;
+      border-radius: 1rem 1rem 0rem 0rem;
+      margin: 0rem 1rem;
+    }
+
+    .app-main__text {
+      padding: 1rem 2rem;
+    }
+
+    .app-main__flights--hidden {
+      visibility: hidden;
+    }
   }
 }
 // pale blue as the primary color and light gray as the accent color.

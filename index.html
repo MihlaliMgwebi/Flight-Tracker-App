@@ -15,20 +15,20 @@
   <div id="app">
     <header class="app-header">
       <div class="app-header__logo"></div>
-      <div class="app-header__time-input">
+      <div class="app-header__time-input" id="time-input__input">
         <label for="time-input__input">Select a day and time for your flight:</label>
         <input id="time-input__input" type="datetime-local" name="time-input__input" required />
         <!-- TODO set min in JS -->
       </div>
     </header>
     <main class="app-main">
-
       <div class="app-main__text">
         <h1>TM FIT</h1>
         <h2>Track My Flights In Time</h2>
         <h3>Track my flights. Anywhere. Anytime.</h3>
         <p>Select a time to view the details of all the flights at your specified time.</p>
       </div>
+      <div class="app-main__flights app-main__flights--hidden" id="app-main__flights"></div>
     </main>
   </div>
 
