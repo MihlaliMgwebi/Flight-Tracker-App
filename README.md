@@ -43,6 +43,9 @@ I researched and used a website to mock input for parameters.
 - rem: font size based off ROOT element. Root font-size defaults to default font size of browser (usually 16px). So yes for everything else.
 - container query length units: some browsers don't support it. Use grid or flex rather.
 - vw or %: the rest are based on pixels and the amount of pixels you use stay the same.
+- dvh and svh
+  - dvh adjusts dynamically based on the viewport height (dvh adjusts based on how big the screen is)
+  - svh is a fixed percentage of the viewport height (stays the same percentage no matter what)
 
 ##
 

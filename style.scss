@@ -32,10 +32,9 @@
 html,
 body {
   height: 100vh;
+  height: 100svh; //stays the same percentage no matter what
   margin: 0;
 }
-
-// // [The @media at-rule may be placed at the top level of your code or nested inside any other](https://developer.mozilla.org/en-US/docs/Web/CSS/@media)
 
 /* Extra small devices (phones, 600px and down) E.g. 375 x 667*/
 // @media only screen and (max-width: 600px) {//37.5rem
@@ -106,8 +105,8 @@ body {
     @include theme($theme: DarkBlue);
   }
 }
-// }
 
+// // [The @media at-rule may be placed at the top level of your code or nested inside any other](https://developer.mozilla.org/en-US/docs/Web/CSS/@media)
 /* Small devices (portrait tablets and large phones, 600px and up) E.g. 667 x 375*/
 @media only screen and (min-width: 600px) {
   //37.5rem
