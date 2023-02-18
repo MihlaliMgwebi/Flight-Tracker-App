@@ -2,31 +2,19 @@
 
 // font, color, background, containers
 // [Kevin Powell Media Queries](https://www.youtube.com/watch?v=BvB8kSmgMcM)
-@mixin theme($theme: #fff, $font-color: #333) {
-  background: $theme;
-  // box-shadow: 0 0 1px rgba($theme, 0.25);
+@mixin theme($primary-color: #c5e3ec, $font-color: #d4d4d4, $font-size: 1rem) {
+  background: $primary-color;
   color: $font-color;
+  font-size: $font-size;
 }
 
-@mixin svg(
-  $stroke: currentColor,
-  $fill: currentColor,
-  $stroke-width: 0,
-  $viewBox: 0 0 24 24,
-  $height: 1em,
-  $width: 1em
-) {
-  stroke: $stroke;
-  fill: $fill;
-  stroke-width: $stroke-width;
-  viewbox: $viewBox;
-  height: 1em;
-  width: 1em;
-  xmlns: "http://www.w3.org/2000/svg";
+@mixin grid-layout($height, $rows: 1fr, $cols: 1fr) {
+  height: $height;
+  display: grid;
+  grid-template: $rows / $cols;
 }
-@mixin path($fill: none, $d) {
-  fill: $fill;
-  d: $d;
+
+@mixin flex-layout($height) {
 }
 
 html,
@@ -36,140 +24,14 @@ body {
   margin: 0;
 }
 
-/* Extra small devices (phones, 600px and down) E.g. 375 x 667*/
-// @media only screen and (max-width: 600px) {//37.5rem
 #app {
-  height: 100%;
-  display: grid;
-  grid-template: 1fr 4fr/ 1fr;
-
-  header {
-    @include theme($theme: white);
+  @include theme();
+  @include grid-layout($height: 100%, $rows: 1fr 5fr);
+  .app-header {
+    @include theme();
   }
-  main {
-    @include theme($theme: DarkOrange);
-    display: flex;
-    flex-direction: column;
-
-    .country-search-bar {
-      @include theme(#fff, #8cafd3);
-      display: grid;
-      grid-template: 1fr / 2fr 8fr 2fr;
-      .country-search-bar-menu {
-        padding: 0.5rem 1rem;
-        div {
-          @include theme(black);
-          // TODO [Animate](https://www.w3schools.com/howto/howto_css_menu_icon.asp)
-          width: 100%;
-          height: 0.25rem;
-          margin: 0.3rem 0rem;
-        }
-      }
-    }
-
-    #map-container {
-      height: 12rem;
-    }
-
-    .flights-details__wrapper {
-      @include theme(#f4f4f4);
-      height: 100%;
-      padding: 0rem 1rem;
-
-      .flights {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        .flight {
-          @include theme(white);
-          background: white;
-          color: #333;
-          height: 2rem;
-          // margin-top: 1rem;
-          border-radius: 1rem;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          align-items: center;
-        }
-      }
-    }
-
-    .flight__details {
-      display: none;
-    }
-  }
-  footer {
-    @include theme($theme: DarkBlue);
+  .app-main {
+    @include theme(#f1f1f1);
   }
 }
-
-// // [The @media at-rule may be placed at the top level of your code or nested inside any other](https://developer.mozilla.org/en-US/docs/Web/CSS/@media)
-/* Small devices (portrait tablets and large phones, 600px and up) E.g. 667 x 375*/
-@media only screen and (min-width: 600px) {
-  //37.5rem
-  #app {
-    /* SPECIFICITY: inline, #, ., :, */
-    main {
-      @include theme($theme: DarkOrange);
-      .time-input {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-      .flight__details {
-        display: none;
-      }
-      #flights.flights {
-        flex-flow: row wrap;
-      }
-      .flight {
-        width: 40%;
-      }
-    }
-    footer {
-      @include theme($theme: DarkBlue);
-    }
-  }
-}
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-  // 48rem
-  #app {
-    main {
-      .flight {
-        width: 30%;
-      }
-    }
-  }
-}
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-  // 62rem
-  #app {
-    main {
-      .flight {
-        width: 25%;
-        margin: 1rem; //eww
-      }
-    }
-  }
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-  //75rem
-  #app {
-    main {
-      .flight {
-        width: 20%;
-        margin: 0.5rem; //eww
-      }
-    }
-  }
-}
-// [Bootstrap Breakpoints](<div id="map-container" class="leaflet-container leaflet-touch leaflet-retina leaflet-safari leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative; outline: none;"><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(28px, 0px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 18; transform: translate3d(0px, 1px, 0px) scale(2);"></div><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 19; transform: translate3d(-316px, -3px, 0px) scale(1);"><img alt="" src="https://tile.openstreetmap.org/13/4734/4711.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(388px, -102px, 0px); opacity: 1;"><img alt="" src="https://tile.openstreetmap.org/13/4734/4712.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(388px, 154px, 0px); opacity: 1;"><img alt="" src="https://tile.openstreetmap.org/13/4733/4711.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(132px, -102px, 0px); opacity: 1;"><img alt="" src="https://tile.openstreetmap.org/13/4735/4711.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(644px, -102px, 0px); opacity: 1;"><img alt="" src="https://tile.openstreetmap.org/13/4733/4712.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(132px, 154px, 0px); opacity: 1;"><img alt="" src="https://tile.openstreetmap.org/13/4735/4712.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(644px, 154px, 0px); opacity: 1;"><img alt="" src="https://tile.openstreetmap.org/13/4732/4711.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-124px, -102px, 0px); opacity: 1;"><img alt="" src="https://tile.openstreetmap.org/13/4732/4712.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-124px, 154px, 0px); opacity: 1;"><img alt="" src="https://tile.openstreetmap.org/13/4736/4711.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(900px, -102px, 0px); opacity: 1;"><img alt="" src="https://tile.openstreetmap.org/13/4736/4712.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(900px, 154px, 0px); opacity: 1;"><img alt="" src="https://tile.openstreetmap.org/13/4734/4710.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(388px, -358px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-overlay-pane"></div><div class="leaflet-pane leaflet-shadow-pane"></div><div class="leaflet-pane leaflet-marker-pane"></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(1.21202e+06px, 1.20622e+06px, 0px) scale(4096);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in" aria-disabled="false"><span aria-hidden="true">+</span></a><a class="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" aria-label="Zoom out" aria-disabled="false"><span aria-hidden="true">−</span></a></div></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="leaflet-control-attribution leaflet-control"><a href="https://leafletjs.com" title="A JavaScript library for interactive maps"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" class="leaflet-attribution-flag"><path fill="#4C7BE1" d="M0 0h12v4H0z"></path><path fill="#FFD500" d="M0 4h12v3H0z"></path><path fill="#E0BC00" d="M0 7h12v1H0z"></path></svg> Leaflet</a> <span aria-hidden="true">|</span> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a></div></div></div></div>)
+// pale blue as the primary color and light gray as the accent color.
