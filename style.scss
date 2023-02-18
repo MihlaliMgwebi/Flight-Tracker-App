@@ -25,13 +25,16 @@ body {
 }
 
 #app {
-  @include theme();
   @include grid-layout($height: 100%, $rows: 1fr 5fr);
   .app-header {
-    @include theme();
+    @include theme(#f1f1f1);
+    .app-header__logo {
+    }
+    .app-header__searchbar {
+    }
   }
   .app-main {
-    @include theme(#f1f1f1);
+    @include theme();
   }
 }
 // pale blue as the primary color and light gray as the accent color.
