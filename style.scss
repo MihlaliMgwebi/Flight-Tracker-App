@@ -2,11 +2,14 @@
 
 // font, color, background, containers
 // [Kevin Powell Media Queries](https://www.youtube.com/watch?v=BvB8kSmgMcM)
-@mixin theme($primary-color: #c5e3ec, $font-color: #d4d4d4, $font-size: 1rem) {
+@mixin theme(
+  $primary-color: rgb(77 153 231),
+  $font-color: #333,
+  $font-size: 1rem
+) {
   background: $primary-color;
   color: $font-color;
   font-size: $font-size;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
 @mixin grid-layout($height, $rows: 1fr, $cols: 1fr) {
@@ -31,6 +34,21 @@
   align-items: $align-items;
 }
 
+@mixin background(
+  $image: $image,
+  $repeat: no-repeat,
+  $size: cover,
+  $position: top,
+  $border-radius: 1rem 1rem 0rem 0rem,
+  $box-shadow: 0 0 1rem black
+) {
+  background-image: $image;
+  background-repeat: $repeat;
+  background-size: $size;
+  background-position: $position;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+}
 html,
 body {
   height: 100vh;
@@ -77,6 +95,7 @@ body {
   }
   .app-main {
     @include theme();
+    @include background($image: url(/assets/bg.avif));
   }
 }
 // pale blue as the primary color and light gray as the accent color.
