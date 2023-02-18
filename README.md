@@ -1,105 +1,33 @@
 ### Situation:
 
-I was tasked with creating a flight tracking app. I must:
+## I must make a responsive layout with grid, flex, and media queries.
 
-- make use of the [opensky-network API](https://openskynetwork.github.io/opensky-api/rest.html#id10) to track ongoing flights.
-- make a responsive layout with grid, flex, and media queries.
-- show a list of ongoing flights.
-- Use [Leaflet](https://leafletjs.com/) with openstreetmap (it's the default used in all leaflet demos) to display a selected flight's current position on the map.
+My Landing page consists of a header and main
+
+# Header
+
+Search bar where you can enter the time.
+
+# Main
+
+What the website does and how to use it.
 
 ### Tension:
 
-## Understanding the [Epoch Unix Timestamp](https://www.unixtimestamp.com/index.php):
+## 1. Undecided on layout
 
-The time in seconds since epoch is basically just counting how many seconds have gone by since January 1, 1970, 00:00:00 UTC. It's a way for computers to keep track of time and know exactly when things happened or need to happen.
-JavaScript Date objects represent a single moment in time in a platform-independent format. Date objects encapsulate an integral number that represents milliseconds since the midnight at the beginning of January 1, 1970, UTC ([the epoch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)).
-
-## REST API Implementation
-
-# How to use API
-
-# How to extract data
-
-# Get data with baseURL
-
-# Data returned is undefined
-
-## Which font size to use for media queries with the mobile first approach if:
-
-## How to get the input time
-
-Kept returning NaN
-
-## Mediaqueries understanding and approach
+Many undesirable layouts and sites out there.
 
 ### Action and Result.
 
-## Website Converter
+## 1. Google Maps layout
 
-I researched and used a website to mock input for parameters.
-
-- px: good for spacing and layout. If a user changes the default font-size of browser the elemen't font size will stay the same. So.. no pixels.
-- em: font size based off PARENT element. Great for sidebar menu if I want submenu items to have smaller font-size gradually. Also chnages based on user preference, So... yes for sidebar and footers.
-- rem: font size based off ROOT element. Root font-size defaults to default font size of browser (usually 16px). So yes for everything else.
-- container query length units: some browsers don't support it. Use grid or flex rather.
-- vw or %: the rest are based on pixels and the amount of pixels you use stay the same.
-- dvh and svh
-  - dvh adjusts dynamically based on the viewport height (dvh adjusts based on how big the screen is)
-  - svh is a fixed percentage of the viewport height (stays the same percentage no matter what)
-
-##
-
-# Using the correct link
-
-# Using map instead of forEach.
-
-## How to get the input time
-
-Add event listener
-
-## [Bootstrap breakpoints]()
+It meets the requirements.
 
 ### Learning
 
-##
-
-##
-
-#
-
-# When to use map and when to use of forEach.
-
-The forEach() method iterates over each element of an array whereas map() method returns a new array
-
-### Rubric
-
-#### Requirements:
-
-- Build/Bundle: 1
-- Git + GitHub + Conventional Commits: 5
-- Responsive mobile-first design: 5
-- List of flights (API): 4
-- List of flights + select: 5
-- Leaflet + selected flight: 10
-
-#### Bonus:
-
-- Clean code:
-- Formatted: 2
-- Separation of concerns: 7
-- Extra shizniz:
-- Polling: 2
-- Beauty factor: 3
-- SCSS: 1
-
-TOTAL: 30
-Extra: 15
-TOTAL PERCENT: 150%
+## 1. Separation of concerns
 
 #### References
 
-- [CSS units for font-size: px | em | rem](https://medium.com/@dixita0607/css-units-for-font-size-px-em-rem-79f7e592bb97)
-- [PX, EM or REM Media Queries?](https://zellwk.com/blog/media-query-units/)
-- [CSS Container Queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries)
-- [5 simple tips to making responsive layouts the easy way](https://www.youtube.com/watch?v=VQraviuwbzU)
-- [The problems with viewport units](https://www.youtube.com/watch?v=veEqYQlfNx8&ab_channel=KevinPowell)
+- [Google Maps](https://www.google.com/maps/@-25.7562574,28.2409557,15z)
