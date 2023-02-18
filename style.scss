@@ -14,7 +14,20 @@
   grid-template: $rows / $cols;
 }
 
-@mixin flex-layout($height) {
+@mixin flex-layout(
+  $height,
+  $flex-direction: row,
+  $flex-wrap: nowrap,
+  $align-content: normal,
+  $justify-content: normal,
+  $align-items: normal
+) {
+  height: $height;
+  display: flex;
+  flex-flow: $flex-direction $flex-wrap;
+  align-content: $align-content;
+  justify-content: $justify-content;
+  align-items: $align-items;
 }
 
 html,
@@ -28,9 +41,24 @@ body {
   @include grid-layout($height: 100%, $rows: 1fr 5fr);
   .app-header {
     @include theme(#f1f1f1);
+    @include flex-layout(
+      100%,
+      $justify-content: space-evenly,
+      $align-items: center
+    );
     .app-header__logo {
+      @include theme(#f1f1f1);
+      width: 30%;
+      height: 90%;
+      background-image: url("./assets/logo-500x500-png.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: left;
     }
     .app-header__searchbar {
+      @include theme(green);
+      width: 40%;
+      height: 90%;
     }
   }
   .app-main {
