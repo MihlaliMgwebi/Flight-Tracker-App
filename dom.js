@@ -1,11 +1,8 @@
-import * as api from "./api";
+import { getFlightDetails } from "./api";
 import * as map from "./map";
-export function loadLandingPage() {
-  setUnixTimestampInMilliseconds();
-}
 
-//[Setting the value using JavaScript](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/time#setting_the_value_using_javascript)
-function setUnixTimestampInMilliseconds() {
+export function loadLandingPage() {
+  //[Setting the value using JavaScript](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/time#setting_the_value_using_javascript)
   const timeControl = document.getElementById("time-input__input");
   // [Anonymous functions to pass parameters](https://www.w3schools.com/js/js_htmldom_eventlistener.asp)
   timeControl.addEventListener("input", () => {
@@ -13,65 +10,49 @@ function setUnixTimestampInMilliseconds() {
       timeControl.value
     );
     loadFlights();
-    map.showMap();
+    map.createMap();
   });
 }
 
 function convert24HrTimeToUnixTimestampInMilliseconds(timeControlValue) {
-  // console.log(timeControlValue);
   const date = new Date(timeControlValue);
-  const seconds = Math.floor(date / 1000);
-  return seconds;
+  return Math.floor(date / 1000); //milliseconds
 }
 
 function loadFlights() {
-  api.getFirst20FlightDetailsByTimeInSeconds().then((flights) => {
-    flights.forEach((flight) => {
-      // console.log(flight);
-      const FlightDetails = {
-        ID: flight[0],
-        CALLSIGN: flight[1],
-        ORIGIN_COUNTRY: flight[2],
-        LONGITUDE: flight[5],
-        LATITUDE: flight[6],
-        IS_ON_GROUND: flight[8],
-        TRUE_TRACK_COMPASS: flight[10],
-        // CATEGORY: flight[16],
-      };
-      createFlightCard(FlightDetails);
-
-      map.addMarkerToMap(FlightDetails);
-    });
-  });
+  console.log(getFlightDetails());
+  for (let flight of getFlightDetails() ?? []) {
+    createFlightCard(flight);
+    map.addMarkerToMap(flight);
+  }
 }
 
-function createFlightCard(FlightDetails) {
-  const cardId = `card-${FlightDetails.ID}`;
-  const buttonId = `button-${FlightDetails.ID}`;
-  const cardFlightDetailsId = `card__details-${FlightDetails.ID}`;
+function createFlightCard(flightDetails) {
+  const cardId = `card-${flightDetails.ID}`;
+  const buttonId = `button-${flightDetails.ID}`;
+  const cardFlightDetailsId = `card__details-${flightDetails.ID}`;
 
   const cardFlightDetails = document.createElement("div");
-  cardFlightDetails.setAttribute("id", cardFlightDetailsId);
-  cardFlightDetails.setAttribute("class", "flight__details");
-  cardFlightDetails.setAttribute("style", "display:none");
+  cardFlightDetails.id = cardFlightDetailsId;
+  cardFlightDetails.className = "flight__details";
+  cardFlightDetails.style.display = "none";
   cardFlightDetails.innerHTML = `<p>Flight Deets Laties</p>`;
 
   const button = document.createElement("button");
-  button.setAttribute("id", buttonId);
+  button.id = buttonId;
   button.setAttribute("class", "flight__summary");
-  button.setAttribute("data-callsign", FlightDetails.CALLSIGN);
-  button.setAttribute("data-origin-country", FlightDetails.ORIGIN_COUNTRY);
-  button.setAttribute("data-longitude", FlightDetails.LONGITUDE);
-  button.setAttribute("data-latitude", FlightDetails.LATITUDE);
-  button.setAttribute("data-is-on-ground", FlightDetails.IS_ON_GROUND);
+  button.setAttribute("data-callsign", flightDetails.CALLSIGN);
+  button.setAttribute("data-origin-country", flightDetails.ORIGIN_COUNTRY);
+  button.setAttribute("data-longitude", flightDetails.LONGITUDE);
+  button.setAttribute("data-latitude", flightDetails.LATITUDE);
+  button.setAttribute("data-is-on-ground", flightDetails.IS_ON_GROUND);
   button.setAttribute(
     "data-true-track-compass",
-    FlightDetails.TRUE_TRACK_COMPASS
+    flightDetails.TRUE_TRACK_COMPASS
   );
-  button.setAttribute("aircraft-category", FlightDetails.CATEGORY);
-  button.textContent = `Flight ${FlightDetails.CALLSIGN} from ${FlightDetails.ORIGIN_COUNTRY}`;
+  button.setAttribute("data-aircraft-category", flightDetails.CATEGORY);
+  button.textContent = `Flight ${flightDetails.CALLSIGN} from ${flightDetails.ORIGIN_COUNTRY}`;
 
-  // TODO: if lat and lng not null
   const card = document.createElement("div");
   card.setAttribute("class", "flight");
   card.setAttribute("id", cardId);
@@ -81,7 +62,7 @@ function createFlightCard(FlightDetails) {
   card.appendChild(cardFlightDetails);
 
   button.addEventListener("click", (event) => {
-    map.showMapAtMarker([FlightDetails.LONGITUDE, FlightDetails.LATITUDE]);
+    map.moveMapToLatLng([flightDetails.LONGITUDE, flightDetails.LATITUDE]);
     toggleFlightDetailsVisibility(event.target.id);
   });
 }
@@ -91,14 +72,9 @@ function toggleFlightDetailsVisibility(buttonId) {
   const cardFlightDetailsId = `card__details-${id}`;
   const cardFlightContainerId = `card-${id}`;
 
-  // console.log("id", id);
-  // console.log("cardFlightDetailsId", cardFlightDetailsId);
+  const cardFlightDetails = document.getElementById(cardFlightDetailsId);
+  const cardFlightContainer = document.getElementById(cardFlightContainerId);
 
-  const cardFlightDetails = document.querySelector(`#${cardFlightDetailsId}`);
-  const cardFlightContainer = document.querySelector(
-    `#${cardFlightContainerId}`
-  );
-  console.log("cardFlightDetails", cardFlightDetails.style);
   if (cardFlightDetails.style.display === "none") {
     cardFlightDetails.style.display = "block";
     cardFlightContainer.style.height = "8rem";
@@ -109,23 +85,3 @@ function toggleFlightDetailsVisibility(buttonId) {
     cardFlightContainer.style.flexDirection = "row";
   }
 }
-
-// <div class="flight-property flight__origin-country">
-//   <span>Origin Country:</span>
-//   <div>${FlightDetails.ORIGIN_COUNTRY}</div>
-//   </div>
-// <div class="flight-property flight__callsign">
-//   <span>Call Sign:</span>
-//   <div>${FlightDetails.CALLSIGN}</div>
-//   </div>
-// </div>
-// <div class="flight-property flight__is-on-ground">
-//   <div class="isOnGround-icon__${FlightDetails.IS_ON_GROUND}"></div>
-//   <span class="isOnGround-icon__${FlightDetails.IS_ON_GROUND}"></span>
-//   </div></div>
-// </div>
-// `;
-// <div class="flight-property flight__aircraft-category">
-// <p>Aircraft Category:<p>
-// <div>${api.getAircraftCategory(FlightDetails.CATEGORY)}</div>
-// </div>

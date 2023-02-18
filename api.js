@@ -54,40 +54,29 @@ const RequestMethods = {
 const BASE_URL = "https://opensky-network.org/api/states/all?extended=1&time=";
 
 export function getFirst20FlightDetailsByTimeInSeconds() {
-  // const timeControl = document.querySelector("#time-input__input");
-  // const milliseconds = timeControl.dataset.epoch;
-  // axios({
-  //     method: RequestMethods.GET,
-  //     url: `${BASE_URL}${milliseconds}`
-  //   })
-  //     .then((responseJSON) => getFlightsOfOriginCountry(responseJSON.data.states, "South Africa")) //console.log(responseJSON.data.states))
-  //     .catch((error) => console.error(error))
-  //     .finally(() => console.log('hideSpinner'));//hideSpinner()
-
   return fetch("./data.json")
-    .then(console.log("showSpinner"))
     .then((response) => response.json())
     .then((data) => data.states.slice(0, 9))
-    .then(console.log("hideSpinner")) //finally
-    .catch((error) => console.error(error));
+    .catch((error) => console.error(error))
+    .finally(console.log("hideSpinner"));
 }
 
-// export function getAircraftCategory(categoryNumeric) {
-//   return categoryNumeric === undefined
-//     ? AircraftCategory[0]
-//     : AircraftCategory[categoryNumeric];
-// }
-
-export function getListOf20OriginCountries(data, origin) {
-  const originCountries = Object.values(data).map((val) => {
-    return val[2];
+export async function getFlightDetails() {
+  //TODO:mapping function.. working?
+  const flightDetails = await getFirst20FlightDetailsByTimeInSeconds();
+  const flights = flightDetails.map((flight) => {
+    //TODO: nullish coalescing  here
+    return {
+      ID: flight[0],
+      CALLSIGN: flight[1],
+      ORIGIN_COUNTRY: flight[2],
+      LONGITUDE: flight[5],
+      LATITUDE: flight[6],
+      IS_ON_GROUND: flight[8],
+      TRUE_TRACK_COMPASS: flight[10],
+      // CATEGORY: flight[16],
+    };
   });
-  const distinctCountries = [...new Set(originCountries)]; //Set removes duplicates and spread operator converts set to array
-  const nonEmptyDistinctCountries = distinctCountries.filter(
-    (element) => element !== ""
-  );
-  const sortedFirst20NonEmptyDistinctCountries = nonEmptyDistinctCountries
-    .slice(0, 20)
-    .sort();
-  return sortedFirst20NonEmptyDistinctCountries;
+  console.log(flights);
+  return flights;
 }
