@@ -15,9 +15,14 @@
   <div id="app">
     <header class="app-header">
       <div class="app-header__logo"></div>
-      <div class="app-header__searchbar"></div>
+      <div class="app-header__time-input">
+        <label for="time-input__input">Select a day and time for your flight:</label>
+        <input id="time-input__input" type="datetime-local" name="time-input__input" required />
+        <!-- TODO set min in JS -->
+      </div>
     </header>
-    <main class="app-main"></main>
+    <main class="app-main">
+    </main>
   </div>
 
   <script type="module" src="/main.js" defer></script>

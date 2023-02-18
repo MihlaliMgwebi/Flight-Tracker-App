@@ -6,6 +6,7 @@
   background: $primary-color;
   color: $font-color;
   font-size: $font-size;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
 @mixin grid-layout($height, $rows: 1fr, $cols: 1fr) {
@@ -38,27 +39,40 @@ body {
 }
 
 #app {
+  @include theme();
   @include grid-layout($height: 100%, $rows: 1fr 5fr);
+
   .app-header {
     @include theme(#f1f1f1);
     @include flex-layout(
-      100%,
+      95%,
       $justify-content: space-evenly,
       $align-items: center
     );
+    border-radius: 0px 0px 1rem 1rem;
+    box-shadow: 0 0 1rem black;
+
     .app-header__logo {
       @include theme(#f1f1f1);
-      width: 30%;
+      width: 25%;
       height: 90%;
       background-image: url("./assets/logo-500x500-png.png");
       background-size: cover;
       background-repeat: no-repeat;
       background-position: left;
     }
-    .app-header__searchbar {
-      @include theme(green);
-      width: 40%;
-      height: 90%;
+    .app-header__time-input {
+      @include theme(#f1f1f1, #333);
+      @include flex-layout(
+        90%,
+        $justify-content: center,
+        $flex-direction: column,
+        $align-items: flex-start
+      );
+      width: 70%;
+      #time-input__input {
+        margin-top: 0.1rem;
+      }
     }
   }
   .app-main {
