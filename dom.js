@@ -28,7 +28,6 @@ function loadFlightDetails(flight) {
   flightSummaryCollapsibleButton.innerHTML = `Flight ${flight.CALLSIGN} from ${flight.ORIGIN_COUNTRY}`;
   flightSummaryCollapsibleButton.addEventListener("click", (event) => {
     event.target.nextElementSibling.classList.toggle("hide");
-    // console.log(event.target.nextElementSibling);
   });
 
   const flightDetailsCard = createFlightDetailsCard(flight);
