@@ -52,90 +52,111 @@ body {
   margin: 0;
 }
 
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-  #app {
-    @include theme($base-color);
-    @include grid-layout($height: 100%);
+#app {
+  @include theme($base-color);
+  @include grid-layout($height: 100%);
 
-    .app-header {
-      @include theme(#f1f1f1);
-      grid-area: 1/1 / span 2 / span 12;
+  .app-header {
+    @include theme(#f1f1f1);
+    grid-area: 1/1 / span 2 / span 12;
 
-      @include flex-layout(
-        96%,
-        $justify-content: flex-start,
-        $align-items: center
-      );
+    @include flex-layout(96%, $justify-content: center, $align-items: center);
 
-      border-radius: 0px 0px 1rem 1rem;
-      box-shadow: 0 0 1rem #333;
+    border-radius: 0px 0px 1rem 1rem;
+    box-shadow: 0 0 1rem #333;
 
-      &__logo {
-        height: inherit;
+    &__logo {
+      height: inherit;
+    }
+    &__time-input {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      gap: 0.5em;
+    }
+  }
+  .app-main {
+    @include theme();
+    grid-area: 3/1 / span 10 / span 12;
+
+    display: grid;
+    grid-template: repeat(12, 1fr) / repeat(12, 1fr);
+
+    &__text {
+      grid-area: 1/1 / span 4 / span 12;
+    }
+    &__flights {
+      grid-area: 5/1 / span 8 / span 12;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+      background: transparent;
+      box-shadow: 1px 0 1rem white;
+      border-radius: 1rem 1rem 0rem 0rem;
+      margin: 0rem 1rem;
+
+      .active,
+      .flight__summary--collapsible:hover {
+        @include theme(#d4d4d4);
       }
-      &__time-input {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        gap: 0.5em;
+      .flight__summary--collapsible {
+        @include theme(#e7e7e7);
+        width: 100%;
+        border: none;
+        padding: 1rem;
+      }
+      .flight__details {
+        @include theme(#f1f1f1);
+        padding: 0.5rem;
+        display: grid;
+        grid-template: 1fr/ 1fr 11fr;
+      }
+      .hide {
+        display: none;
       }
     }
-    .app-main {
-      @include theme();
-      grid-area: 3/1 / span 10 / span 12;
+    @include background($image: url(/assets/bg.avif));
+    margin: 1rem;
+    .app-main__text {
+      padding: 0rem 2rem;
+    }
 
-      display: grid;
-      grid-template: repeat(12, 1fr) / repeat(12, 1fr);
-
-      &__text {
-        grid-area: 1/1 / span 4 / span 12;
-      }
-      &__flights {
-        grid-area: 5/1 / span 8 / span 12;
-        display: flex;
-        flex-direction: column;
-        overflow: auto;
-        background: transparent;
-        box-shadow: 1px 0 1rem white;
-        border-radius: 1rem 1rem 0rem 0rem;
-        margin: 0rem 1rem;
-
-        .active,
-        .flight__summary--collapsible:hover {
-          @include theme(#d4d4d4);
-        }
-        .flight__summary--collapsible {
-          @include theme(#e7e7e7);
-          width: 100%;
-          border: none;
-          padding: 1rem;
-        }
-        .flight__details {
-          @include theme(#f1f1f1);
-          padding: 0.5rem;
-          display: grid;
-          grid-template: 1fr/ 1fr 11fr;
-        }
-        .hide {
-          display: none;
-        }
-      }
-      @include background($image: url(/assets/bg.avif));
-      margin: 1rem;
-      .app-main__text {
-        padding: 0rem 2rem;
-      }
-
-      .app-main__flights--hidden {
-        visibility: hidden;
-      }
+    .app-main__flights--hidden {
+      visibility: hidden;
     }
   }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
-// @media only screen and (min-width: 600px) {...}
+@media only screen and (min-width: 600px) {
+  #app {
+    .app-header {
+      font-size: 1.5rem;
+      justify-content: center;
+
+      &__logo {
+        height: 8rem;
+      }
+    }
+    .app-main__flights {
+      grid-area: 5/1 / span 8 / span 12;
+    }
+    .app-main__text {
+      padding: 0rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      p {
+        font-size: 1.5rem;
+        visibility: hidden;
+      }
+    }
+
+    #time-input__input-value {
+      height: 1.5rem;
+    }
+  }
+}
 
 // /* Medium devices (landscape tablets, 768px and up) */
 // @media only screen and (min-width: 768px) {...}
