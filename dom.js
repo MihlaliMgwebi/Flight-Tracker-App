@@ -6,7 +6,7 @@ export function loadFlights() {
   const timeControl = document.getElementById("time-input__input-value");
   // [Anonymous functions to pass parameters](https://www.w3schools.com/js/js_htmldom_eventlistener.asp)
   timeControl.addEventListener("input", () => {
-    toggleFlightsVisibility();
+    toggleVisibility("app-main__flights");
     getFlightDetails(
       convert24HrTimeToUnixTimestampInMilliseconds(timeControl.value)
     ).then((flights) => {
@@ -20,8 +20,7 @@ function convert24HrTimeToUnixTimestampInMilliseconds(timeControlValue) {
   return Math.floor(date / 1000);
 }
 
-function toggleFlightsVisibility() {
-  const toggleClass = "app-main__flights";
+function toggleVisibility(toggleClass) {
   const menu = document.getElementById(toggleClass);
   menu.classList.remove(`${toggleClass}--hidden`);
 }
