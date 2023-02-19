@@ -37,7 +37,7 @@ $base-color: rgb(77 153 231);
   $size: cover,
   $position: top,
   $border-radius: 1rem 1rem 0rem 0rem,
-  $box-shadow: 0 0 1rem black
+  $box-shadow: 0 0 1rem whitesmoke
 ) {
   background: $color $image $repeat $position;
   background-size: $size;
@@ -122,9 +122,9 @@ body {
         }
       }
       @include background($image: url(/assets/bg.avif));
-
+      margin: 1rem;
       .app-main__text {
-        padding: 1rem 2rem;
+        padding: 0rem 2rem;
       }
 
       .app-main__flights--hidden {
