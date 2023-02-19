@@ -1,6 +1,6 @@
 // SASS: nesting, var in mixins, functions
 $base-color: rgb(77 153 231);
-// font, color, background, containers
+
 // [Kevin Powell Media Queries](https://www.youtube.com/watch?v=BvB8kSmgMcM)
 @mixin theme($primary-color: $base-color, $font-color: #333, $font-size: 1rem) {
   background: $primary-color;
@@ -29,21 +29,6 @@ $base-color: rgb(77 153 231);
   justify-content: $justify-content;
   align-items: $align-items;
 }
-
-// @mixin background(
-//   $color: $base-color,
-//   $image: $image,
-//   $repeat: no-repeat,
-//   $size: cover,
-//   $position: top,
-//   $border-radius: 1rem 1rem 0rem 0rem,
-//   $box-shadow: 0 0 1rem black
-// ) {
-//   background: $color $image $repeat $position;
-//   background-size: $size;
-//   border-radius: $border-radius;
-//   box-shadow: $box-shadow;
-// }
 
 html,
 body {
@@ -92,47 +77,45 @@ body {
         grid-area: 1/1 / span 4 / span 12;
       }
       &__flights {
-        grid-area: 5/1 / span 4 / span 12;
+        grid-area: 5/1 / span 8 / span 12;
         display: flex;
         flex-direction: column;
+        background: transparent;
+        box-shadow: 1px 0 1rem white;
+        border-radius: 1rem 1rem 0rem 0rem;
+        margin: 0rem 1rem;
       }
       // @include background($image: url(/assets/bg.avif));
 
-      //     .app-main__flights {
-      //       height: 29rem;
-      //       background: transparent;
-      //       box-shadow: 1px 0 1rem white;
-      //       border-radius: 1rem 1rem 0rem 0rem;
-      //       margin: 0rem 1rem;
+      .app-main__flights {
+        .active,
+        .flight__summary--collapsible:hover {
+          @include theme(#d4d4d4);
+        }
+        .flight__summary--collapsible {
+          @include theme(#e7e7e7);
+          width: 100%;
+          border: none;
+          padding: 1rem;
+        }
+        .flight__details {
+          @include theme(#f1f1f1);
+          padding: 0.5rem;
+          display: grid;
+          grid-template: 1fr/ 1fr 11fr;
+        }
+        .hide {
+          display: none;
+        }
+      }
 
-      //       .active,
-      //       .flight__summary--collapsible:hover {
-      //         @include theme(#d4d4d4);
-      //       }
-      //       .flight__summary--collapsible {
-      //         @include theme(#e7e7e7);
-      //         width: 100%;
-      //         border: none;
-      //         padding: 1rem;
-      //       }
-      //       .flight__details {
-      //         @include theme(#f1f1f1);
-      //         padding: 0.5rem;
-      //         display: grid;
-      //         grid-template: 1fr/ 1fr 11fr;
-      //       }
-      //       .hide {
-      //         display: none;
-      //       }
-      //     }
+      .app-main__text {
+        padding: 1rem 2rem;
+      }
 
-      //     .app-main__text {
-      //       padding: 1rem 2rem;
-      //     }
-
-      //     .app-main__flights--hidden {
-      //       visibility: hidden;
-      //     }
+      .app-main__flights--hidden {
+        visibility: hidden;
+      }
     }
   }
 }
