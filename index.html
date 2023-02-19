@@ -6,6 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Flight Tracking App - Mihlali Mgwebi</title>
 
+  <!-- Include Leaflet CSS file in the head section of your document: -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+
+  <!-- Include Leaflet JavaScript file after Leaflet’s CSS: -->
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
   <!-- Include axios to consume API -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -32,7 +40,7 @@
         <p>Select a time to view the real-time details about flights (such as their current location, altitude, and
           speed) at your specified time.</p>
       </div>
-      <div class="app-main__map"></div>
+      <div class="app-main__map" id="app-main__map"></div>
       <div class="app-main__flights app-main__flights--hidden" id="app-main__flights">
       </div>
     </main>

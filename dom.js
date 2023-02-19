@@ -1,6 +1,6 @@
 // DOM Manipulation
 import { getFlightDetails } from "./api";
-
+import { addMarkerToMap, createMap, moveMapToLatLng } from "./map.js";
 export function loadFlights() {
   //[Setting the value using JavaScript](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/time#setting_the_value_using_javascript)
   const timeControl = document.getElementById("time-input__input-value");
@@ -12,6 +12,7 @@ export function loadFlights() {
     ).then((flights) => {
       flights.forEach((flight) => loadFlightDetails(flight));
     });
+    createMap();
   });
 }
 
@@ -26,6 +27,9 @@ function toggleVisibility(toggleClass) {
 }
 
 function loadFlightDetails(flight) {
+  if (flight.LATITUDE !== null && flight.LONGITUDE !== null)
+    addMarkerToMap(flight);
+
   const flightSummaryCollapsibleButtonId = `flight__summary--collapsible-${flight.ICAO24}`;
 
   const flightSummaryCollapsibleButton = document.createElement("button");
@@ -35,6 +39,9 @@ function loadFlightDetails(flight) {
   flightSummaryCollapsibleButton.addEventListener("click", (event) => {
     event.target.nextElementSibling.classList.toggle("hide");
     // toggleVisibility("app-main__flights");
+    console.log(flight.LATITUDE);
+    if (flight.LATITUDE !== null && flight.LONGITUDE !== null)
+      moveMapToLatLng([flight.LATITUDE, flight.LONGITUDE]);
   });
 
   const flightDetailsCard = createFlightDetailsCard(flight);
