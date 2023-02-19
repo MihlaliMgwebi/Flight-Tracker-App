@@ -3,14 +3,21 @@ import { getFlightDetails } from "./api";
 
 export function loadFlights() {
   //[Setting the value using JavaScript](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/time#setting_the_value_using_javascript)
-  const timeControl = document.getElementById("time-input__input");
+  const timeControl = document.getElementById("time-input__input-value");
   // [Anonymous functions to pass parameters](https://www.w3schools.com/js/js_htmldom_eventlistener.asp)
   timeControl.addEventListener("input", () => {
     toggleFlightsVisibility();
-    getFlightDetails().then((flights) => {
+    getFlightDetails(
+      convert24HrTimeToUnixTimestampInMilliseconds(timeControl.value)
+    ).then((flights) => {
       flights.forEach((flight) => loadFlightDetails(flight));
     });
   });
+}
+
+function convert24HrTimeToUnixTimestampInMilliseconds(timeControlValue) {
+  const date = new Date(timeControlValue);
+  return Math.floor(date / 1000);
 }
 
 function toggleFlightsVisibility() {
