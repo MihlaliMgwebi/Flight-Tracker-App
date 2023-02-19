@@ -85,6 +85,11 @@ body {
     &__text {
       grid-area: 1/1 / span 4 / span 12;
     }
+    &__map {
+      grid-area: 1/1 / span 4 / span 12;
+      margin: 0rem 1rem;
+      border-radius: 1rem;
+    }
     &__flights {
       grid-area: 5/1 / span 8 / span 12;
       display: flex;
@@ -149,7 +154,6 @@ body {
       grid-area: 5/1 / span 8 / span 12;
     }
     .app-main__text {
-      padding: 0rem 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -190,6 +194,9 @@ body {
       flex-wrap: nowrap;
 
       grid-area: 2/6 / span 10 / span 7;
+    }
+    .app-main__map {
+      grid-area: 2/1 / span 10 / span 5;
     }
     .app-main__text {
       grid-area: 2/1 / span 10 / span 5;
