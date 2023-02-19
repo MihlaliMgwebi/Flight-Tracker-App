@@ -108,8 +108,15 @@ body {
       .flight__details {
         @include theme(#f1f1f1);
         padding: 0.5rem;
-        display: grid;
-        grid-template: 1fr/ 1fr 11fr;
+        display: flex;
+        grid-template: 1fr/1fr 11fr;
+        flex-direction: column;
+        align-items: center;
+
+        [id^="flight__detail"] {
+          display: flex;
+          gap: 1rem;
+        }
       }
       .hide {
         display: none;
