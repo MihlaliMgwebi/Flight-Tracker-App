@@ -8,7 +8,7 @@ $base-color: rgb(77 153 231);
   font-size: $font-size;
 }
 
-@mixin grid-layout($height, $rows: 1fr, $cols: 1fr) {
+@mixin grid-layout($height, $rows: repeat(12, 1fr), $cols: repeat(12, 1fr)) {
   height: $height;
   display: grid;
   grid-template: $rows / $cols;
@@ -44,6 +44,7 @@ $base-color: rgb(77 153 231);
   border-radius: $border-radius;
   box-shadow: $box-shadow;
 }
+
 html,
 body {
   height: 100vh;
@@ -51,88 +52,96 @@ body {
   margin: 0;
 }
 
-#app {
-  @include theme();
-  @include grid-layout($height: 100%, $rows: 1fr 5fr);
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  #app {
+    @include theme($base-color);
+    @include grid-layout($height: 100%);
 
-  .app-header {
-    @include theme(#f1f1f1);
-    @include flex-layout(
-      95%,
-      $justify-content: space-evenly,
-      $align-items: center
-    );
-    border-radius: 0px 0px 1rem 1rem;
-    box-shadow: 0 0 1rem black;
-
-    .app-header__logo {
+    .app-header {
       @include theme(#f1f1f1);
-      width: 25%;
-      height: 90%;
-      background-image: url("./assets/logo-500x500-png.png");
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: left;
-    }
-    .app-header__time-input {
-      @include theme(#f1f1f1, #333);
+      grid-area: 1/1 / span 2 / span 12;
+
       @include flex-layout(
-        90%,
-        $justify-content: center,
-        $flex-direction: column,
-        $align-items: flex-start
+        96%,
+        $justify-content: flex-start,
+        $align-items: center
       );
-      width: 70%;
-      #time-input__input {
-        margin-top: 0.1rem;
+
+      border-radius: 0px 0px 1rem 1rem;
+      box-shadow: 0 0 1rem #333;
+
+      &__logo {
+        height: inherit;
+      }
+      &__time-input {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 0.5em;
       }
     }
-  }
-  .app-main {
-    @include theme();
-    @include flex-layout(
-      $flex-direction: column,
-      $justify-content: space-between,
-      $height: 100%
-    );
+    .app-main {
+      @include theme();
+      grid-area: 3/1 / span 10 / span 12;
 
-    @include background($image: url(/assets/bg.avif));
+      display: grid;
+      grid-template: repeat(12, 1fr) / repeat(12, 1fr);
 
-    .app-main__flights {
-      height: 29rem;
-      background: transparent;
-      box-shadow: 1px 0 1rem white;
-      border-radius: 1rem 1rem 0rem 0rem;
-      margin: 0rem 1rem;
-
-      .active,
-      .flight__summary--collapsible:hover {
-        @include theme(#d4d4d4);
+      &__text {
+        grid-area: 1/1 / span 4 / span 12;
       }
-      .flight__summary--collapsible {
-        @include theme(#e7e7e7);
-        width: 100%;
-        border: none;
-        padding: 1rem;
-      }
-      .flight__details {
-        @include theme(#f1f1f1);
-        padding: 0.5rem;
-        display: grid;
-        grid-template: 1fr/ 1fr 11fr;
-      }
-      .hide {
-        display: none;
-      }
-    }
+      &__flights {
+        grid-area: 5/1 / span 8 / span 12;
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        background: transparent;
+        box-shadow: 1px 0 1rem white;
+        border-radius: 1rem 1rem 0rem 0rem;
+        margin: 0rem 1rem;
 
-    .app-main__text {
-      padding: 1rem 2rem;
-    }
+        .active,
+        .flight__summary--collapsible:hover {
+          @include theme(#d4d4d4);
+        }
+        .flight__summary--collapsible {
+          @include theme(#e7e7e7);
+          width: 100%;
+          border: none;
+          padding: 1rem;
+        }
+        .flight__details {
+          @include theme(#f1f1f1);
+          padding: 0.5rem;
+          display: grid;
+          grid-template: 1fr/ 1fr 11fr;
+        }
+        .hide {
+          display: none;
+        }
+      }
+      @include background($image: url(/assets/bg.avif));
 
-    .app-main__flights--hidden {
-      visibility: hidden;
+      .app-main__text {
+        padding: 1rem 2rem;
+      }
+
+      .app-main__flights--hidden {
+        visibility: hidden;
+      }
     }
   }
 }
-// pale blue as the primary color and light gray as the accent color.
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+// @media only screen and (min-width: 600px) {...}
+
+// /* Medium devices (landscape tablets, 768px and up) */
+// @media only screen and (min-width: 768px) {...}
+
+// /* Large devices (laptops/desktops, 992px and up) */
+// @media only screen and (min-width: 992px) {...}
+
+// /* Extra large devices (large laptops and desktops, 1200px and up) */
+// @media only screen and (min-width: 1200px) {...}
