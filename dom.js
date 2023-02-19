@@ -25,7 +25,7 @@ function loadFlightDetails(flight) {
   const flightSummaryCollapsibleButton = document.createElement("button");
   flightSummaryCollapsibleButton.id = flightSummaryCollapsibleButtonId;
   flightSummaryCollapsibleButton.className = `flight__summary--collapsible`;
-  flightSummaryCollapsibleButton.innerHTML = `Flight ${flight.CALLSIGN} from orgin country ${flight.ORIGIN_COUNTRY}`;
+  flightSummaryCollapsibleButton.innerHTML = `Flight ${flight.CALLSIGN} from ${flight.ORIGIN_COUNTRY}`;
   flightSummaryCollapsibleButton.addEventListener("click", (event) => {
     event.target.nextElementSibling.classList.toggle("hide");
     // console.log(event.target.nextElementSibling);
