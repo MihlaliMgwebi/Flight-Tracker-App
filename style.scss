@@ -159,10 +159,43 @@ body {
 }
 
 // /* Medium devices (landscape tablets, 768px and up) */
-// @media only screen and (min-width: 768px) {...}
+@media only screen and (min-width: 768px) {
+  #app {
+    .app-main__flights {
+      grid-area: 5/1 / span 7 / span 12;
+      flex-wrap: wrap;
+      .app-main__flight {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}
 
 // /* Large devices (laptops/desktops, 992px and up) */
-// @media only screen and (min-width: 992px) {...}
+@media only screen and (min-width: 992px) {
+  #app {
+    .app-header {
+      margin: 0rem 1rem;
+      justify-content: space-around;
+    }
+    .app-main__flights {
+      flex-wrap: nowrap;
+
+      grid-area: 2/6 / span 10 / span 7;
+    }
+    .app-main__text {
+      grid-area: 2/1 / span 10 / span 5;
+      h1,
+      h2,
+      h3,
+      p {
+        font-size: 1.5rem;
+        visibility: visible;
+      }
+    }
+  }
+}
 
 // /* Extra large devices (large laptops and desktops, 1200px and up) */
 // @media only screen and (min-width: 1200px) {...}

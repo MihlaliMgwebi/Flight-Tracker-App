@@ -39,10 +39,14 @@ function loadFlightDetails(flight) {
 
   const flightDetailsCard = createFlightDetailsCard(flight);
 
-  const flightSummaryAndDetailsContainer =
-    document.getElementById("app-main__flights");
+  const flightSummaryAndDetailsContainer = document.createElement("div");
+  flightSummaryAndDetailsContainer.className = "app-main__flight";
   flightSummaryAndDetailsContainer.appendChild(flightSummaryCollapsibleButton);
   flightSummaryAndDetailsContainer.appendChild(flightDetailsCard);
+
+  document
+    .getElementById("app-main__flights")
+    .appendChild(flightSummaryAndDetailsContainer);
 }
 
 function createFlightDetailsCard(flight) {
@@ -56,8 +60,11 @@ function createFlightDetailsCard(flight) {
     flightDetailsText.innerHTML = `${flightDetail}: ${flight[flightDetail]}`; //add data
     const flightDetailsSVG = document.createElement("p");
     flightDetailsSVG.innerHTML = svg;
-    flightDetailsCard.appendChild(flightDetailsSVG);
-    flightDetailsCard.appendChild(flightDetailsText);
+    const flightDetails = document.createElement("div");
+    flightDetails.id = `flight__detail-${flight[flightDetail]}`;
+    flightDetails.appendChild(flightDetailsSVG);
+    flightDetails.appendChild(flightDetailsText);
+    flightDetailsCard.appendChild(flightDetails);
   });
 
   return flightDetailsCard;
