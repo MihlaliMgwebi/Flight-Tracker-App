@@ -31,7 +31,7 @@ export function moveMapToLatLng(latLngTuple) {
 export function addMarkerToMap(flightDetails) {
   // add a marker to the map using the custom icon
   L.marker([flightDetails.LATITUDE, flightDetails.LONGITUDE], {
-    icon: flightDetails.IS_ON_GROUND ? arrivalIcon : departureIcon,
+    icon: flightDetails.ON_GROUND ? arrivalIcon : departureIcon,
   })
     .addTo(map)
     .bindPopup(

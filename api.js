@@ -48,3 +48,7 @@ export async function getFlightDetails(time) {
   });
   return flights;
 }
+
+function showSpinner() {}
+
+function hideSpinner() {}
