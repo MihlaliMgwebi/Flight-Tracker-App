@@ -38,8 +38,6 @@ function loadFlightDetails(flight) {
   flightSummaryCollapsibleButton.innerHTML = `Flight ${flight.CALLSIGN} from ${flight.ORIGIN_COUNTRY}`;
   flightSummaryCollapsibleButton.addEventListener("click", (event) => {
     event.target.nextElementSibling.classList.toggle("hide");
-    // toggleVisibility("app-main__flights");
-    console.log(flight.LATITUDE);
     if (flight.LATITUDE !== null && flight.LONGITUDE !== null)
       moveMapToLatLng([flight.LATITUDE, flight.LONGITUDE]);
   });
