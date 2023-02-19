@@ -31,7 +31,7 @@ function loadFlightDetails(flight) {
     // console.log(event.target.nextElementSibling);
   });
 
-  const flightDetailsCard = createFlightDetailsCard(flight.ICAO24);
+  const flightDetailsCard = createFlightDetailsCard(flight);
 
   const flightSummaryAndDetailsContainer =
     document.getElementById("app-main__flights");
@@ -39,15 +39,15 @@ function loadFlightDetails(flight) {
   flightSummaryAndDetailsContainer.appendChild(flightDetailsCard);
 }
 
-function createFlightDetailsCard(flightIcao24) {
+function createFlightDetailsCard(flight) {
   const flightDetailsCard = document.createElement("div");
-  flightDetailsCard.id = `flight__details-${flightIcao24}`;
+  flightDetailsCard.id = `flight__details-${flight.ICAO24}`;
   flightDetailsCard.classList = `flight__details hide`;
 
   Object.entries(getSVGs()).forEach((entry) => {
     const [flightDetail, svg] = entry;
     const flightDetailsText = document.createElement("p");
-    flightDetailsText.innerHTML = `${flightDetail}: hello`; //add data
+    flightDetailsText.innerHTML = `${flightDetail}: ${flight[flightDetail]}`; //add data
     const flightDetailsSVG = document.createElement("p");
     flightDetailsSVG.innerHTML = svg;
     flightDetailsCard.appendChild(flightDetailsSVG);
