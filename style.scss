@@ -95,6 +95,29 @@ body {
       margin: 1rem;
       border-radius: 1rem;
     }
+    .show-spinner {
+      display: block;
+      margin: 40%;
+    }
+    &__spinner {
+      display: none;
+      grid-area: 5/1 / span 8 / span 12;
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 16px solid #3498db;
+      width: 120px;
+      height: 120px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
     &__flights {
       grid-area: 5/1 / span 8 / span 12;
       display: flex;
@@ -106,7 +129,6 @@ body {
       margin: 0rem 1rem;
 
       // [Animated Collapsible](https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_collapsible_symbol)
-
       .flight__summary--collapsible {
         @include theme(#e7e7e7);
         width: 100%;

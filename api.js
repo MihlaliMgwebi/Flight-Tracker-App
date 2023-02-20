@@ -11,18 +11,19 @@ const RequestMethods = {
 const BASE_URL = "https://opensky-network.org/api/states/all?extended=1&time=";
 
 export function getFirst20FlightDetailsByTimeInSeconds(method, url) {
-  //   return axios({
-  //     method: method,
-  //     url: url,
-  //   })
-  //     .then((responseJSON) => responseJSON.data.states.slice(0, 20))
-  //     .catch((error) => console.error(error))
-  //     .finally(() => console.log("hideSpinner"));
-  return fetch("./data.json")
-    .then((response) => response.json())
-    .then((data) => data.states.slice(0, 20))
+  showSpinner();
+  return axios({
+    method: method,
+    url: url,
+  })
+    .then((responseJSON) => responseJSON.data.states.slice(0, 20))
     .catch((error) => console.error(error))
-    .finally(console.log("hideSpinner"));
+    .finally(() => hideSpinner());
+  // return fetch("./data.json")
+  //   .then((response) => response.json())
+  //   .then((data) => data.states.slice(0, 20))
+  //   .catch((error) => console.error(error))
+  //   .finally(hideSpinner());
 }
 
 export async function getFlightDetails(time) {
@@ -49,6 +50,10 @@ export async function getFlightDetails(time) {
   return flights;
 }
 
-function showSpinner() {}
+function showSpinner() {
+  document.getElementById("app-main__spinner").classList.add("show-spinner");
+}
 
-function hideSpinner() {}
+function hideSpinner() {
+  document.getElementById("app-main__spinner").classList.remove("show-spinner");
+}
