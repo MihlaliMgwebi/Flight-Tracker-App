@@ -190,7 +190,7 @@ body {
 @media only screen and (min-width: 768px) {
   #app {
     .app-main__flights {
-      grid-area: 5/1 / span 7 / span 12;
+      grid-area: 5/1 / span 8 / span 12;
       flex-wrap: wrap;
       .app-main__flight {
         display: flex;
