@@ -37,6 +37,7 @@ function loadFlightDetails(flight) {
   flightSummaryCollapsibleButton.className = `flight__summary--collapsible`;
   flightSummaryCollapsibleButton.innerHTML = `Flight ${flight.CALLSIGN} from ${flight.ORIGIN_COUNTRY}`;
   flightSummaryCollapsibleButton.addEventListener("click", (event) => {
+    event.target.classList.toggle("active");
     event.target.nextElementSibling.classList.toggle("hide");
     if (flight.LATITUDE !== null && flight.LONGITUDE !== null)
       moveMapToLatLng([flight.LATITUDE, flight.LONGITUDE]);

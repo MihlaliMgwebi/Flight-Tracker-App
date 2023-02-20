@@ -100,10 +100,8 @@ body {
       border-radius: 1rem 1rem 0rem 0rem;
       margin: 0rem 1rem;
 
-      .active,
-      .flight__summary--collapsible:hover {
-        @include theme(#d4d4d4);
-      }
+      // [Animated Collapsible](https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_collapsible_symbol)
+
       .flight__summary--collapsible {
         @include theme(#e7e7e7);
         width: 100%;
@@ -111,6 +109,24 @@ body {
         padding: 1rem;
         border-bottom: 1px solid #d4d4d4;
       }
+
+      .active,
+      .flight__summary--collapsible:hover {
+        @include theme(#d4d4d4);
+      }
+
+      .flight__summary--collapsible:after {
+        content: "\002B";
+        font-weight: bold;
+        float: right;
+      }
+
+      .active:after {
+        content: "\2212";
+        font-weight: bold;
+        float: right;
+      }
+
       .flight__details {
         @include theme(#f1f1f1);
         padding: 0.5rem;
