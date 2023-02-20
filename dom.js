@@ -7,6 +7,7 @@ export function loadFlights() {
   // [Anonymous functions to pass parameters](https://www.w3schools.com/js/js_htmldom_eventlistener.asp)
   timeControl.addEventListener("input", () => {
     toggleVisibility("app-main__flights");
+    document.getElementById("app-main__text").style.display = "none";
     getFlightDetails(
       convert24HrTimeToUnixTimestampInMilliseconds(timeControl.value)
     ).then((flights) => {
