@@ -2,6 +2,8 @@
 import { getFlightDetails } from "./api";
 import { addMarkerToMap, createMap, moveMapToLatLng } from "./map.js";
 export function loadFlights() {
+  createMap();
+  document.getElementById("app-main__map").classList.add("hide");
   //[Setting the value using JavaScript](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/time#setting_the_value_using_javascript)
   const timeControl = document.getElementById("time-input__input-value");
   // [Anonymous functions to pass parameters](https://www.w3schools.com/js/js_htmldom_eventlistener.asp)
@@ -13,7 +15,7 @@ export function loadFlights() {
     ).then((flights) => {
       flights.forEach((flight) => loadFlightDetails(flight));
     });
-    createMap();
+    document.getElementById("app-main__map").classList.remove("hide");
   });
 }
 
