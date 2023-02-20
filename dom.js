@@ -27,6 +27,7 @@ export function loadFlights() {
   timeControl.addEventListener("input", () => {
     toggleVisibility("app-main__flights");
     document.getElementById("app-main__text").style.display = "none";
+    document.getElementById("app-main__flights").innerHTML = ""; //remove old flights
     getFlightDetails(
       convert24HrTimeToUnixTimestampInMilliseconds(timeControl.value)
     ).then((flights) => {
