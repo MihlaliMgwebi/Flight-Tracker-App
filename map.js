@@ -22,10 +22,12 @@ export function createMap(
       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }).addTo(map);
   map.flyTo(latLngTuple, zoomLevel); //smoothly pan and zoom to a specific coordinate on the map.
+  map.invalidateSize();
 }
 
 export function moveMapToLatLng(latLngTuple) {
   map.flyTo(latLngTuple, 13); //smoothly pan and zoom to a specific coordinate on the map.
+  map.invalidateSize();
 }
 
 export function addMarkerToMap(flightDetails) {
