@@ -11,19 +11,14 @@ const RequestMethods = {
 const BASE_URL = "https://opensky-network.org/api/states/all?extended=1&time=";
 
 export function getFirst20FlightDetailsByTimeInSeconds(method, url) {
-  // showSpinner();
-  // return axios({
-  //   method: method,
-  //   url: url,
-  // })
-  //   .then((responseJSON) => responseJSON.data.states.slice(0, 20))
-  //   .catch((error) => console.error(error))
-  //   .finally(() => hideSpinner());
-  return fetch("./data.json")
-    .then((response) => response.json())
-    .then((data) => data.states.slice(0, 20))
+  showSpinner();
+  return axios({
+    method: method,
+    url: url,
+  })
+    .then((responseJSON) => responseJSON.data.states.slice(0, 20))
     .catch((error) => console.error(error))
-    .finally(hideSpinner());
+    .finally(() => hideSpinner());
 }
 
 export async function getFlightDetails(time) {
@@ -32,7 +27,6 @@ export async function getFlightDetails(time) {
     `${BASE_URL}${time}`
   );
 
-  console.log(time);
   const flights = flightDetails.map((flight) => {
     return {
       ICAO24: flight[0] ?? "N/A",

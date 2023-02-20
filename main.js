@@ -1,2 +1,3 @@
-import { loadFlights } from "./dom.js";
+import { loadFlights, setMinTimeInput } from "./dom.js";
+setMinTimeInput();
 loadFlights();
