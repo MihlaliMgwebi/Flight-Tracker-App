@@ -21,7 +21,10 @@ function getFirst20FlightDetailsByTimeInMilliseconds(method, url) {
         observer.next(responseJSON.data.states.slice(0, 20))
       )
       .catch((error) => observer.error(error))
-      .finally(() => hideSpinner());
+      .finally(() => {
+        hideSpinner();
+        observer.complete();
+      });
   });
 }
 
