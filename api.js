@@ -25,27 +25,36 @@ function getFirst20FlightDetailsByTimeInMilliseconds(method, url) {
   });
 }
 
-export async function getFlightDetails(time) {
-  const flightDetails = await getFirst20FlightDetailsByTimeInMilliseconds(
-    RequestMethods.GET,
-    `${BASE_URL}${time}`
-  );
+export function getFlightDetails(time) {
+  const getFlightDetailsObservable$ =
+    getFirst20FlightDetailsByTimeInMilliseconds(
+      RequestMethods.GET,
+      `${BASE_URL}${time}`
+    );
 
-  const flights = flightDetails.map((flight) => {
-    return {
-      ICAO24: flight[0] ?? "N/A",
-      CALLSIGN: flight[1] ?? "N/A",
-      ORIGIN_COUNTRY: flight[2] ?? "N/A",
-      LONGITUDE: flight[5] ?? null,
-      LATITUDE: flight[6] ?? null,
-      ON_GROUND: flight[8] ?? "N/A",
-      VELOCITY: flight[9] ?? "N/A",
-      TRUE_TRACK: flight[10] ?? "N/A",
-      VERTICAL_RATE: flight[11] ?? "N/A",
-      GEO_ALTITUDE: flight[13] ?? "N/A",
-    };
-  });
-  return flights;
+  getFlightDetailsObservable$.subscribe((flightDetails) =>
+    console.log(flightDetails)
+  );
+  // const flightDetails = await getFirst20FlightDetailsByTimeInMilliseconds(
+  //   RequestMethods.GET,
+  //   `${BASE_URL}${time}`
+  // );
+
+  // const flights = flightDetails.map((flight) => {
+  //   return {
+  //     ICAO24: flight[0] ?? "N/A",
+  //     CALLSIGN: flight[1] ?? "N/A",
+  //     ORIGIN_COUNTRY: flight[2] ?? "N/A",
+  //     LONGITUDE: flight[5] ?? null,
+  //     LATITUDE: flight[6] ?? null,
+  //     ON_GROUND: flight[8] ?? "N/A",
+  //     VELOCITY: flight[9] ?? "N/A",
+  //     TRUE_TRACK: flight[10] ?? "N/A",
+  //     VERTICAL_RATE: flight[11] ?? "N/A",
+  //     GEO_ALTITUDE: flight[13] ?? "N/A",
+  //   };
+  // });
+  // return flights;
 }
 
 function showSpinner() {
