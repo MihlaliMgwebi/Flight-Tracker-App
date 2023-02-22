@@ -30,7 +30,7 @@ export function loadFlights() {
     document.getElementById("app-main__flights").innerHTML = ""; //remove old flights
     getFlightDetails(
       convert24HrTimeToUnixTimestampInMilliseconds(timeControl.value)
-    ).then((flights) => {
+    ).subscribe((flights) => {
       flights.forEach((flight) => loadFlightDetails(flight));
     });
     document.getElementById("app-main__map").classList.remove("hide");
