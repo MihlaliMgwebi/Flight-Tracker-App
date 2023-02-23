@@ -1,5 +1,5 @@
 // DOM Manipulation
-import { getFlightDetails } from "./api";
+import { getFirst20FlightDetails } from "./api";
 import { addMarkerToMap, createMap, moveMapToLatLng } from "./map.js";
 
 export function setMinTimeInput() {
@@ -28,9 +28,9 @@ export function loadFlights() {
     toggleVisibility("app-main__flights");
     document.getElementById("app-main__text").style.display = "none";
     document.getElementById("app-main__flights").innerHTML = ""; //remove old flights
-    getFlightDetails(
+    getFirst20FlightDetails(
       convert24HrTimeToUnixTimestampInMilliseconds(timeControl.value)
-    ).then((flights) => {
+    ).subscribe((flights) => {
       flights.forEach((flight) => loadFlightDetails(flight));
     });
     document.getElementById("app-main__map").classList.remove("hide");
