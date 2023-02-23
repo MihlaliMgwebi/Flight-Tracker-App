@@ -1,4 +1,5 @@
 // DOM Manipulation
+import { fromEvent } from "rxjs";
 import { getFlightDetails } from "./api";
 import { addMarkerToMap, createMap, moveMapToLatLng } from "./map.js";
 
@@ -57,13 +58,18 @@ function loadFlightDetails(flight) {
   flightSummaryCollapsibleButton.id = flightSummaryCollapsibleButtonId;
   flightSummaryCollapsibleButton.className = `flight__summary--collapsible`;
   flightSummaryCollapsibleButton.innerHTML = `Flight ${flight.CALLSIGN} from ${flight.ORIGIN_COUNTRY}`;
-  flightSummaryCollapsibleButton.addEventListener("click", (event) => {
-    event.target.classList.toggle("active");
-    event.target.nextElementSibling.classList.toggle("hide");
+
+  const flightSummaryCollapsibleButton$ = fromEvent(
+    flightSummaryCollapsibleButton,
+    "click"
+  );
+
+  flightSummaryCollapsibleButton$.subscribe(() => {
+    flightSummaryCollapsibleButton.classList.toggle("active");
+    flightSummaryCollapsibleButton.nextElementSibling.classList.toggle("hide");
     if (flight.LATITUDE !== null && flight.LONGITUDE !== null)
       moveMapToLatLng([flight.LATITUDE, flight.LONGITUDE]);
   });
-
   const flightDetailsCard = createFlightDetailsCard(flight);
 
   const flightSummaryAndDetailsContainer = document.createElement("div");
