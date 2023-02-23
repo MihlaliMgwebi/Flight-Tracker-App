@@ -11,5 +11,8 @@
   "devDependencies": {
     "scss": "^0.2.4",
     "vite": "^4.1.0"
+  },
+  "dependencies": {
+    "rxjs": "^7.8.0"
   }
 }
