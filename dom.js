@@ -1,7 +1,7 @@
 // DOM Manipulation
+import { fromEvent } from "rxjs";
 import { getFirst20FlightDetails } from "./api";
-import { addMarkerToMap, createMap, moveMapToLatLng } from "./map.js";
-
+import { createMap, moveMapToLatLng } from "./map.js";
 export function setMinTimeInput() {
   //[Tomorrow time](https://www.freecodecamp.org/news/javascript-get-current-date-todays-date-in-js/)
   const tomorrow = new Date();
@@ -48,9 +48,6 @@ function toggleVisibility(toggleClass) {
 }
 
 function loadFlightDetails(flight) {
-  if (flight.LATITUDE !== null && flight.LONGITUDE !== null)
-    addMarkerToMap(flight);
-
   const flightSummaryCollapsibleButtonId = `flight__summary--collapsible-${flight.ICAO24}`;
 
   const flightSummaryCollapsibleButton = document.createElement("button");

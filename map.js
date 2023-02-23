@@ -1,3 +1,5 @@
+import { getFirst20FlightDetails } from "./api.js";
+
 let map;
 
 // [Create custom Icons](https://leafletjs.com/examples/custom-icons/)
@@ -28,13 +30,16 @@ export function moveMapToLatLng(latLngTuple) {
   map.flyTo(latLngTuple, 13); //smoothly pan and zoom to a specific coordinate on the map.
 }
 
-export function addMarkerToMap(flightDetails) {
-  // add a marker to the map using the custom icon
-  L.marker([flightDetails.LATITUDE, flightDetails.LONGITUDE], {
-    icon: flightDetails.ON_GROUND ? arrivalIcon : departureIcon,
+//addMarkerToMap(flightDetails)
+getFirst20FlightDetails(1677485168).subscribe((allFlightDetails) =>
+  allFlightDetails.map((flightDetails) => {
+    if (flightDetails.LATITUDE !== null && flightDetails.LONGITUDE !== null)
+      L.marker([flightDetails.LATITUDE, flightDetails.LONGITUDE], {
+        icon: flightDetails.ON_GROUND ? arrivalIcon : departureIcon,
+      })
+        .addTo(map)
+        .bindPopup(
+          `Flight ${flightDetails.CALLSIGN} from ${flightDetails.ORIGIN_COUNTRY}`
+        );
   })
-    .addTo(map)
-    .bindPopup(
-      `Flight ${flightDetails.CALLSIGN} from ${flightDetails.ORIGIN_COUNTRY}`
-    );
-}
+);
