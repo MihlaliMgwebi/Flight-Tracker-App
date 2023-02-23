@@ -58,8 +58,6 @@ function loadFlightDetails(flight) {
   flightSummaryCollapsibleButton.addEventListener("click", (event) => {
     event.target.classList.toggle("active");
     event.target.nextElementSibling.classList.toggle("hide");
-    // if (flight.LATITUDE !== null && flight.LONGITUDE !== null)
-    //   moveMapToLatLng([flight.LATITUDE, flight.LONGITUDE]);
   });
 
   const flightDetailsCard = createFlightDetailsCard(flight);
