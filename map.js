@@ -1,3 +1,6 @@
+import { getFlightDetails } from "./api.js";
+import { moveMapToLatLng$ } from "./services/mapService.js";
+
 let map;
 
 // [Create custom Icons](https://leafletjs.com/examples/custom-icons/)
@@ -24,10 +27,18 @@ export function createMap(
   map.flyTo(latLngTuple, zoomLevel); //smoothly pan and zoom to a specific coordinate on the map.
 }
 
-export function moveMapToLatLng(latLngTuple) {
-  map.flyTo(latLngTuple, 13); //smoothly pan and zoom to a specific coordinate on the map.
-}
+moveMapToLatLng$.subscribe({
+  next: (event) => {
+    const selectedFlightId = event.target.id.split("-")[3];
+    const selectedFlightDetails = getFlightDetails(selectedFlightId);
+    const latLngTuple = [
+      selectedFlightDetails.LATITUDE,
+      selectedFlightDetails.LONGITUDE,
+    ];
 
+    map.flyTo(latLngTuple, 13);
+  },
+});
 export function addMarkerToMap(flightDetails) {
   // add a marker to the map using the custom icon
   L.marker([flightDetails.LATITUDE, flightDetails.LONGITUDE], {

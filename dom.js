@@ -1,6 +1,6 @@
 // DOM Manipulation
 import { getFirst20FlightDetails } from "./api";
-import { addMarkerToMap, createMap, moveMapToLatLng } from "./map.js";
+import { addMarkerToMap } from "./map.js";
 
 export function setMinTimeInput() {
   //[Tomorrow time](https://www.freecodecamp.org/news/javascript-get-current-date-todays-date-in-js/)
@@ -18,9 +18,7 @@ export function setMinTimeInput() {
 }
 
 export function loadFlights() {
-  createMap();
-  document.getElementById("app-main__map").classList.add("hide");
-  //[Setting the value using JavaScript](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/time#setting_the_value_using_javascript)
+  // document.getElementById("app-main__map").classList.add("hide");
   const timeControl = document.getElementById("time-input__input-value");
 
   // [Anonymous functions to pass parameters](https://www.w3schools.com/js/js_htmldom_eventlistener.asp)
@@ -60,8 +58,8 @@ function loadFlightDetails(flight) {
   flightSummaryCollapsibleButton.addEventListener("click", (event) => {
     event.target.classList.toggle("active");
     event.target.nextElementSibling.classList.toggle("hide");
-    if (flight.LATITUDE !== null && flight.LONGITUDE !== null)
-      moveMapToLatLng([flight.LATITUDE, flight.LONGITUDE]);
+    // if (flight.LATITUDE !== null && flight.LONGITUDE !== null)
+    //   moveMapToLatLng([flight.LATITUDE, flight.LONGITUDE]);
   });
 
   const flightDetailsCard = createFlightDetailsCard(flight);
