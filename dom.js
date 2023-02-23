@@ -1,7 +1,7 @@
 // DOM Manipulation
 import { fromEvent } from "rxjs";
-import { getFirst20FlightDetails } from "./api";
-import { createMap, moveMapToLatLng } from "./map.js";
+import { getFirst20FlightDetails, getFlightDetails } from "./api";
+import { createMap } from "./map.js";
 export function setMinTimeInput() {
   //[Tomorrow time](https://www.freecodecamp.org/news/javascript-get-current-date-todays-date-in-js/)
   const tomorrow = new Date();
@@ -55,17 +55,23 @@ function loadFlightDetails(flight) {
   flightSummaryCollapsibleButton.className = `flight__summary--collapsible`;
   flightSummaryCollapsibleButton.innerHTML = `Flight ${flight.CALLSIGN} from ${flight.ORIGIN_COUNTRY}`;
 
-  const flightSummaryCollapsibleButton$ = fromEvent(
-    flightSummaryCollapsibleButton,
-    "click"
-  );
+  const moveMapToLatLng$ = fromEvent(flightSummaryCollapsibleButton, "click");
 
-  flightSummaryCollapsibleButton$.subscribe(() => {
-    flightSummaryCollapsibleButton.classList.toggle("active");
-    flightSummaryCollapsibleButton.nextElementSibling.classList.toggle("hide");
-    if (flight.LATITUDE !== null && flight.LONGITUDE !== null)
-      moveMapToLatLng([flight.LATITUDE, flight.LONGITUDE]);
+  moveMapToLatLng$.subscribe({
+    next: (event) => {
+      const selectedFlightId = event.target.id.split("-")[3];
+      const selectedFlightDetails = getFlightDetails(selectedFlightId);
+
+      return [selectedFlightDetails.LATITUDE, selectedFlightDetails.LONGITUDE];
+    },
   });
+  //EVENTS that need to happen when button is clicked
+  // flightSummaryCollapsibleButton$.subscribe(() => {
+  // flightSummaryCollapsibleButton.classList.toggle("active");
+  // flightSummaryCollapsibleButton.nextElementSibling.classList.toggle("hide");
+  // if (flight.LATITUDE !== null && flight.LONGITUDE !== null)
+  //   moveMapToLatLng([flight.LATITUDE, flight.LONGITUDE]);
+  // });
   const flightDetailsCard = createFlightDetailsCard(flight);
 
   const flightSummaryAndDetailsContainer = document.createElement("div");

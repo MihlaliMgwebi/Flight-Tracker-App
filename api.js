@@ -1,16 +1,9 @@
 import { catchError, map, of, switchMap } from "rxjs";
 import { fromFetch } from "rxjs/fetch";
-// [API Calls](https://openskynetwork.github.io/opensky-api/rest.html#all-state-vectors)
-// [Example](https://opensky-network.org/api/states/all?time=1677164400)
-const RequestMethods = {
-  GET: "GET",
-  POST: "POST",
-  PUT: "PUT",
-  DELETE: "DELETE",
-};
+
+let allFlights;
 
 const BASE_URL = "https://opensky-network.org/api/states/all?extended=1&time=";
-
 export function getFirst20FlightDetails(timeInMilliseconds) {
   showSpinner();
   const flightDetails$ = fromFetch(`${BASE_URL}${timeInMilliseconds}`).pipe(
@@ -26,8 +19,8 @@ export function getFirst20FlightDetails(timeInMilliseconds) {
       hideSpinner();
       return of({ error: true, message: err.message });
     }),
-    map((flights) =>
-      flights.states.slice(0, 20).map((flight) => {
+    map((flights) => {
+      allFlights = flights.states.slice(0, 20).map((flight) => {
         return {
           ICAO24: flight[0] ?? "N/A",
           CALLSIGN: flight[1] ?? "N/A",
@@ -40,10 +33,17 @@ export function getFirst20FlightDetails(timeInMilliseconds) {
           VERTICAL_RATE: flight[11] ?? "N/A",
           GEO_ALTITUDE: flight[13] ?? "N/A",
         };
-      })
-    )
+      });
+      return allFlights;
+    })
   );
   return flightDetails$;
+}
+
+export function getFlightDetails(selectedFlightId) {
+
+  return allFlights.filter((flight) => flight.ICAO24 === selectedFlightId)[0];
+
 }
 
 function showSpinner() {

@@ -26,20 +26,18 @@ export function createMap(
   map.flyTo(latLngTuple, zoomLevel); //smoothly pan and zoom to a specific coordinate on the map.
 }
 
-export function moveMapToLatLng(latLngTuple) {
-  map.flyTo(latLngTuple, 13); //smoothly pan and zoom to a specific coordinate on the map.
-}
+// export function moveMapToLatLng(latLngTuple) {
+//   map.flyTo(latLngTuple, 13); //smoothly pan and zoom to a specific coordinate on the map.
+// }
 
 //addMarkerToMap(flightDetails)
-getFirst20FlightDetails(1677485168).subscribe((allFlightDetails) =>
-  allFlightDetails.map((flightDetails) => {
-    if (flightDetails.LATITUDE !== null && flightDetails.LONGITUDE !== null)
-      L.marker([flightDetails.LATITUDE, flightDetails.LONGITUDE], {
-        icon: flightDetails.ON_GROUND ? arrivalIcon : departureIcon,
+getFirst20FlightDetails(1677485168).subscribe((allFlights) =>
+  allFlights.map((flight) => {
+    if (flight.LATITUDE !== null && flight.LONGITUDE !== null)
+      L.marker([flight.LATITUDE, flight.LONGITUDE], {
+        icon: flight.ON_GROUND ? arrivalIcon : departureIcon,
       })
         .addTo(map)
-        .bindPopup(
-          `Flight ${flightDetails.CALLSIGN} from ${flightDetails.ORIGIN_COUNTRY}`
-        );
+        .bindPopup(`Flight ${flight.CALLSIGN} from ${flight.ORIGIN_COUNTRY}`);
   })
 );
