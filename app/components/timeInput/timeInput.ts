@@ -1,4 +1,6 @@
-import { Observable, fromEvent } from "rxjs";
+import { Observer, fromEvent } from "rxjs";
+import { getFirst20FlightDetails } from "../../../api";
+import { Utils } from "../../../utils";
 
 // functions
 function createTimeInputLabel(): HTMLLabelElement {
@@ -51,6 +53,24 @@ export function appendTimeInputToParent(parentElement: HTMLDivElement): void {
     parentElement.appendChild(createTimeInputContainer());
 }
 
-export function subscribeToTimeInputChange(): Observable<InputEvent> {
-    return fromEvent(getTimeHTMLInputElement(), 'input') as Observable<InputEvent>;
+function getTimeInMillisecondsOnTimeInputEvent(): Observer<Event> {
+    return {
+        next: (event) => {
+            if (event && event.target) {
+                const timeHTMLInputElement: HTMLInputElement = event.target as HTMLInputElement;
+                const dateTime: string = timeHTMLInputElement.value;
+                const localUnixTimestampInSeconds = Utils.convertDateTimeToLocalUnixTimestampInSeconds(dateTime);
+                getFirst20FlightDetails(localUnixTimestampInSeconds);
+                return localUnixTimestampInSeconds;
+            }
+
+
+        },
+        error: (error) => console.error(error),
+        complete: () => console.log('Observer completed'),
+    };
+}
+
+export function subscribeToTimeInputChange(): void {
+    fromEvent(getTimeHTMLInputElement(), 'input').subscribe(getTimeInMillisecondsOnTimeInputEvent());
 }
