@@ -1,22 +1,27 @@
+import { Observable, fromEvent } from "rxjs";
+
+// functions
 function createTimeInputLabel(): HTMLLabelElement {
-    const timeInputLabel = document.createElement("label");
+    const timeInputLabel: HTMLLabelElement = document.createElement("label");
     timeInputLabel.htmlFor = "time-input__input-value";
     timeInputLabel.textContent = "Select a day and time for your flight:";
     return timeInputLabel;
 }
 
 function createTimeInput(): HTMLInputElement {
-    const timeInput = document.createElement("input");
+    const timeInput: HTMLInputElement = document.createElement("input");
     timeInput.id = "time-input__input-value";
     timeInput.type = "datetime-local";
     timeInput.name = "time-input__input-value";
     timeInput.required = true;
-    disableHistoricDates(timeInput);// user can only select dates from tomorrow onwards
+
+    setDateTimeInputMinDateToTomorrow(timeInput);
+
     return timeInput;
 }
 
 function createTimeInputContainer(): HTMLDivElement {
-    const timeInputContainer = document.createElement("div");
+    const timeInputContainer: HTMLDivElement = document.createElement("div");
     timeInputContainer.id = "time-input__input";
     timeInputContainer.classList.add("app-header__time-input");
     timeInputContainer.appendChild(createTimeInputLabel());
@@ -24,9 +29,9 @@ function createTimeInputContainer(): HTMLDivElement {
     return timeInputContainer;
 }
 
-function disableHistoricDates(timeInput: HTMLInputElement): void {
+function setDateTimeInputMinDateToTomorrow(timeInput: HTMLInputElement): void {
     //[Tomorrow time](https://www.freecodecamp.org/news/javascript-get-current-date-todays-date-in-js/)
-    const tomorrow = new Date();
+    const tomorrow: Date = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     const year = tomorrow.getFullYear();
     const month = (tomorrow.getMonth() + 1).toString().padStart(2, "0");
@@ -38,7 +43,14 @@ function disableHistoricDates(timeInput: HTMLInputElement): void {
     timeInput.setAttribute("min", tomorrowDate);
 }
 
-export function getTimeInput(parentElement: HTMLElement): void {
+function getTimeHTMLInputElement(): HTMLInputElement {
+    return document.getElementById('time-input__input-value') as HTMLInputElement;
+}
+
+export function appendTimeInputToParent(parentElement: HTMLDivElement): void {
     parentElement.appendChild(createTimeInputContainer());
 }
 
+export function subscribeToTimeInputChange(): Observable<InputEvent> {
+    return fromEvent(getTimeHTMLInputElement(), 'input') as Observable<InputEvent>;
+}
