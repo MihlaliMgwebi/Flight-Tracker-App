@@ -2,21 +2,6 @@
 // import { getFirst20FlightDetails } from "./api";
 // import { addMarkerToMap, createMap, moveMapToLatLng } from "./map.js";
 
-// export function setMinTimeInput() {
-//   //[Tomorrow time](https://www.freecodecamp.org/news/javascript-get-current-date-todays-date-in-js/)
-//   const tomorrow = new Date();
-//   tomorrow.setDate(tomorrow.getDate() + 1);
-//   const year = tomorrow.getFullYear();
-//   const month = (tomorrow.getMonth() + 1).toString().padStart(2, "0");
-//   const day = tomorrow.getDate().toString().padStart(2, "0");
-//   const hours = "00";
-//   const minutes = "00";
-//   const tomorrowDate = `${year}-${month}-${day}T${hours}:${minutes}`;
-//   document
-//     .getElementById("time-input__input-value")!
-//     .setAttribute("min", tomorrowDate);
-// }
-
 // export function loadFlights() {
 //   createMap();
 //   document.getElementById("app-main__map").classList.add("hide");

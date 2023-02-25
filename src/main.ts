@@ -1,4 +1,4 @@
-// import { setMinTimeInput } from "./dom.ts";
-// setMinTimeInput();
+// import {  } from "./dom.ts";
+
 // loadFlights();
 
