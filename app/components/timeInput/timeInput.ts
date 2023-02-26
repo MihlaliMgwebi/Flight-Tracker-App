@@ -1,5 +1,4 @@
-import { Observer, fromEvent } from "rxjs";
-import { getFirst20FlightDetails } from "../../../src/api";
+import { Observable, fromEvent, map } from "rxjs";
 import { Utils } from "../../../utils";
 
 // functions
@@ -53,24 +52,19 @@ export function appendTimeInputToParent(parentElement: HTMLDivElement): void {
     parentElement.appendChild(createTimeInputContainer());
 }
 
-function getTimeInMillisecondsOnTimeInputEvent(): Observer<Event> {
-    return {
-        next: (event) => {
-            if (event && event.target) {
-                const timeHTMLInputElement: HTMLInputElement = event.target as HTMLInputElement;
-                const dateTime: string = timeHTMLInputElement.value;
-                const localUnixTimestampInSeconds = Utils.convertDateTimeToLocalUnixTimestampInSeconds(dateTime);
-                getFirst20FlightDetails(localUnixTimestampInSeconds);
-                return localUnixTimestampInSeconds;
-            }
+// function getTimeInMillisecondsOnTimeInputEvent(): Observable<number> {
+//     return fromEvent(getTimeHTMLInputElement(), 'input').pipe(map((event: Event) => Utils.convertDateTimeToLocalUnixTimestampInSeconds((event.target as HTMLInputElement).value)))
+// }
 
-
-        },
-        error: (error) => console.error(error),
-        complete: () => console.log('Observer completed'),
-    };
+export function getTimeInMillisecondsOnTimeInputEvent(): Observable<number> {
+    return fromEvent(getTimeHTMLInputElement(), 'input').pipe(
+        map((event: Event) => {
+            return Utils.convertDateTimeToLocalUnixTimestampInSeconds(
+                (event.target as HTMLInputElement).value
+            );
+        }
+        )
+    );
 }
 
-export function subscribeToTimeInputChange(): void {
-    fromEvent(getTimeHTMLInputElement(), 'input').subscribe(getTimeInMillisecondsOnTimeInputEvent());
-}
+// Call the function and subscribe to its emissions
