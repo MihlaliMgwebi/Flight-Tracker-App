@@ -1,6 +1,6 @@
-import { Observable, map, switchMap } from "rxjs";
+import { Observable, map, of, switchMap } from "rxjs";
 import { fromFetch } from "rxjs/fetch";
-import { IFlightAPIResponse, IFlightDetails } from "./models/flight";
+import { IFlight, IFlightAPIResponse } from "./models/flight";
 
 
 
@@ -11,16 +11,20 @@ export function getFirst20FlightDetails(timeInMilliseconds: number): Observable<
         // showSpinner();
         const flightDetails$ = fromFetch(`${BASE_URL}${timeInMilliseconds}`).pipe(
             switchMap((response) => {
-                // if (response.ok) {
-                //     // hideSpinner();
-                return response.json() as Promise<IFlightAPIResponse>;
-                // } else {
-                //     return of({ error: true, message: `Error ${response.status}` });
-                // }
+                if (response.ok) {
+                    //     // hideSpinner();
+                    return response.json() as Promise<IFlightAPIResponse>;
+                } else {
+                    return of({ error: true, message: `Error ${response.status}` });
+                }
             }),
             map((result) => {
-                const flights = result.states.map((state) => {
-                    const flight: IFlightDetails = {
+                const data: IFlightAPIResponse | { error: boolean; message: string; } = result;
+                if (!("states" in data) || !data.states)
+                    return null;
+
+                const flights = data.states.map((state) => {
+                    const flight: IFlight = {
                         icao24: state[0] as string ?? null,
                         callsign: state[1] as string ?? null,
                         origin_country: state[2] as string ?? null,
@@ -43,8 +47,10 @@ export function getFirst20FlightDetails(timeInMilliseconds: number): Observable<
                     return flight;
                 })
                 return flights;
-            }))
-
+            })
+        )
         return flightDetails$;
     }
 }
+
+

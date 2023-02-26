@@ -1,40 +1,36 @@
-// Just definition
 
 export interface IFlightAPIResponse {
     time: number,
-    // states: <keyof, IFlightDetails>() => [][]
-    states: (string | number | boolean | number[])[][]
+    states: IFlight[] | null;
 }
 
-export interface IFlightDetails {
-    icao24: string,
-    callsign: string,
-    origin_country: string,
-    time_position: number,
-    last_contact: number,
-    longitude: number,
-    latitude: number,
-    baro_altitude: number,
-    on_ground: boolean,
-    velocity: number,
-    true_track: number,
-    vertical_rate: number,
-    sensors: number[],
-    geo_altitude: number,
-    squawk: string,
-    spi: boolean,
-    position_source: number,
-    category: number
-
+interface IMap {
+    icao24: string;
+    longitude: number | null;
+    latitude: number | null;
 }
 
-// export interface arrays {
-//     letters: string[],
-//     ages: Array<number>,
-//     person: string | IPerson;
-//     people: (string | IPerson)[];
-// }
+//[Extend interfaces](https://www.typescriptlang.org/docs/handbook/interfaces.html#extending-interfaces)
+interface IFlight extends IMap {
+    [index: number]: number | number[] | boolean | string | null;//[Numeric Indexing] https://www.typescriptlang.org/docs/handbook/interfaces.html#indexable-types
+    callsign: string | null;
+    origin_country: string;
+    time_position: number | null;
+    last_contact: number;
+    baro_altitude: number | null;
+    on_ground: boolean;
+    velocity: number | null;
+    true_track: number | null;
+    vertical_rate: number | null;
+    sensors: number[] | null;
+    geo_altitude: number | null;
+    squawk: string | null;
+    spi: boolean;
+    position_source: number | null;
+    category?: number
+}
 
-// interface IPerson { //interface can now be type
-//     name: string;
-// }
+export interface IFlights {
+    flights: IFlight[] | null;
+}
+
