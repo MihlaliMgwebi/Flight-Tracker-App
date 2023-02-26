@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.1",
     "scss": "^0.2.4",
     "typescript": "^4.9.5",
     "vite": "^4.1.0"
