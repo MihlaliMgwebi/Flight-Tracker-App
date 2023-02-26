@@ -1,7 +1,6 @@
 import { Observable, fromEvent, map } from "rxjs";
 import { Utils } from "../../../utils";
 
-// functions
 function createTimeInputLabel(): HTMLLabelElement {
     const timeInputLabel: HTMLLabelElement = document.createElement("label");
     timeInputLabel.htmlFor = "time-input__input-value";
@@ -52,9 +51,6 @@ export function appendTimeInputToParent(parentElement: HTMLDivElement): void {
     parentElement.appendChild(createTimeInputContainer());
 }
 
-// function getTimeInMillisecondsOnTimeInputEvent(): Observable<number> {
-//     return fromEvent(getTimeHTMLInputElement(), 'input').pipe(map((event: Event) => Utils.convertDateTimeToLocalUnixTimestampInSeconds((event.target as HTMLInputElement).value)))
-// }
 
 export function getTimeInMillisecondsOnTimeInputEvent(): Observable<number> {
     return fromEvent(getTimeHTMLInputElement(), 'input').pipe(
@@ -62,9 +58,7 @@ export function getTimeInMillisecondsOnTimeInputEvent(): Observable<number> {
             return Utils.convertDateTimeToLocalUnixTimestampInSeconds(
                 (event.target as HTMLInputElement).value
             );
-        }
-        )
+        })
     );
 }
 
-// Call the function and subscribe to its emissions
