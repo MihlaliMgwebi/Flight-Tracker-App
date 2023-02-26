@@ -113,3 +113,11 @@
 //   };
 //   return flightDetails;
 // }
+
+// function showSpinner() {
+//     document.getElementById("app-main__spinner").classList.add("show-spinner");
+// }
+
+// function hideSpinner() {
+//     document.getElementById("app-main__spinner").classList.remove("show-spinner");
+// }

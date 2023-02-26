@@ -4,18 +4,21 @@ export interface IFlightAPIResponse {
     states: IFlight[] | null;
 }
 
-interface IMap {
-    icao24: string;
-    longitude: number | null;
-    latitude: number | null;
-}
+// [Extend interfaces](https://www.typescriptlang.org/docs/handbook/interfaces.html#extending-interfaces)
+//     interface IMap {
+//     icao24: string;
+//     longitude: number | null;
+//     latitude: number | null;
+// }
 
-//[Extend interfaces](https://www.typescriptlang.org/docs/handbook/interfaces.html#extending-interfaces)
-interface IFlight extends IMap {
-    [index: number]: number | number[] | boolean | string | null;//[Numeric Indexing] https://www.typescriptlang.org/docs/handbook/interfaces.html#indexable-types
+
+interface IFlight {//extends IMap {
+    icao24: string;
     callsign: string | null;
     origin_country: string;
     time_position: number | null;
+    longitude: number | null;
+    latitude: number | null;
     last_contact: number;
     baro_altitude: number | null;
     on_ground: boolean;

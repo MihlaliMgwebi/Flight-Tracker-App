@@ -1,5 +1,5 @@
 import { Observer, fromEvent } from "rxjs";
-import { getFirst20FlightDetails } from "../../../api";
+import { getFirst20FlightDetails } from "../../../src/api";
 import { Utils } from "../../../utils";
 
 // functions
