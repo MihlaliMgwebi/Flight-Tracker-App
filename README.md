@@ -22,7 +22,11 @@ I made a typo amd realised that if I use the wrong numeric index, I could get th
 
 Opensky won't send me an email or call me if they update their API and numeric indexes refer to other flight details because added or changed properties.
 
-## 4. How to store API response in seperate interfaces: Map and Flight (extention of Map)
+## 4. Subscriptions instead of function calls
+
+I was calling a function so that the value emitted by the obseravble could be passed as a parameter. This defeats the purpose of the observable.
+
+## TODO. How to store API response in seperate interfaces: Map and Flight (extention of Map)
 
 ### Action and Result.
 
@@ -37,6 +41,14 @@ Recalled indexable types from documentation and implemented as advised.= with re
 ## 3. String based indexing
 
 MDN(https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_Accessors) and AirBNB(https://github.com/airbnb/javascript#objects) say that string-based indexing is more flexible and more reliable when properties are added or changed.
+
+## 4. Using rjxs operators
+
+I set up a stream using the fromEvent function from the rxjs library.
+The fromEvent stream is set up to listen for input events on a specific HTML input element, obtained using the getTimeHTMLInputElement() function.
+The map operator is then applied to the stream to transform the events emitted by the fromEvent observable.
+The map takes the Event object emitted by the fromEvent observable, casts it to an HTMLInputElement, and retrieves the current value of the input element using the .value property.
+This stream can be subscribed to in order to receive and use the input value in an API call or other operations.
 
 ### Learning
 
@@ -57,3 +69,7 @@ Using numeric indexing can make sense in specific situations where the data bein
 Using numeric indexing on an object built off an API response can be problematic because it assumes that the object's properties have a fixed and predictable order, which may not always be the case.
 
 Latsly, numeric indexing can make the code harder to read and maintain.
+
+## 4. Rxjs Operator combinations
+
+I can use a combination of operators to form one line of code that emits exactly what I want.
