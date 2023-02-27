@@ -1,6 +1,6 @@
-import { manipulateDOM } from "./src/dom";
+import { setupDOM } from "./src/dom";
 
-manipulateDOM();
+setupDOM();
 
 
 

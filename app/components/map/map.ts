@@ -1,25 +1,33 @@
 import L from "leaflet";
 
-export function appendMapToParent(parentElement: HTMLDivElement): void {
-    parentElement.appendChild(createMapContainer());
-}
+const map = L.map("app-main__map").setView([-26.089863, 28.135071], 13);
 
-function createMapContainer(): HTMLDivElement {
-    const mapContainer: HTMLDivElement = document.createElement("div");
-    mapContainer.id = "app-main__map";
-    mapContainer.classList.add("app-main__map");
-    // mapContainer.classList.add("app-main__map", "hide");
+export function createMap(
+    latLngTuple: [number, number] = [-26.089863, 28.135071],
+    zoomLevel = 0.5
+) {
 
-    const map = L.map(mapContainer).setView([51.505, -0.09], 13);
-
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution:
+            '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);
-
-    // L.marker([51.5, -0.09]).addTo(map)
-    //     .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-    //     .openPopup();
-
-    return mapContainer;
+    map.flyTo(latLngTuple, zoomLevel); //smoothly pan and zoom to a specific coordinate on the map.
+    map.invalidateSize();
 }
 
+// export function moveMapToLatLng(latLngTuple) {
+//     map.flyTo(latLngTuple, 13); //smoothly pan and zoom to a specific coordinate on the map.
+//     map.invalidateSize();
+// }
+
+// export function addMarkerToMap(flightDetails) {
+//     // add a marker to the map using the custom icon
+//     L.marker([flightDetails.LATITUDE, flightDetails.LONGITUDE], {
+//         icon: flightDetails.ON_GROUND ? arrivalIcon : departureIcon,
+//     })
+//         .addTo(map)
+//         .bindPopup(
+//             `Flight ${flightDetails.CALLSIGN} from ${flightDetails.ORIGIN_COUNTRY}`
+//         );
+// }
