@@ -8,11 +8,10 @@ const BASE_URL = "https://opensky-network.org/api/states/all?extended=1&time=";
 
 export function getFirst20FlightDetails(): Subject<IFlights | null> {
     let timeInMilliseconds: number = 0;
-    getTimeInMillisecondsOnTimeInputEvent().subscribe((value) => {
+    const timeInMillisecondsOnTimeInputSubscription = getTimeInMillisecondsOnTimeInputEvent().subscribe((value) => {
         timeInMilliseconds = value;
     });
-    //TODO: null check
-    // showSpinner();
+    timeInMillisecondsOnTimeInputSubscription.unsubscribe(); //ASK WHY IT DIN"T SUBSCRIBE CHILE. UNSUBSCRIBING GETS MESSY W/ others
     const flightDetails$ = fromFetch(`${BASE_URL}${timeInMilliseconds}`).pipe(
         switchMap((response) => {
             if (response.ok) {

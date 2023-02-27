@@ -30,7 +30,7 @@ function addMarkersToMap() {
                             `Flight ${flight.callsign} from ${flight.origin_country}`
                         ).on('click', () => {
                             if (flight.latitude && flight.longitude)
-                                map.flyTo([flight.latitude, flight.longitude], 15, {
+                                map.flyTo([flight.latitude, flight.longitude], 4, {
                                     animate: true,
                                     duration: 2
                                 });
