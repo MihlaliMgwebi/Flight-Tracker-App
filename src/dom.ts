@@ -1,31 +1,13 @@
-// // DOM Manipulation
-
+// DOM Manipulation
+import { createMap } from "../app/components/map/map";
 import { appendTimeInputToParent } from "../app/components/timeInput/timeInput";
 
-export function setupDOM() {
-    // create app container 
-    const app: HTMLDivElement = document.createElement("div");
-    const header: HTMLElement = document.createElement("header");
-    const main: HTMLElement = document.createElement("main");
-    const map: HTMLDivElement = document.createElement("div");
+export function manipulateDOM() {
+    const header: HTMLElement | null = document.getElementById("app-header")
+    if (header)
+        appendTimeInputToParent(header as HTMLDivElement);
 
-    app.id = "app";
-    header.className = "app-header";
-    main.className = "app-main";
-    map.id = "app-main__map"
-    map.className = "app-main__map"
-
-    // append children to app
-    appendTimeInputToParent(header as HTMLDivElement);
-    // appendMapToParent(main as HTMLDivElement)
-    app.appendChild(header);
-    main.appendChild(map);
-    app.appendChild(main)
-    //append app to body
-    const body: HTMLBodyElement = document.querySelector("body") as HTMLBodyElement;
-    body.appendChild(app);
-
-    // createMap();
+    createMap()
 }
 // import { getFirst20FlightDetails } from "./api";
 // import { addMarkerToMap, createMap, moveMapToLatLng } from "./map.js";

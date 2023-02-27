@@ -1,6 +1,8 @@
-import { setupDOM } from "./src/dom";
+import 'leaflet/dist/leaflet.css';
+import { manipulateDOM } from "./src/dom";
+manipulateDOM();
 
-setupDOM();
+
 
 
 
