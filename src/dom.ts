@@ -1,4 +1,28 @@
 // // DOM Manipulation
+
+import { appendMapToParent } from "../app/components/map/map";
+import { appendTimeInputToParent } from "../app/components/timeInput/timeInput";
+
+export function manipulateDOM() {
+    // create app container 
+    const app: HTMLDivElement = document.createElement("div");
+    app.id = "app";
+
+    //create components
+    const main: HTMLElement = document.createElement("main");
+    main.className = "app-main";
+
+    // append children to app
+    appendTimeInputToParent(main as HTMLDivElement);
+    appendMapToParent(main as HTMLDivElement)
+
+    app.appendChild(main)
+    //append app to body
+    const body: HTMLBodyElement = document.querySelector("body") as HTMLBodyElement;
+    body.appendChild(app);
+
+
+}
 // import { getFirst20FlightDetails } from "./api";
 // import { addMarkerToMap, createMap, moveMapToLatLng } from "./map.js";
 

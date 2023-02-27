@@ -1,9 +1,6 @@
-// Still unsure where to put my observables lol
+import { manipulateDOM } from "./src/dom";
 
-import { createApp } from './app/components/apps/app';
-
-
-createApp();
+manipulateDOM();
 
 
 
