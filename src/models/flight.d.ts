@@ -13,6 +13,7 @@ export interface IFlightAPIResponse {
 
 
 interface IFlight {//extends IMap {
+    [index: number]: boolean | string | number | number[] | null;
     icao24: string;
     callsign: string | null;
     origin_country: string;

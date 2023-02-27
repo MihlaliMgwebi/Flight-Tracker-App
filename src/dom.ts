@@ -9,33 +9,7 @@ export function manipulateDOM() {
 
     createMap()
 }
-// import { getFirst20FlightDetails } from "./api";
-// import { addMarkerToMap, createMap, moveMapToLatLng } from "./map.js";
 
-// export function loadFlights() {
-//   createMap();
-//   document.getElementById("app-main__map").classList.add("hide");
-//   //[Setting the value using JavaScript](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/time#setting_the_value_using_javascript)
-//   const timeControl = document.getElementById("time-input__input-value");
-
-//   // [Anonymous functions to pass parameters](https://www.w3schools.com/js/js_htmldom_eventlistener.asp)
-//   timeControl.addEventListener("input", () => {
-//     toggleVisibility("app-main__flights");
-//     document.getElementById("app-main__text").style.display = "none";
-//     document.getElementById("app-main__flights").innerHTML = ""; //remove old flights
-//     getFirst20FlightDetails(
-//       convert24HrTimeToUnixTimestampInMilliseconds(timeControl.value)
-//     ).subscribe((flights) => {
-//       flights.forEach((flight) => loadFlightDetails(flight));
-//     });
-//     document.getElementById("app-main__map").classList.remove("hide");
-//   });
-// }
-
-// function convert24HrTimeToUnixTimestampInMilliseconds(timeControlValue) {
-//   const date = new Date(timeControlValue);
-//   return Math.floor(date / 1000);
-// }
 
 // function toggleVisibility(toggleClass) {
 //   const menu = document.getElementById(toggleClass);

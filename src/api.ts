@@ -1,4 +1,4 @@
-import { Observable, map, of, switchMap } from "rxjs";
+import { Subject, map, of, switchMap } from "rxjs";
 import { fromFetch } from "rxjs/fetch";
 import { getTimeInMillisecondsOnTimeInputEvent } from '../app/components/timeInput/timeInput';
 import { IFlight, IFlightAPIResponse, IFlights } from "./models/flight";
@@ -6,7 +6,7 @@ import { IFlight, IFlightAPIResponse, IFlights } from "./models/flight";
 
 const BASE_URL = "https://opensky-network.org/api/states/all?extended=1&time=";
 
-export function getFirst20FlightDetails(): Observable<any> {
+export function getFirst20FlightDetails(): Subject<IFlights | null> {
     let timeInMilliseconds: number = 0;
     getTimeInMillisecondsOnTimeInputEvent().subscribe((value) => {
         timeInMilliseconds = value;
@@ -29,26 +29,26 @@ export function getFirst20FlightDetails(): Observable<any> {
 
             const flights: IFlights =
             {
-                flights: data.states.map((state) => {
+                flights: data.states.slice(0, 20).map((state) => {
                     const flight: IFlight = {
-                        icao24: state["icao24"] as string ?? null,
-                        callsign: state["callsign"] as string ?? null,
-                        origin_country: state["origin_country"] as string ?? null,
-                        time_position: state["time_position"] as number ?? null,
-                        last_contact: state["last_contact"] as number ?? null,
-                        longitude: state["longitude"] as number ?? null,
-                        latitude: state["latitude"] as number ?? null,
-                        baro_altitude: state["baro_altitude"] as number ?? null,
-                        on_ground: state["on_ground"] as boolean ?? null,
-                        velocity: state["velocity"] as number ?? null,
-                        true_track: state["true_track"] as number ?? null,
-                        vertical_rate: state["vertical_rate"] as number ?? null,
-                        sensors: state["sensors"] as number[] ?? null,
-                        geo_altitude: state["geo_altitude"] as number ?? null,
-                        squawk: state["squawk"] as string ?? null,
-                        spi: state["spi"] as boolean ?? null,
-                        position_source: state["position_source"] as number ?? null,
-                        category: state["category"] as number ?? null
+                        icao24: state[0] as string ?? null,
+                        callsign: state[1] as string ?? null,
+                        origin_country: state[2] as string ?? null,
+                        time_position: state[3] as number ?? null,
+                        last_contact: state[4] as number ?? null,
+                        longitude: state[5] as number ?? null,
+                        latitude: state[6] as number ?? null,
+                        baro_altitude: state[7] as number ?? null,
+                        on_ground: state[8] as boolean ?? null,
+                        velocity: state[9] as number ?? null,
+                        true_track: state[10] as number ?? null,
+                        vertical_rate: state[11] as number ?? null,
+                        sensors: state[12] as number[] ?? null,
+                        geo_altitude: state[13] as number ?? null,
+                        squawk: state[14] as string ?? null,
+                        spi: state[15] as boolean ?? null,
+                        position_source: state[16] as number ?? null,
+                        category: state[17] as number ?? null
                     }
                     return flight;
                 })
@@ -56,6 +56,6 @@ export function getFirst20FlightDetails(): Observable<any> {
             return flights;
         })
     )
-    return flightDetails$;
+    return <Subject<IFlights | null>>flightDetails$;
 }
 
