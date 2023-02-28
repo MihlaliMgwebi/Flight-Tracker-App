@@ -22,9 +22,24 @@
 //     ).subscribe((details) => {
 //         //Understand control flow
 //     })
+//pipe tap switchMap // switchMap pipe into tap (show spinner) then switchMap
+import { switchMap, tap } from 'rxjs';
 import { timeInMillisecondsOnTimeInputEventStream$ } from "./app/components/timeInput/timeInput";
-import { getFirst20FlightDetails } from "./src/api";
-timeInMillisecondsOnTimeInputEventStream$.subscribe((timeInMilliseconds: number) => { getFirst20FlightDetails(timeInMilliseconds).subscribe((flights) => console.log(flights)) });
+import { getFirst20FlightDetails } from './src/api';
+import { hideSpinner, showSpinner } from './src/dom';
+
+timeInMillisecondsOnTimeInputEventStream$
+    .pipe(
+        tap(() => showSpinner()),
+        switchMap((timeInMilliseconds) => {
+            return getFirst20FlightDetails(timeInMilliseconds)
+        }),
+        tap(() => hideSpinner())
+    ).subscribe((details) => {
+        console.log(details)
+    })
+// subscribe(
+//     (timeInMilliseconds: number) => { getFirst20FlightDetails(timeInMilliseconds).subscribe((flights) => console.log(flights)) });
 
 
 

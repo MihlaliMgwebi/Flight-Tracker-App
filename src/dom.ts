@@ -10,11 +10,11 @@
 // }
 
 // //Chile not sure when to show and hide w/ time Input and button
-// function showSpinner() {
-//     document.getElementById("app-main__spinner")?.classList.add("show-spinner");
-// }
+export function showSpinner() {
+    document.getElementById("app-main__spinner")!.classList.add("show-spinner");
+}
 
-// function hideSpinner() {
-//     document.getElementById("app-main__spinner")?.classList.remove("show-spinner");
-// }
+export function hideSpinner() {
+    document.getElementById("app-main__spinner")?.classList.remove("show-spinner");
+}
 
