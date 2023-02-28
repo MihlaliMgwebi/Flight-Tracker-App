@@ -20,7 +20,6 @@ function getTimeHTMLInputElement(): HTMLInputElement {
         setDateTimeInputMinDateToTomorrow(timeHTMLInputElement)
         return timeHTMLInputElement as HTMLInputElement
     }
-
     return document.createElement('input') as HTMLInputElement //TODO error handling: can't select a time
 }
 
@@ -30,6 +29,6 @@ export const timeInMillisecondsOnTimeInputEventStream$: Observable<number> =
             return Utils.convertDateTimeToLocalUnixTimestampInSeconds(
                 (event.target as HTMLInputElement).value
             );
-        })
-    );
+        }),
+    )
 

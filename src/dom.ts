@@ -1,13 +1,12 @@
 // DOM Manipulation
-// import { createMap } from "../app/components/map/map";
-// import { appendTimeInputToParent } from "../app/components/timeInput/timeInput";
-// export function manipulateDOM() {
-//     const header: HTMLElement | null = document.getElementById("app-header")
-//     if (header)
-//         appendTimeInputToParent(header as HTMLDivElement);
+import { createAndDisplayMap$ } from "../app/components/map/map";
 
-//     createMap()
-// }
+import { IFlights } from "./models/flight";
+
+// import { appendTimeInputToParent } from "../app/components/timeInput/timeInput";
+export function manipulateDOM(flights: IFlights): void {
+    createAndDisplayMap$.next(flights)
+}
 
 // //Chile not sure when to show and hide w/ time Input and button
 export function showSpinner() {

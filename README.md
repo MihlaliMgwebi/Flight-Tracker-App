@@ -90,3 +90,8 @@ I can use a combination of operators to form one line of code that emits exactly
 ## 5 Benefits of UDT Guard Function
 
 By using this type guard function, I can use the result parameter in a type-safe manner within the rest of my code. If the function returns true, TypeScript will treat result as of type IFlightAPIResponse and allow me to access its properties without any compilation errors. If the function returns false, TypeScript will treat result as the error object type and allow me to access its error and message properties instead.
+
+HELP:
+
+- Clean up subscriptions
+- Map won't bloody hide
