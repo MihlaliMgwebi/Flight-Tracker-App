@@ -13,11 +13,9 @@ export function createMap() {
     }).addTo(map);
 
     map.invalidateSize();
-
-    addMarkersToMap();
 }
 
-function addMarkersToMap() {
+const flightDetailsSubscription =
     getFirst20FlightDetails().subscribe((allFlights) => {
         if (allFlights)
             allFlights.flights?.map((flight) => {
@@ -37,4 +35,3 @@ function addMarkersToMap() {
                         })
             })
     });
-}
