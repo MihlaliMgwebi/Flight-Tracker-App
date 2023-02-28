@@ -2,20 +2,21 @@ import { Observable, map, of, switchMap } from "rxjs";
 import { fromFetch } from "rxjs/fetch";
 import { IFlight, IFlightAPIResponse, IFlights } from "./models/flight";
 
-
 const BASE_URL = "https://opensky-network.org/api/states/all?extended=1&time=";
 
 function isIFlightAPIResponse(result: IFlightAPIResponse | { error: boolean; message: string; }): result is IFlightAPIResponse {
     return Object.keys(result).includes("states")
 }
+
+
 export function getFirst20FlightDetails(timeInMilliseconds: number): Observable<IFlights> {
     return fromFetch(`${BASE_URL}${timeInMilliseconds}`).pipe(
         switchMap((response) => {
-            if (response.ok) {
-                return response.json() as Promise<IFlightAPIResponse>;//[Zod](https://github.com/colinhacks/zod#basic-usage)
-            } else {
-                return of({ error: true, message: `Error ${response.status}` });
-            }
+            return (response.ok) ?
+                response.json() as Promise<IFlightAPIResponse>//[Zod](https://github.com/colinhacks/zod#basic-usage)
+                :
+                of({ error: true, message: `Error ${response.status}` });
+
         }),
         map((result) => {
             if (isIFlightAPIResponse(result)) { //[User Defined Type Guard](https://stackoverflow.com/questions/12789231/class-type-check-in-typescript/40718205#40718205)

@@ -3,6 +3,7 @@ import { switchMap } from 'rxjs';
 import { getTimeInMillisecondsOnTimeInputEvent } from './app/components/timeInput/timeInput';
 import { getFirst20FlightDetails } from './src/api';
 import { manipulateDOM } from "./src/dom";
+
 manipulateDOM();
 
 getTimeInMillisecondsOnTimeInputEvent()

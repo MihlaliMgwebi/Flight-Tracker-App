@@ -26,7 +26,11 @@ Opensky won't send me an email or call me if they update their API and numeric i
 
 I was calling a function so that the value emitted by the obseravble could be passed as a parameter. This defeats the purpose of the observable.
 
-## TODO. How to store API response in seperate interfaces: Map and Flight (extention of Map)
+## 5. API call response object
+My api call response object had the possibility to come back as either of 2 types:
+A. IFlightAPIResponse - an interface that defines a response object returned by some flight API with a property called states.
+OR
+B. { error: boolean; message: string; } - an object with two properties: error and message, used to represent an error response.
 
 ### Action and Result.
 
@@ -49,6 +53,13 @@ The fromEvent stream is set up to listen for input events on a specific HTML inp
 The map operator is then applied to the stream to transform the events emitted by the fromEvent observable.
 The map takes the Event object emitted by the fromEvent observable, casts it to an HTMLInputElement, and retrieves the current value of the input element using the .value property.
 This stream can be subscribed to in order to receive and use the input value in an API call or other operations.
+
+## User Defined Type Guard Function and TS predicates
+The purpose of the function is to check whether the result parameter is of type IFlightAPIResponse and return a boolean value that indicates the result of this check.
+
+The 'result is IFlightAPIResponse' syntax is used to define a type predicate that TypeScript can use to narrow down the type of the result parameter within the function. This predicate indicates that if the condition within the function's body is true, then result is of type IFlightAPIResponse.
+
+In this case, the function checks if the result parameter has a property called states using the Object.keys() method. If the states property exists, the function returns true, indicating that result is of type IFlightAPIResponse.
 
 ### Learning
 
@@ -73,3 +84,6 @@ Latsly, numeric indexing can make the code harder to read and maintain.
 ## 4. Rxjs Operator combinations
 
 I can use a combination of operators to form one line of code that emits exactly what I want.
+
+## 5 Benefits of UDT Guard Function
+By using this type guard function, I can use the result parameter in a type-safe manner within the rest of my code. If the function returns true, TypeScript will treat result as of type IFlightAPIResponse and allow me to access its properties without any compilation errors. If the function returns false, TypeScript will treat result as the error object type and allow me to access its error and message properties instead.
