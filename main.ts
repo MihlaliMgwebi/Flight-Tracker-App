@@ -6,25 +6,10 @@
 // If the user clicks on a button to zoom to the marker, another function is triggered that zooms the map to the selected marker's location.
 // The user can then explore the map and view information about each location by clicking on markers and buttons.
 
-// import { switchMap } from 'rxjs';
-// import { getTimeInMillisecondsOnTimeInputEvent } from './app/components/timeInput/timeInput';
-// import { getFirst20FlightDetails } from './src/api';
-// import { manipulateDOM } from "./src/dom";
-
-// manipulateDOM();
-
-// getTimeInMillisecondsOnTimeInputEvent()
-//     .pipe(
-//         switchMap((timeInMilliseconds) =>
-//             getFirst20FlightDetails(timeInMilliseconds))
-//     ).subscribe((details) => {
-//         //Understand control flow
-//     })
-//pipe tap switchMap // switchMap pipe into tap (show spinner) then switchMap
 import { switchMap, tap } from 'rxjs';
 import { timeInMillisecondsOnTimeInputEventStream$ } from "./app/components/timeInput/timeInput";
 import { getFirst20FlightDetails } from './src/api';
-import { hideSpinner, showSpinner } from './src/dom';
+import { hideSpinner, manipulateDOM, showSpinner } from "./src/dom";
 
 timeInMillisecondsOnTimeInputEventStream$ //TODO: clean up subscription
     .pipe(
@@ -34,7 +19,7 @@ timeInMillisecondsOnTimeInputEventStream$ //TODO: clean up subscription
         }),
         tap(() => hideSpinner())
     ).subscribe((flights) => {
-        // manipulateDOM(flights)
+        manipulateDOM(flights)
     })
 
 

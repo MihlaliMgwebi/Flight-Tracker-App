@@ -1,11 +1,11 @@
 // DOM Manipulation
-import { createAndDisplayMap$ } from "../app/components/map/map";
-
+import {createLeafletMapWithMarkers$} from '../app/components/map/map'
 import { IFlights } from "./models/flight";
 
-// import { appendTimeInputToParent } from "../app/components/timeInput/timeInput";
 export function manipulateDOM(flights: IFlights): void {
-    createAndDisplayMap$.next(flights)
+    const mapElement = document.getElementById('app-main__map')
+    if (mapElement)
+        createLeafletMapWithMarkers$.next(flights);
 }
 
 // //Chile not sure when to show and hide w/ time Input and button
