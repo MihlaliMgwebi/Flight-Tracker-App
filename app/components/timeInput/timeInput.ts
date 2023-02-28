@@ -1,35 +1,12 @@
 import { Observable, fromEvent, map } from "rxjs";
 import { Utils } from "../../../utils";
 
-function createTimeInputLabel(): HTMLLabelElement {
-    const timeInputLabel: HTMLLabelElement = document.createElement("label");
-    timeInputLabel.htmlFor = "time-input__input-value";
-    timeInputLabel.textContent = "Select a day and time for your flight:";
-    return timeInputLabel;
+function isHTMLElement(element: HTMLElement | null): element is HTMLElement {
+    return element !== null
 }
 
-function createTimeInput(): HTMLInputElement {
-    const timeInput: HTMLInputElement = document.createElement("input");
-    timeInput.id = "time-input__input-value";
-    timeInput.type = "datetime-local";
-    timeInput.name = "time-input__input-value";
-    timeInput.required = true;
 
-    setDateTimeInputMinDateToTomorrow(timeInput);
-
-    return timeInput;
-}
-
-function createTimeInputContainer(): HTMLDivElement {
-    const timeInputContainer: HTMLDivElement = document.createElement("div");
-    timeInputContainer.id = "time-input__input";
-    timeInputContainer.classList.add("app-header__time-input");
-    timeInputContainer.appendChild(createTimeInputLabel());
-    timeInputContainer.appendChild(createTimeInput());
-    return timeInputContainer;
-}
-
-function setDateTimeInputMinDateToTomorrow(timeInput: HTMLInputElement): void {
+function setDateTimeInputMinDateToTomorrow(timeInput: HTMLInputElement | null): void {
     //[Tomorrow time](https://www.freecodecamp.org/news/javascript-get-current-date-todays-date-in-js/)
     const tomorrow: Date = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -39,26 +16,23 @@ function setDateTimeInputMinDateToTomorrow(timeInput: HTMLInputElement): void {
     const hours = "00";
     const minutes = "00";
     const tomorrowDate = `${year}-${month}-${day}T${hours}:${minutes}`;
-
-    timeInput.setAttribute("min", tomorrowDate);
+    timeInput?.setAttribute("min", tomorrowDate);
 }
 
 function getTimeHTMLInputElement(): HTMLInputElement {
-    return document.getElementById('time-input__input-value') as HTMLInputElement;
+    const timeHTMLInputElement: HTMLInputElement = isHTMLElement(document.getElementById('time-input__input-value')) ? document.getElementById('time-input__input-value') as HTMLInputElement : document.createElement('input');
+
+    setDateTimeInputMinDateToTomorrow(timeHTMLInputElement)
+    return timeHTMLInputElement
 }
 
-export function appendTimeInputToParent(parentElement: HTMLDivElement): void {
-    parentElement.appendChild(createTimeInputContainer());
-}
 
-
-export function getTimeInMillisecondsOnTimeInputEvent(): Observable<number> {
-    return fromEvent(getTimeHTMLInputElement(), 'input').pipe(
+export const timeInMillisecondsOnTimeInputEventStream$: Observable<number> =
+    fromEvent(getTimeHTMLInputElement(), 'input').pipe(
         map((event: Event) => {
             return Utils.convertDateTimeToLocalUnixTimestampInSeconds(
                 (event.target as HTMLInputElement).value
             );
         })
-    );
-}
+    )
 

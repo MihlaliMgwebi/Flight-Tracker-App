@@ -16,7 +16,7 @@ export function createMap() {
 }
 
 const flightDetailsSubscription =
-    getFirst20FlightDetails().subscribe((allFlights) => {
+    getFirst20FlightDetails(0).subscribe((allFlights) => {
         if (allFlights)
             allFlights.flights?.map((flight) => {
                 if (flight.latitude && flight.longitude)

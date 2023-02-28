@@ -55,7 +55,7 @@ The map operator is then applied to the stream to transform the events emitted b
 The map takes the Event object emitted by the fromEvent observable, casts it to an HTMLInputElement, and retrieves the current value of the input element using the .value property.
 This stream can be subscribed to in order to receive and use the input value in an API call or other operations.
 
-## User Defined Type Guard Function and TS predicates
+## 5. User Defined Type Guard Function and TS predicates
 
 The purpose of the function is to check whether the result parameter is of type IFlightAPIResponse and return a boolean value that indicates the result of this check.
 

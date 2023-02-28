@@ -51,7 +51,7 @@ function createFlightDetailsCard(flight: IFlight) {
 
 const flightSummaryAndDetailsContainer = document.createElement("div");
 flightSummaryAndDetailsContainer.className = "app-main__flight";
-getFirst20FlightDetails().subscribe((allFlights) => {
+getFirst20FlightDetails(0).subscribe((allFlights) => {
     if (allFlights?.flights)
         for (let flight of allFlights?.flights) {
             flightSummaryAndDetailsContainer.appendChild(createFlightSummaryCollapsibleButton(flight));
