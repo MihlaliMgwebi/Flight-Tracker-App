@@ -1,6 +1,5 @@
 // CONTROL FLOW
-// The user enters a time in the input field on the web page.
-// An event listener is attached to the input field, which triggers a function when the user clicks the "submit" button or presses "Enter" on their keyboard.
+
 // The function reads the value of the input field and converts it into a date object that can be used to filter a list of marker data.
 // The function retrieves the marker data from a server using an API request. This data includes the location, name, and other relevant information for each marker.
 // The function then loops through the marker data and creates a marker object for each location using a mapping library like Google Maps or Leaflet. Each marker is also given a click event listener that will trigger a function to display more information when the marker is clicked.
@@ -24,7 +23,8 @@
 //         //Understand control flow
 //     })
 import { timeInMillisecondsOnTimeInputEventStream$ } from "./app/components/timeInput/timeInput";
-timeInMillisecondsOnTimeInputEventStream$.subscribe((timeInMilliseconds: number) => { console.log(timeInMilliseconds); });
+import { getFirst20FlightDetails } from "./src/api";
+timeInMillisecondsOnTimeInputEventStream$.subscribe((timeInMilliseconds: number) => { getFirst20FlightDetails(timeInMilliseconds).subscribe((flights) => console.log(flights)) });
 
 
 

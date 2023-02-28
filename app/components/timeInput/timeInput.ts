@@ -1,11 +1,6 @@
 import { Observable, fromEvent, map } from "rxjs";
 import { Utils } from "../../../utils";
 
-function isHTMLElement(element: HTMLElement | null): element is HTMLElement {
-    return element !== null
-}
-
-
 function setDateTimeInputMinDateToTomorrow(timeInput: HTMLInputElement | null): void {
     //[Tomorrow time](https://www.freecodecamp.org/news/javascript-get-current-date-todays-date-in-js/)
     const tomorrow: Date = new Date();
@@ -20,12 +15,14 @@ function setDateTimeInputMinDateToTomorrow(timeInput: HTMLInputElement | null): 
 }
 
 function getTimeHTMLInputElement(): HTMLInputElement {
-    const timeHTMLInputElement: HTMLInputElement = isHTMLElement(document.getElementById('time-input__input-value')) ? document.getElementById('time-input__input-value') as HTMLInputElement : document.createElement('input');
+    const timeHTMLInputElement = document.getElementById('time-input__input-value');
+    if (timeHTMLInputElement instanceof HTMLInputElement) {
+        setDateTimeInputMinDateToTomorrow(timeHTMLInputElement)
+        return timeHTMLInputElement as HTMLInputElement
+    }
 
-    setDateTimeInputMinDateToTomorrow(timeHTMLInputElement)
-    return timeHTMLInputElement
+    return document.createElement('input') as HTMLInputElement //TODO error handling: can't select a time
 }
-
 
 export const timeInMillisecondsOnTimeInputEventStream$: Observable<number> =
     fromEvent(getTimeHTMLInputElement(), 'input').pipe(
@@ -34,5 +31,5 @@ export const timeInMillisecondsOnTimeInputEventStream$: Observable<number> =
                 (event.target as HTMLInputElement).value
             );
         })
-    )
+    );
 
