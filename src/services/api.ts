@@ -1,6 +1,6 @@
-import { Observable, concatMap, map, of, switchMap, timer } from 'rxjs';
+import { Observable, concatMap, map, of, switchMap, timer } from "rxjs";
 import { fromFetch } from "rxjs/fetch";
-import { IFlight, IFlightAPIResponse, IFlights } from '../models/flight';
+import { IFlight, IFlightAPIResponse, IFlights } from "../models/flight";
 
 const BASE_URL = "https://opensky-network.org/api/states/all?extended=1&time=";
 
@@ -45,6 +45,8 @@ export function getFirst20FlightDetails(timeInMilliseconds: number): Observable<
                             return flight;
                         })
                     }
+
+                    console.log("", flights)
                     return flights;
                 }
                 else {

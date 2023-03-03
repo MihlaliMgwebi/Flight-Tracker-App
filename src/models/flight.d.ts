@@ -1,8 +1,9 @@
+// src / flight.d.ts
 export interface IFlightAPIResponse {
     time: number,
     states: (boolean | string | number | number[])[][];//check preview in netwrok tab
-  }
-  interface IFlight {
+}
+interface IFlight {
     [key: string]: string | null | number | boolean | number[] | undefined;
     icao24: string;
     callsign: string | null;
@@ -22,7 +23,7 @@ export interface IFlightAPIResponse {
     spi: boolean;
     position_source: number | null;
     category?: number
-  }
-  export interface IFlights {
+}
+export interface IFlights {
     flights: IFlight[] | null;
-  }
+}
