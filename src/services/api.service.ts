@@ -6,16 +6,15 @@ import { IFlight, IFlightAPIResponse, IFlights } from "../models/flight";
 
 const BASE_URL = "https://opensky-network.org/api/states/all?extended=1&time=";
 
-function isIFlightAPIResponse(result: IFlightAPIResponse | { error: boolean; message: string; }): result is IFlightAPIResponse {
-    return Object.keys(result).includes("states")
-}
-
 let clicks: Observable<Event>;
 const dateTimePicker: HTMLInputElement | HTMLElement | null = document.getElementById('time-input__input-value');
 if (dateTimePicker && dateTimePicker instanceof HTMLInputElement) {
     clicks = fromEvent(document, 'click');
 }
 
+function isIFlightAPIResponse(result: IFlightAPIResponse | { error: boolean; message: string; }): result is IFlightAPIResponse {
+    return Object.keys(result).includes("states")
+}
 
 export function pollFirst20FlightDetails(timeInMilliseconds: number): Observable<IFlights> {
     return timer(0, 16000).pipe(
