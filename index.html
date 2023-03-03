@@ -9,7 +9,7 @@
   <!-- [Google Font Family: Trirong](https://www.w3schools.com/css/css_font_google.asp) -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
   <!-- Include external stylesheet because dom manip keeps overriding -->
-  <link rel="stylesheet" href="style.scss">
+  <!-- <link rel="stylesheet" href="style.scss"> -->
 </head>
 
 <body>
@@ -31,14 +31,14 @@
         <p>Select a time to view the real-time details about flights (such as their current location, altitude, and
           speed) at your specified time.</p>
       </div>
-      <div class="app-main__map" id="app-main__map"></div>
       <div class="app-main__spinner" id="app-main__spinner"></div>
       <div class="app-main__flights app-main__flights--hidden" id="app-main__flights">
+        <div class="app-main__map" id="app-main__map"></div>
       </div>
     </main>
   </div>
 
-  <script type="module" src="/main.ts" defer></script>
+  <script type="module" src="src/main.ts" defer></script>
 </body>
 
 </html>
