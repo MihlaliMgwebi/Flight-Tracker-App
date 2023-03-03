@@ -1,66 +1,15 @@
 
+import { BehaviorSubject, combineLatestWith, map } from 'rxjs';
 
-// src / utils.ts
-function convertDateTimeToLocalUnixTimestampInSeconds(dateTimeInputValue: string): number {
-  const MILLISECONDS_IN_SECOND: number = 1000;
-  const unixTimestampInMilliseconds: number = Date.parse(dateTimeInputValue);
-  const unixTimestampInSeconds: number = unixTimestampInMilliseconds / MILLISECONDS_IN_SECOND;
-  return unixTimestampInSeconds;
-}
-//src / components / dateTime.ts
-function setDateTimeInputMinDateToTomorrow(timeInput: HTMLInputElement | null): void {
-  //[Tomorrow time](https://www.freecodecamp.org/news/javascript-get-current-date-todays-date-in-js/)
-  const tomorrow: Date = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  const year = tomorrow.getFullYear();
-  const month = (tomorrow.getMonth() + 1).toString().padStart(2, "0");
-  const day = tomorrow.getDate().toString().padStart(2, "0");
-  const hours = "00";
-  const minutes = "00";
-  const tomorrowDate = `${year}-${month}-${day}T${hours}:${minutes}`;
-  timeInput?.setAttribute("min", tomorrowDate);
-}
-//src / main.ts
-// Behaviour subject
-// Date 
-import { BehaviorSubject, combineLatestWith } from 'rxjs';
-const dateTimeInMillisecondsStream$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-// src / dateTimePicker.ts
-// Observer/Emitter
-// DatePicker.InputeventListener {
-//   .next(date: Date)
-// }
-const dateTimePicker: HTMLInputElement | HTMLElement | null = document.getElementById('time-input__input-value');
-if (dateTimePicker && dateTimePicker instanceof HTMLInputElement) {
-  setDateTimeInputMinDateToTomorrow(dateTimePicker)
-  dateTimePicker.oninput = (dateTimeEvent) => {
-    const dateTime: string = (dateTimeEvent.target as HTMLInputElement)?.value;
-    dateTimeInMillisecondsStream$.next(dateTime)
-  }
-}
-// src / api.ts
-import { map, switchMap } from 'rxjs';
+export const dateTimeInMillisecondsStream$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+export const allFlightsStream$: BehaviorSubject<IFlights | undefined> = new BehaviorSubject<IFlights | undefined>(undefined);
+export const selectedFlightStream$: BehaviorSubject<string> = new BehaviorSubject<string>("");
 
+emitDateTimeInMillisecondsWhenUserPicksDateTime();
 
-// src / main.ts
-// Behaviour subject
-// Flights
-const allFlightsStream$: BehaviorSubject<IFlights | undefined> = new BehaviorSubject<IFlights | undefined>(undefined);
-// src / main.ts
-// Observer/Emitter
-// API Service.subscribe (milliseconds){
-//     getFlights().then(next: flights))
-// }
-import { filter } from 'rxjs';
-dateTimeInMillisecondsStream$.pipe(
-  filter((dateTime) => dateTime !== ""),
-  map((dateTime) => convertDateTimeToLocalUnixTimestampInSeconds(dateTime)),
-  switchMap((dateTimeInMilliseconds) => getFirst20FlightDetails(dateTimeInMilliseconds))
-).subscribe((flightDetails) => allFlightsStream$.next(flightDetails))
 // src / main.ts
 // Behaviour subject
 // icao24
-const selectedFlightStream$: BehaviorSubject<string> = new BehaviorSubject<string>("");
 // src / main.ts
 // Observer/Emitter
 // DOM Flight List.subscribe (flights => {
@@ -211,7 +160,7 @@ allFlightsStream$.pipe(
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { IFlight, IFlights } from './models/flight';
-import { getFirst20FlightDetails } from './services/api';
+import { emitDateTimeInMillisecondsWhenUserPicksDateTime } from './services/dateTimePicker';
 export const arrivalIcon = L.icon({
   iconUrl: "assets/airplane-arrival.svg",
   iconSize: [30, 30],
