@@ -1,6 +1,6 @@
 import { filter, map, switchMap } from "rxjs";
 import { allFlightsStream$, dateTimeInMillisecondsStream$ } from "../main";
-import { getFirst20FlightDetails } from "./api";
+import { pollFirst20FlightDetails } from "./api";
 
 function convertDateTimeToLocalUnixTimestampInSeconds(dateTimeInputValue: string): number {
     const MILLISECONDS_IN_SECOND: number = 1000;
@@ -36,5 +36,5 @@ export function emitDateTimeInMillisecondsWhenUserPicksDateTime(): void {
 dateTimeInMillisecondsStream$.pipe(
     filter((dateTime) => dateTime !== ""),
     map((dateTime) => convertDateTimeToLocalUnixTimestampInSeconds(dateTime)),
-    switchMap((dateTimeInMilliseconds) => getFirst20FlightDetails(dateTimeInMilliseconds))
+    switchMap((dateTimeInMilliseconds) => pollFirst20FlightDetails(dateTimeInMilliseconds))
 ).subscribe((flightDetails) => allFlightsStream$.next(flightDetails))

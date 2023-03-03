@@ -1,3 +1,5 @@
+// OBSERVER and EMITTER for polling the API
+
 import { Observable, concatMap, map, of, switchMap, timer } from "rxjs";
 import { fromFetch } from "rxjs/fetch";
 import { IFlight, IFlightAPIResponse, IFlights } from "../models/flight";
@@ -8,7 +10,7 @@ function isIFlightAPIResponse(result: IFlightAPIResponse | { error: boolean; mes
     return Object.keys(result).includes("states")
 }
 
-export function getFirst20FlightDetails(timeInMilliseconds: number): Observable<IFlights> {
+export function pollFirst20FlightDetails(timeInMilliseconds: number): Observable<IFlights> {
     return timer(0, 16000).pipe(
         concatMap(() => fromFetch(`${BASE_URL}${timeInMilliseconds}`).pipe(
             switchMap((response) => {
