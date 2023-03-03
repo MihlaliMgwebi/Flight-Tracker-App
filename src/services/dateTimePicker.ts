@@ -1,6 +1,6 @@
 import { filter, map, switchMap } from "rxjs";
 import { allFlightsStream$, dateTimeInMillisecondsStream$ } from "../main";
-import { pollFirst20FlightDetails } from "./api";
+import { pollFirst20FlightDetails } from "./api.service";
 
 function convertDateTimeToLocalUnixTimestampInSeconds(dateTimeInputValue: string): number {
     const MILLISECONDS_IN_SECOND: number = 1000;

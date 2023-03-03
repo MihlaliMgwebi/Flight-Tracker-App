@@ -1,6 +1,6 @@
 // OBSERVER and EMITTER for polling the API
 
-import { Observable, concatMap, map, of, switchMap, timer } from "rxjs";
+import { Observable, concatMap, fromEvent, map, of, switchMap, takeUntil, timer } from "rxjs";
 import { fromFetch } from "rxjs/fetch";
 import { IFlight, IFlightAPIResponse, IFlights } from "../models/flight";
 
@@ -10,8 +10,16 @@ function isIFlightAPIResponse(result: IFlightAPIResponse | { error: boolean; mes
     return Object.keys(result).includes("states")
 }
 
+let clicks: Observable<Event>;
+const dateTimePicker: HTMLInputElement | HTMLElement | null = document.getElementById('time-input__input-value');
+if (dateTimePicker && dateTimePicker instanceof HTMLInputElement) {
+    clicks = fromEvent(document, 'click');
+}
+
+
 export function pollFirst20FlightDetails(timeInMilliseconds: number): Observable<IFlights> {
     return timer(0, 16000).pipe(
+        takeUntil(clicks),
         concatMap(() => fromFetch(`${BASE_URL}${timeInMilliseconds}`).pipe(
             switchMap((response) => {
                 return (response.ok) ?
