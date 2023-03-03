@@ -47,8 +47,6 @@ export function pollFirst20FlightDetails(timeInMilliseconds: number): Observable
                             return flight;
                         })
                     }
-
-                    console.log("", flights)
                     return flights;
                 }
                 else {
