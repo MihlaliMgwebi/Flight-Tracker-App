@@ -1,23 +1,17 @@
 
 import { BehaviorSubject, combineLatestWith, map } from 'rxjs';
+import { IFlight, IFlights } from './models/flight';
+import { emitDateTimeInMillisecondsWhenUserPicksDateTime } from './services/dateTimePicker';
 
 export const dateTimeInMillisecondsStream$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 export const allFlightsStream$: BehaviorSubject<IFlights | undefined> = new BehaviorSubject<IFlights | undefined>(undefined);
 export const selectedFlightStream$: BehaviorSubject<string> = new BehaviorSubject<string>("");
+export const zoomToPostitionOnMap$: BehaviorSubject<{ latitude: number | null | undefined, longitude: number | null | undefined } | undefined> = new BehaviorSubject<{ latitude: number | null | undefined, longitude: number | null | undefined } | undefined>(undefined);
 
 emitDateTimeInMillisecondsWhenUserPicksDateTime();
 
-// src / main.ts
-// Behaviour subject
-// icao24
-// src / main.ts
-// Observer/Emitter
-// DOM Flight List.subscribe (flights => {
-//     render List
-//     Button.Onclick.next(icao24)
-// })
-allFlightsStream$.pipe(
-).subscribe((allFlights) => {
+
+allFlightsStream$.subscribe((allFlights) => {
   const allFlightSummaryAndDetailsContainer: HTMLDivElement | HTMLElement | null = document.getElementById('app-main__flights');
   if (allFlightSummaryAndDetailsContainer && allFlightSummaryAndDetailsContainer instanceof HTMLDivElement) {
     if (allFlights)
@@ -29,7 +23,7 @@ allFlightsStream$.pipe(
   }
   return null;
 })
-// src / component/ flight
+
 function createOneFlightSummaryAndDetailsContainer(flight: IFlight): HTMLDivElement {
   const flightSummaryAndDetailsContainer = document.createElement("div");
   flightSummaryAndDetailsContainer.className = "app-main__flight";
@@ -38,6 +32,7 @@ function createOneFlightSummaryAndDetailsContainer(flight: IFlight): HTMLDivElem
     flightSummaryAndDetailsContainer.appendChild(createFlightDetailsCard(flight));
   return flightSummaryAndDetailsContainer
 }
+
 function createFlightSummaryCollapsibleButton(flight: IFlight): HTMLButtonElement {
   const flightSummaryCollapsibleButton = document.createElement("button");
   const flightSummaryCollapsibleButtonId = `flight__summary--collapsible-${flight.icao24}`;
@@ -53,7 +48,7 @@ function createFlightSummaryCollapsibleButton(flight: IFlight): HTMLButtonElemen
   });
   return flightSummaryCollapsibleButton;
 }
-// smaller
+
 interface IFlightSVGAndTextandUnits {
   callsign: {
     svg: string;
@@ -111,6 +106,7 @@ function getFlightSVGAndTextandUnits(): IFlightSVGAndTextandUnits {
   };
   return flightDetails;
 }
+
 function createFlightDetailsCard(flight: IFlight) {
   const flightDetailsCard = document.createElement("div");
   flightDetailsCard.id = `flight__details-${flight.icao24}`;
@@ -129,12 +125,7 @@ function createFlightDetailsCard(flight: IFlight) {
   });
   return flightDetailsCard;
 }
-// src / main.ts
-// Observer/Emitter
-// pipe (clw)
-//[Combine with Latest Playground](https://stackblitz.com/edit/j8qf7v?file=index.js)
-// selectedFlightStream$.pipe(
-//   combineLatestWith(allFlightsStream$),
+
 allFlightsStream$.pipe(
   combineLatestWith(selectedFlightStream$),
   map(
@@ -155,52 +146,4 @@ allFlightsStream$.pipe(
     //DOM render card details
   }
   );
-//src /map.ts
-// Make map with markers
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import { IFlight, IFlights } from './models/flight';
-import { emitDateTimeInMillisecondsWhenUserPicksDateTime } from './services/dateTimePicker';
-export const arrivalIcon = L.icon({
-  iconUrl: "assets/airplane-arrival.svg",
-  iconSize: [30, 30],
-});
-export const departureIcon = L.icon({
-  iconUrl: "assets/airplane-departure.svg",
-  iconSize: [30, 30],
-});
-allFlightsStream$.subscribe((allFlights) => {
-  if (allFlights?.flights)
-    addMarkersToLeafletMap(allFlights)
-})
 
-const leafletMap = L.map('app-main__map').setView([51.505, -0.09], 2);
-
-function createLeafletMap() {
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, '
-  }).addTo(leafletMap);
-  leafletMap.invalidateSize();
-}
-// src main.ts --> local Storage
-createLeafletMap();
-function addMarkersToLeafletMap(allFlights: IFlights) {
-
-  if (allFlights)
-    allFlights.flights?.map((flight) => {
-      if (flight.latitude && flight.longitude)
-        L.marker([flight.latitude, flight.longitude], {
-          icon: flight.on_ground ? arrivalIcon : departureIcon,
-        })
-          .addTo(leafletMap)
-          .bindPopup(
-            `Flight ${flight.callsign} from ${flight.origin_country}`
-          ).on('click', () => {
-            if (flight.latitude && flight.longitude)
-              leafletMap.flyTo([flight.latitude, flight.longitude], 4, {
-                animate: true,
-                duration: 2
-              });
-          })
-    })
-};
