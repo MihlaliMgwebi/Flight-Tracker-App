@@ -1,93 +1,32 @@
-// OBSERVER and EMITTER for DOM Manipulation
-
-import { combineLatestWith, map } from "rxjs";
-import { allFlightsStream$, selectedFlightStream$ } from "../main";
-import { IFlight } from "../models/flight";
-
-// STEP 3. use flight details to create UI
-allFlightsStream$.subscribe((allFlights) => {
-    const allFlightSummaryAndDetailsContainer: HTMLDivElement | HTMLElement | null = document.getElementById('app-main__flights');
-    if (allFlightSummaryAndDetailsContainer && allFlightSummaryAndDetailsContainer instanceof HTMLDivElement) {
-        // clean up old UI: remove old flights
-        const listOfOldFlights = document.getElementById("app-main__flights")
-        if (listOfOldFlights)
-            Array.from(listOfOldFlights.children).forEach(oldFlight => oldFlight.remove());
-
-        if (allFlights)
-            return allFlights.flights?.map((flight) => {
-                allFlightSummaryAndDetailsContainer.appendChild(
-                    createOneFlightSummaryAndDetailsContainer(flight)
-                )
-            })
+interface IFlightCardDetails {
+    callsign: {
+        svg: string;
+        text: string;
+        units: string;
+    };
+    velocity: {
+        svg: string;
+        text: string;
+        units: string;
+    };
+    true_track: {
+        svg: string;
+        text: string;
+        units: string;
+    };
+    vertical_rate: {
+        svg: string;
+        text: string;
+        units: string;
     }
-    return null;
-})
-
-function createOneFlightSummaryAndDetailsContainer(flight: IFlight): HTMLDivElement {
-    const flightSummaryAndDetailsContainer = document.createElement("div");
-    flightSummaryAndDetailsContainer.className = "app-main__flight";
-    flightSummaryAndDetailsContainer.appendChild(createFlightSummaryCollapsibleButton(flight));
-    if (flight)
-        flightSummaryAndDetailsContainer.appendChild(createFlightDetailsCard(flight));
-    return flightSummaryAndDetailsContainer
+    geo_altitude: {
+        svg: string;
+        text: string;
+        units: string;
+    }
 }
 
-function createFlightSummaryCollapsibleButton(flight: IFlight): HTMLButtonElement {
-    const flightSummaryCollapsibleButton = document.createElement("button");
-    const flightSummaryCollapsibleButtonId = `flight__summary--collapsible-${flight.icao24}`;
-    flightSummaryCollapsibleButton.id = flightSummaryCollapsibleButtonId;
-    flightSummaryCollapsibleButton.className = `flight__summary--collapsible`;
-    flightSummaryCollapsibleButton.innerHTML = `Flight ${flight.callsign} from ${flight.origin_country}`;
-    flightSummaryCollapsibleButton.addEventListener("click", (event) => {
-        const button: HTMLButtonElement = event.target as HTMLButtonElement;
-        button?.classList.toggle("active");
-        button.nextElementSibling?.classList.toggle("hide");
-        if (flight && flight.icao24 != null)
-            selectedFlightStream$.next(flight.icao24)
-    });
-    return flightSummaryCollapsibleButton;
-}
-
-function createFlightDetailsCard(flight: IFlight) {
-    const flightDetailsCard = document.createElement("div");
-    flightDetailsCard.id = `flight__details-${flight.icao24}`;
-    // flightDetailsCard.className = `flight__details hide`;
-    Object.entries(getFlightSVGAndTextandUnits()).forEach((entry) => {
-        const [flightDetail, flightDetailSVGAndTextandUnits] = entry;
-        const flightDetailsSVG = document.createElement("p");
-        flightDetailsSVG.innerHTML = flightDetailSVGAndTextandUnits.svg;
-        const flightDetailsTextAndUnits = document.createElement("p");
-        flightDetailsTextAndUnits.innerHTML = `${flightDetailSVGAndTextandUnits.text} ${flight[flightDetail]} ${flightDetailSVGAndTextandUnits.units}`; //add data
-        const flightDetails = document.createElement("div");
-        flightDetails.id = `flight__detail-${flight[flightDetail]}`;
-        flightDetails.appendChild(flightDetailsSVG);
-        flightDetails.appendChild(flightDetailsTextAndUnits);
-        flightDetailsCard.appendChild(flightDetails);
-    });
-    return flightDetailsCard;
-}
-
-allFlightsStream$.pipe(
-    combineLatestWith(selectedFlightStream$),
-    map(
-        ([allFlights, selectedFlightIcao24]) => {
-            if (allFlights && selectedFlightIcao24) {
-                const flights: IFlight[] | null = allFlights?.flights;
-                if (flights)
-                    return flights.find(flight => flight.icao24 === selectedFlightIcao24)
-            }
-            return undefined
-        }
-    )
-)
-    .subscribe((selectedFlight: IFlight | undefined) => {
-        if (selectedFlight)
-            console.log(selectedFlight)
-        //MAP fly to 
-        //DOM render card details
-    });
-
-function getFlightSVGAndTextandUnits(): IIcon {
+export function getFlightSVGAndTextandUnits(): IFlightCardDetails {
     const flightDetails = {
         callsign: {
             svg: '<svg stroke="currentColor" fill="none" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>',

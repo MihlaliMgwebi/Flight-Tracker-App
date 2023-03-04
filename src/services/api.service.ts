@@ -1,16 +1,8 @@
-// OBSERVER and EMITTER for polling the API
-
-import { Observable, concatMap, fromEvent, map, of, switchMap, takeUntil, timer } from "rxjs";
+import { Observable, concatMap, map, of, switchMap, timer } from 'rxjs';
 import { fromFetch } from "rxjs/fetch";
-import { IFlight, IFlightAPIResponse, IFlights } from "../models/flight";
+import { IFlight, IFlightAPIResponse, IFlights } from '../models/flight';
 
 const BASE_URL = "https://opensky-network.org/api/states/all?extended=1&time=";
-
-let clicks: Observable<Event>;
-const dateTimePicker: HTMLInputElement | HTMLElement | null = document.getElementById('time-input__input-value');
-if (dateTimePicker && dateTimePicker instanceof HTMLInputElement) {
-    clicks = fromEvent(document, 'click');
-}
 
 function isIFlightAPIResponse(result: IFlightAPIResponse | { error: boolean; message: string; }): result is IFlightAPIResponse {
     return Object.keys(result).includes("states")
@@ -18,7 +10,6 @@ function isIFlightAPIResponse(result: IFlightAPIResponse | { error: boolean; mes
 
 export function pollFirst20FlightDetails(timeInMilliseconds: number): Observable<IFlights> {
     return timer(0, 16000).pipe(
-        takeUntil(clicks),
         concatMap(() => fromFetch(`${BASE_URL}${timeInMilliseconds}`).pipe(
             switchMap((response) => {
                 return (response.ok) ?
@@ -54,6 +45,7 @@ export function pollFirst20FlightDetails(timeInMilliseconds: number): Observable
                             return flight;
                         })
                     }
+
                     return flights;
                 }
                 else {
