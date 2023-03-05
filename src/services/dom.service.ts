@@ -1,10 +1,6 @@
-import { combineLatestWith, filter, map, switchMap, tap } from "rxjs";
-import { allFlightsStream$, dateTimeInMillisecondsStream$, dateTimePickerOnInput$, selectedFlightStream$, zoomToPostitionOnMap$ } from "../main";
+import { selectedFlightStream$ } from "../main";
 import { IFlight } from "../models/flight";
 import { getFlightSVGAndTextandUnits } from "../models/flightCardDetail";
-import { Utils } from "../utils";
-import { pollFirst20FlightDetails } from "./api.service";
-import { createLeafletMapWithMarkers } from "./map.service";
 
 // STEP 1:  Set Up DOM (helper function)
 export function defaultDateTimeInputMinDateToTomorrow(): void {
@@ -22,44 +18,8 @@ export function defaultDateTimeInputMinDateToTomorrow(): void {
         dateTimePicker?.setAttribute("min", tomorrowDate);
 }
 
-// STEP 2:  Emit date time inputted
-dateTimePickerOnInput$.subscribe((event: Event) => {
-    console.log(event)
-    const dateTimePicker = event.target as HTMLInputElement;
-    if (dateTimePicker && dateTimePicker.id === 'time-input__input-value') {
-        const dateTime: string = dateTimePicker.value;
-        dateTimeInMillisecondsStream$.next(dateTime)
-    }
-});
-
-// STEP 3:  Convert date time to milliseconds then use to poll flights
-dateTimeInMillisecondsStream$.pipe(
-    map((dateTime) => {
-        return (dateTime === undefined) ? "" : dateTime;
-    }),
-    filter((dateTime) => dateTime !== ""),
-    map((dateTime) => Utils.convertDateTimeToLocalUnixTimestampInSeconds(dateTime)),
-    tap(() => showSpinner()),
-    switchMap((dateTimeInMilliseconds) => pollFirst20FlightDetails(dateTimeInMilliseconds)),
-    tap(() => hideSpinner()),
-).subscribe((flightDetails) => allFlightsStream$.next(flightDetails))
-
-// STEP 4: Render DOM
-allFlightsStream$.subscribe((allFlights) => {
-    const allFlightSummaryAndDetailsContainer: HTMLDivElement | HTMLElement | null = document.getElementById('app-main__flights');
-    if (allFlightSummaryAndDetailsContainer && allFlightSummaryAndDetailsContainer instanceof HTMLDivElement) {
-        if (allFlights)
-            return allFlights.flights?.map((flight) => {
-                allFlightSummaryAndDetailsContainer.appendChild(
-                    createOneFlightSummaryAndDetailsContainer(flight)
-                )
-            })
-    }
-    return null;
-})
-
 // STEP 4.1: Call function to render both button and card
-function createOneFlightSummaryAndDetailsContainer(flight: IFlight): HTMLDivElement {
+export function createOneFlightSummaryAndDetailsContainer(flight: IFlight): HTMLDivElement {
     const flightSummaryAndDetailsContainer = document.createElement("div");
     flightSummaryAndDetailsContainer.className = "app-main__flight";
     flightSummaryAndDetailsContainer.appendChild(createFlightSummaryCollapsibleButton(flight));
@@ -105,47 +65,10 @@ function createFlightDetailsCard(flight: IFlight) {
     return flightDetailsCard;
 }
 
-// STEP 5: When click on button, display flight details in card and zoom to location on map
-allFlightsStream$.pipe(
-    combineLatestWith(selectedFlightStream$),
-    map(
-        ([allFlights, selectedFlightIcao24]) => {
-            if (allFlights && selectedFlightIcao24) {
-                const flights: IFlight[] | null = allFlights?.flights;
-                if (flights)
-                    return flights.find(flight => flight.icao24 === selectedFlightIcao24)
-            }
-            return undefined
-        }
-    )
-)
-    .subscribe((selectedFlight: IFlight | undefined) => {
-        if (selectedFlight) {
-            zoomToPostitionOnMap$.next({ latitude: selectedFlight?.latitude, longitude: selectedFlight?.longitude })
-
-            const selectedFlightDetailsCard = document.getElementById(`flight__details-${selectedFlight?.icao24}`);
-            if (selectedFlightDetailsCard instanceof HTMLDivElement) {
-                //hide all cards
-                const allFlightsDetailsCards = document.getElementsByClassName(`flight__details`);
-                Array.from(allFlightsDetailsCards).forEach(card => {
-                    if (!card.classList.contains('hide'))
-                        card.classList.add('hide');
-                })
-                // show selected card
-                selectedFlightDetailsCard.classList.remove('hide')
-            }
-        }
-    });
-
-allFlightsStream$.subscribe((allFlights) => {
-    if (allFlights?.flights)
-        createLeafletMapWithMarkers(allFlights)
-})
-
-function showSpinner() {
+export function showSpinner() {
     document.getElementById("app-main__spinner")?.classList.add("show-spinner");
 }
 
-function hideSpinner() {
+export function hideSpinner() {
     document.getElementById("app-main__spinner")?.classList.remove("show-spinner");
 }
