@@ -41,11 +41,13 @@ function createFlightSummaryCollapsibleButton(flight: IFlight): HTMLButtonElemen
 
     //render button
     const flightSummaryCollapsibleButton = document.createElement("button");
+    flightSummaryCollapsibleButton.setAttribute("aria-expanded", "false");
     const flightSummaryCollapsibleButtonId = `flight__summary--collapsible-${flight.icao24}`;
     flightSummaryCollapsibleButton.id = flightSummaryCollapsibleButtonId;
     flightSummaryCollapsibleButton.classList.add("flight__summary--collapsible", "bg-custom-grey", "w-full", "border-none", "p-4", "border", "border-custom-darkGrey", "border-b-1", "hover:bg-custom-active")
     flightSummaryCollapsibleButton.innerHTML = `Flight ${flight.callsign} from ${flight.origin_country}`;
     flightSummaryCollapsibleButton.addEventListener("click", (event) => {
+        flightSummaryCollapsibleButton.setAttribute("aria-expanded", "true");
         const activeButton: HTMLButtonElement = event.target as HTMLButtonElement;
         const allButtons: HTMLCollectionOf<Element> = document.getElementsByClassName("flight__summary--collapsible")
         activeButton?.classList.add("bg-custom-active");
@@ -54,6 +56,7 @@ function createFlightSummaryCollapsibleButton(flight: IFlight): HTMLButtonElemen
         Array.from(allButtons).forEach((inactiveButton) => {
             if (inactiveButton !== activeButton) {
                 (inactiveButton as HTMLButtonElement).nextElementSibling?.classList.add("hidden");
+                inactiveButton.setAttribute("aria-expanded", "false");
             }
         });
 
@@ -93,3 +96,4 @@ export function showSpinner() {
 export function hideSpinner() {
     document.getElementById("app-main__spinner")?.classList.add("hidden");
 }
+
