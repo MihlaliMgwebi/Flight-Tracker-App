@@ -11,10 +11,6 @@ function isIFlightAPIResponse(result: IFlightAPIResponse | { error: boolean; mes
 export function pollFirst20FlightDetails(timeInMilliseconds: number): Observable<IFlights> {
     const localStorageKey = `pollFirst20FlightDetails:${timeInMilliseconds}`;
     const cachedResponse = localStorage.getItem(localStorageKey);
-    if (cachedResponse) {
-        const cachedFlights = JSON.parse(cachedResponse);
-        return of(cachedFlights);
-    }
 
     return timer(0, 16000).pipe(
         take(10),
@@ -54,17 +50,27 @@ export function pollFirst20FlightDetails(timeInMilliseconds: number): Observable
                                 return flight;
                             })
                         }
-
                         localStorage.setItem(localStorageKey, JSON.stringify(flights));
-
                         return flights;
                     }
                     else {
-                        
-                        return {
-                            flights: []
+                        if (cachedResponse) {
+                            try {
+                                const cachedFlights = JSON.parse(cachedResponse);
+                                return cachedFlights;
+                            } catch (e) {
+                                //console.error("Failed to parse cached response", e);
+                                const message: string = `Failed to parse cached response: ${e}`;
+                                console.error(message)
+                            }
                         }
+                        const emptyObject: IFlights = { flights: [] };
+                        const message: string = `No flights available:${result.message}`;
+                        console.error(message);
+                        return emptyObject;
                     }
                 })
-            )))
+            )
+        )
+    );
 }
