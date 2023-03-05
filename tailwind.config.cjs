@@ -10,6 +10,7 @@ module.exports = {
         custom: {
           blue: "rgb(77, 153, 231)",
           darkGrey: "#333",
+          grey: "#e7e7e7",
           lightGrey: "#f1f1f1",
         },
       },

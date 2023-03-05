@@ -30,10 +30,15 @@ export function createOneFlightSummaryAndDetailsContainer(flight: IFlight): HTML
 
 // STEP 4.2: Render Button
 function createFlightSummaryCollapsibleButton(flight: IFlight): HTMLButtonElement {
+    //style the container that contains the list of buttons
+    const flightSummaryCollapsibleButtonContainer = document.getElementById("app-main")
+    flightSummaryCollapsibleButtonContainer?.classList.add("shadow-whitesmoke")
+
+    //render button
     const flightSummaryCollapsibleButton = document.createElement("button");
     const flightSummaryCollapsibleButtonId = `flight__summary--collapsible-${flight.icao24}`;
     flightSummaryCollapsibleButton.id = flightSummaryCollapsibleButtonId;
-    flightSummaryCollapsibleButton.className = `flight__summary--collapsible`;
+    flightSummaryCollapsibleButton.classList.add("flight__summary--collapsible", "bg-custom", "grey", "w-full", "border-none", "p-4", "border", "border-custom-darkGrey", "border-b-1")
     flightSummaryCollapsibleButton.innerHTML = `Flight ${flight.callsign} from ${flight.origin_country}`;
     flightSummaryCollapsibleButton.addEventListener("click", (event) => {
         const button: HTMLButtonElement = event.target as HTMLButtonElement;
@@ -50,6 +55,7 @@ function createFlightSummaryCollapsibleButton(flight: IFlight): HTMLButtonElemen
 function createFlightDetailsCard(flight: IFlight) {
     const flightDetailsCard = document.createElement("div");
     flightDetailsCard.id = `flight__details-${flight.icao24}`;
+    flightDetailsCard.className = "flex gap-4"
     Object.entries(getFlightSVGAndTextandUnits()).forEach((entry) => {
         const [flightDetail, flightDetailSVGAndTextandUnits] = entry;
         const flightDetailsSVG = document.createElement("p");
@@ -66,9 +72,9 @@ function createFlightDetailsCard(flight: IFlight) {
 }
 
 export function showSpinner() {
-    document.getElementById("app-main__spinner")?.classList.add("show-spinner");
+    document.getElementById("app-main__spinner")?.classList.remove("hidden");
 }
 
 export function hideSpinner() {
-    document.getElementById("app-main__spinner")?.classList.remove("show-spinner");
+    document.getElementById("app-main__spinner")?.classList.add("hidden");
 }
