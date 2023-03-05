@@ -12,7 +12,7 @@ const departureIcon = L.icon({
     iconSize: [30, 30],
 });
 
-const leafletMap = L.map('app-main__map').setView([51.505, -0.09], 2);
+export const leafletMap = L.map('app-main__map').setView([51.505, -0.09], 2);
 export function createLeafletMapWithMarkers(allFlights: IFlights) {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, '
@@ -34,13 +34,4 @@ export function createLeafletMapWithMarkers(allFlights: IFlights) {
                     })
         })
 };
-
-export const zoomToPostitionOnMap = zoomToPostitionOnMap$.subscribe((LatLngTuple) => {
-    if (LatLngTuple?.latitude && LatLngTuple.longitude) {
-        leafletMap.flyTo([LatLngTuple.latitude, LatLngTuple.longitude], 4, {
-            animate: true,
-            duration: 2
-        });
-    }
-})
 

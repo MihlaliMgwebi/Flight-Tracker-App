@@ -1,10 +1,6 @@
-import { combineLatestWith, filter, map, switchMap, tap } from "rxjs";
-import { allFlightsStream$, dateTimeInMillisecondsStream$, dateTimePickerOnInput$, selectedFlightStream$, zoomToPostitionOnMap$ } from "../main";
+import { selectedFlightStream$ } from "../main";
 import { IFlight } from "../models/flight";
 import { getFlightSVGAndTextandUnits } from "../models/flightCardDetail";
-import { Utils } from "../utils";
-import { pollFirst20FlightDetails } from "./api.service";
-import { createLeafletMapWithMarkers } from "./map.service";
 
 // STEP 1:  Set Up DOM (helper function)
 export function defaultDateTimeInputMinDateToTomorrow(): void {
@@ -22,46 +18,15 @@ export function defaultDateTimeInputMinDateToTomorrow(): void {
         dateTimePicker?.setAttribute("min", tomorrowDate);
 }
 
-// STEP 2:  Emit date time inputted
-dateTimePickerOnInput$.subscribe((event: Event) => {
-    console.log(event)
-    const dateTimePicker = event.target as HTMLInputElement;
-    if (dateTimePicker && dateTimePicker.id === 'time-input__input-value') {
-        const dateTime: string = dateTimePicker.value;
-        dateTimeInMillisecondsStream$.next(dateTime)
-    }
-});
-
-// STEP 3:  Convert date time to milliseconds then use to poll flights
-dateTimeInMillisecondsStream$.pipe(
-    map((dateTime) => {
-        return (dateTime === undefined) ? "" : dateTime;
-    }),
-    filter((dateTime) => dateTime !== ""),
-    map((dateTime) => Utils.convertDateTimeToLocalUnixTimestampInSeconds(dateTime)),
-    tap(() => showSpinner()),
-    switchMap((dateTimeInMilliseconds) => pollFirst20FlightDetails(dateTimeInMilliseconds)),
-    tap(() => hideSpinner()),
-).subscribe((flightDetails) => allFlightsStream$.next(flightDetails))
-
-// STEP 4: Render DOM
-allFlightsStream$.subscribe((allFlights) => {
-    const allFlightSummaryAndDetailsContainer: HTMLDivElement | HTMLElement | null = document.getElementById('app-main__flights');
-    if (allFlightSummaryAndDetailsContainer && allFlightSummaryAndDetailsContainer instanceof HTMLDivElement) {
-        if (allFlights)
-            return allFlights.flights?.map((flight) => {
-                allFlightSummaryAndDetailsContainer.appendChild(
-                    createOneFlightSummaryAndDetailsContainer(flight)
-                )
-            })
-    }
-    return null;
-})
-
 // STEP 4.1: Call function to render both button and card
-function createOneFlightSummaryAndDetailsContainer(flight: IFlight): HTMLDivElement {
+export function createOneFlightSummaryAndDetailsContainer(flight: IFlight): HTMLDivElement {
+    // hide text
+    const landingPageText = document.getElementById("app-main__text")
+    landingPageText?.classList.add("hidden")
+
+    // append flight summary and details to dom
     const flightSummaryAndDetailsContainer = document.createElement("div");
-    flightSummaryAndDetailsContainer.className = "app-main__flight";
+    flightSummaryAndDetailsContainer.className = "app-main__flight md:w-1/2 lg:w-full";
     flightSummaryAndDetailsContainer.appendChild(createFlightSummaryCollapsibleButton(flight));
     if (flight)
         flightSummaryAndDetailsContainer.appendChild(createFlightDetailsCard(flight));
@@ -70,15 +35,28 @@ function createOneFlightSummaryAndDetailsContainer(flight: IFlight): HTMLDivElem
 
 // STEP 4.2: Render Button
 function createFlightSummaryCollapsibleButton(flight: IFlight): HTMLButtonElement {
+    //style the container that contains the list of buttons
+    const flightSummaryCollapsibleButtonContainer = document.getElementById("app-main")
+    flightSummaryCollapsibleButtonContainer?.classList.add("shadow-whitesmoke")
+
+    //render button
     const flightSummaryCollapsibleButton = document.createElement("button");
     const flightSummaryCollapsibleButtonId = `flight__summary--collapsible-${flight.icao24}`;
     flightSummaryCollapsibleButton.id = flightSummaryCollapsibleButtonId;
-    flightSummaryCollapsibleButton.className = `flight__summary--collapsible`;
+    flightSummaryCollapsibleButton.classList.add("flight__summary--collapsible", "bg-custom-grey", "w-full", "border-none", "p-4", "border", "border-custom-darkGrey", "border-b-1", "hover:bg-custom-active")
     flightSummaryCollapsibleButton.innerHTML = `Flight ${flight.callsign} from ${flight.origin_country}`;
     flightSummaryCollapsibleButton.addEventListener("click", (event) => {
-        const button: HTMLButtonElement = event.target as HTMLButtonElement;
-        button?.classList.toggle("active");
-        button.nextElementSibling?.classList.toggle("hide");
+        const activeButton: HTMLButtonElement = event.target as HTMLButtonElement;
+        const allButtons: HTMLCollectionOf<Element> = document.getElementsByClassName("flight__summary--collapsible")
+        activeButton?.classList.add("bg-custom-active");
+        activeButton.nextElementSibling?.classList.toggle("hidden")
+        // hide card details of inactive buttons
+        Array.from(allButtons).forEach((inactiveButton) => {
+            if (inactiveButton !== activeButton) {
+                (inactiveButton as HTMLButtonElement).nextElementSibling?.classList.add("hidden");
+            }
+        });
+
         if (flight && flight.icao24 != null)
             selectedFlightStream$.next(flight.icao24)
     });
@@ -90,13 +68,16 @@ function createFlightSummaryCollapsibleButton(flight: IFlight): HTMLButtonElemen
 function createFlightDetailsCard(flight: IFlight) {
     const flightDetailsCard = document.createElement("div");
     flightDetailsCard.id = `flight__details-${flight.icao24}`;
+    flightDetailsCard.classList.add("flex", "flex-col", "items-center", "bg-custom-lightGrey", "p-2", "hidden");
     Object.entries(getFlightSVGAndTextandUnits()).forEach((entry) => {
         const [flightDetail, flightDetailSVGAndTextandUnits] = entry;
         const flightDetailsSVG = document.createElement("p");
+        flightDetailsSVG.classList.add("p-2")
         flightDetailsSVG.innerHTML = flightDetailSVGAndTextandUnits.svg;
         const flightDetailsTextAndUnits = document.createElement("p");
         flightDetailsTextAndUnits.innerHTML = `${flightDetailSVGAndTextandUnits.text} ${flight[flightDetail]} ${flightDetailSVGAndTextandUnits.units}`; //add data
         const flightDetails = document.createElement("div");
+        flightDetails.classList.add("flex", "gap-4")
         flightDetails.id = `flight__detail-${flight[flightDetail]}`;
         flightDetails.appendChild(flightDetailsSVG);
         flightDetails.appendChild(flightDetailsTextAndUnits);
@@ -105,47 +86,10 @@ function createFlightDetailsCard(flight: IFlight) {
     return flightDetailsCard;
 }
 
-// STEP 5: When click on button, display flight details in card and zoom to location on map
-allFlightsStream$.pipe(
-    combineLatestWith(selectedFlightStream$),
-    map(
-        ([allFlights, selectedFlightIcao24]) => {
-            if (allFlights && selectedFlightIcao24) {
-                const flights: IFlight[] | null = allFlights?.flights;
-                if (flights)
-                    return flights.find(flight => flight.icao24 === selectedFlightIcao24)
-            }
-            return undefined
-        }
-    )
-)
-    .subscribe((selectedFlight: IFlight | undefined) => {
-        if (selectedFlight) {
-            zoomToPostitionOnMap$.next({ latitude: selectedFlight?.latitude, longitude: selectedFlight?.longitude })
-
-            const selectedFlightDetailsCard = document.getElementById(`flight__details-${selectedFlight?.icao24}`);
-            if (selectedFlightDetailsCard instanceof HTMLDivElement) {
-                //hide all cards
-                const allFlightsDetailsCards = document.getElementsByClassName(`flight__details`);
-                Array.from(allFlightsDetailsCards).forEach(card => {
-                    if (!card.classList.contains('hide'))
-                        card.classList.add('hide');
-                })
-                // show selected card
-                selectedFlightDetailsCard.classList.remove('hide')
-            }
-        }
-    });
-
-allFlightsStream$.subscribe((allFlights) => {
-    if (allFlights?.flights)
-        createLeafletMapWithMarkers(allFlights)
-})
-
-function showSpinner() {
-    document.getElementById("app-main__spinner")?.classList.add("show-spinner");
+export function showSpinner() {
+    document.getElementById("app-main__spinner")?.classList.remove("hidden");
 }
 
-function hideSpinner() {
-    document.getElementById("app-main__spinner")?.classList.remove("show-spinner");
+export function hideSpinner() {
+    document.getElementById("app-main__spinner")?.classList.add("hidden");
 }
