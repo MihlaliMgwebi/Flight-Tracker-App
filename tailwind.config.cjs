@@ -12,6 +12,7 @@ module.exports = {
           darkGrey: "#333",
           grey: "#e7e7e7",
           lightGrey: "#f1f1f1",
+          active: "#d4d4d4",
         },
       },
       boxShadow: {

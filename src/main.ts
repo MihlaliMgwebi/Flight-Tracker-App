@@ -60,9 +60,8 @@ allFlightsStream$.pipe(
       if (selectedFlightDetailsCard instanceof HTMLDivElement) {
         //hide all cards
         const allFlightsDetailsCards = document.getElementsByClassName(`flight__details`);
-        Array.from(allFlightsDetailsCards).forEach(card => {
-          if (!card.classList.contains('hidden'))
-            card.classList.add('hidden');
+        Array.from(allFlightsDetailsCards).forEach(eachFlightsDetailsCards => {
+          eachFlightsDetailsCards.classList.add('hidden')
         })
         // show selected card
         selectedFlightDetailsCard.classList.remove('hidden')

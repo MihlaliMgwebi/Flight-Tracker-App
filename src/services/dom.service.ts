@@ -20,6 +20,11 @@ export function defaultDateTimeInputMinDateToTomorrow(): void {
 
 // STEP 4.1: Call function to render both button and card
 export function createOneFlightSummaryAndDetailsContainer(flight: IFlight): HTMLDivElement {
+    // hide text
+    const landingPageText = document.getElementById("dateTimeInMillisecondsStream")
+    landingPageText?.classList.add("hidden")
+
+    // append flight summary and details to dom
     const flightSummaryAndDetailsContainer = document.createElement("div");
     flightSummaryAndDetailsContainer.className = "app-main__flight";
     flightSummaryAndDetailsContainer.appendChild(createFlightSummaryCollapsibleButton(flight));
@@ -38,12 +43,20 @@ function createFlightSummaryCollapsibleButton(flight: IFlight): HTMLButtonElemen
     const flightSummaryCollapsibleButton = document.createElement("button");
     const flightSummaryCollapsibleButtonId = `flight__summary--collapsible-${flight.icao24}`;
     flightSummaryCollapsibleButton.id = flightSummaryCollapsibleButtonId;
-    flightSummaryCollapsibleButton.classList.add("flight__summary--collapsible", "bg-custom-grey", "w-full", "border-none", "p-4", "border", "border-custom-darkGrey", "border-b-1")
+    flightSummaryCollapsibleButton.classList.add("flight__summary--collapsible", "bg-custom-grey", "w-full", "border-none", "p-4", "border", "border-custom-darkGrey", "border-b-1", "hover:bg-custom-active")
     flightSummaryCollapsibleButton.innerHTML = `Flight ${flight.callsign} from ${flight.origin_country}`;
     flightSummaryCollapsibleButton.addEventListener("click", (event) => {
-        const button: HTMLButtonElement = event.target as HTMLButtonElement;
-        button?.classList.toggle("active");
-        button.nextElementSibling?.classList.toggle("hidden");
+        const activeButton: HTMLButtonElement = event.target as HTMLButtonElement;
+        const allButtons: HTMLCollectionOf<Element> = document.getElementsByClassName("flight__summary--collapsible")
+        activeButton?.classList.add("bg-custom-active");
+        activeButton.nextElementSibling?.classList.toggle("hidden")
+        // hide card details of inactive buttons
+        Array.from(allButtons).forEach((inactiveButton) => {
+            if (inactiveButton !== activeButton) {
+                (inactiveButton as HTMLButtonElement).nextElementSibling?.classList.add("hidden");
+            }
+        });
+
         if (flight && flight.icao24 != null)
             selectedFlightStream$.next(flight.icao24)
     });
