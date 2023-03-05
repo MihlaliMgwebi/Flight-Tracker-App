@@ -1,6 +1,6 @@
-import { Observable, concatMap, from, map, of, switchMap, timer } from 'rxjs';
+import { Observable, concatMap, map, of, switchMap, timer } from 'rxjs';
+import { fromFetch } from 'rxjs/fetch';
 import { IFlight, IFlightAPIResponse, IFlights } from '../models/flight';
-
 const BASE_URL = "https://opensky-network.org/api/states/all?extended=1&time=";
 
 function isIFlightAPIResponse(result: IFlightAPIResponse | { error: boolean; message: string; }): result is IFlightAPIResponse {
@@ -8,11 +8,11 @@ function isIFlightAPIResponse(result: IFlightAPIResponse | { error: boolean; mes
 }
 
 export function pollFirst20FlightDetails(timeInMilliseconds: number): Observable<IFlights> {
-    const url = 'src/services/data.json';
+    // const url = 'src/services/data.json';
     return timer(0, 16000).pipe(
         concatMap(() =>
-            // fromFetch(`${BASE_URL}${timeInMilliseconds}`).pipe(
-            from(fetch(url)).pipe(
+            fromFetch(`${BASE_URL}${timeInMilliseconds}`).pipe(
+                // from(fetch(url)).pipe(
                 switchMap((response) => {
                     return (response.ok) ?
                         response.json() as Promise<IFlightAPIResponse>//[Zod](https://github.com/colinhacks/zod#basic-usage)
