@@ -1,7 +1,7 @@
 import { BehaviorSubject, combineLatestWith, filter, fromEvent, map, switchMap, tap } from 'rxjs';
 import { IFlight, IFlights } from './models/flight';
 import { pollFirst20FlightDetails } from './services/api.service';
-import { createOneFlightSummaryAndDetailsContainer, defaultDateTimeInputMinDateToTomorrow, hideSpinner, showSpinner } from './services/dom.service';
+import { createOneFlightSummaryAndDetailsContainer, defaultDateTimeInputMinDateToTomorrow, hideSpinner, showLeafletMap, showSpinner } from './services/dom.service';
 import { createLeafletMapWithMarkers, leafletMap } from './services/map.service';
 import { Utils } from './utils';
 
@@ -20,8 +20,6 @@ setUpDomWhenPageLoadedOrReloaded$.subscribe(_ => {
 // STEP 2:  Emit date time inputted
 dateTimePickerOnInput$.subscribe((event: Event) => {
   const dateTimePicker = event.target as HTMLInputElement;
-  const leafletMapContainer = document.getElementById('app-main__map')
-  leafletMapContainer?.classList.remove('invisible')
   if (dateTimePicker && dateTimePicker.id === 'time-input__input-value') {
     const dateTime: string = dateTimePicker.value;
     dateTimeInMillisecondsStream$.next(dateTime)
@@ -34,10 +32,11 @@ dateTimeInMillisecondsStream$.pipe(
     return (dateTime === undefined) ? "" : dateTime;
   }),
   filter((dateTime) => dateTime !== ""),
-  map((dateTime) => Utils.convertDateTimeToLocalUnixTimestampInSeconds(dateTime)),
   tap(() => showSpinner()),
+  map((dateTime) => Utils.convertDateTimeToLocalUnixTimestampInSeconds(dateTime)),
   switchMap((dateTimeInMilliseconds) => pollFirst20FlightDetails(dateTimeInMilliseconds)),
   tap(() => hideSpinner()),
+  tap(() => showLeafletMap()),
 ).subscribe((flightDetails) => allFlightsStream$.next(flightDetails))
 
 // STEP 5: When click on button, display flight details in card and zoom to location on map

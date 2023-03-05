@@ -90,10 +90,18 @@ function createFlightDetailsCard(flight: IFlight) {
 }
 
 export function showSpinner() {
-    document.getElementById("app-main__spinner")?.classList.remove("hidden");
+    const spinner = document.getElementById("app-main__spinner")
+    spinner?.classList.remove("hidden");
+    spinner?.classList.add("flex", "justify-center", "items-center");
 }
 
 export function hideSpinner() {
-    document.getElementById("app-main__spinner")?.classList.add("hidden");
+    const spinner = document.getElementById("app-main__spinner")
+    spinner?.classList.add("hidden");
+    spinner?.classList.remove("flex", "justify-center", "items-center");
 }
 
+export function showLeafletMap() {
+    const leafletMapContainer = document.getElementById('app-main__map')
+    leafletMapContainer?.classList.remove('invisible')
+}
