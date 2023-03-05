@@ -1,6 +1,7 @@
-import { Observable, concatMap, map, of, switchMap, timer } from 'rxjs';
+import { Observable, concatMap, map, of, switchMap, take, timer } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { IFlight, IFlightAPIResponse, IFlights } from '../models/flight';
+
 const BASE_URL = "https://opensky-network.org/api/states/all?extended=1&time=";
 
 function isIFlightAPIResponse(result: IFlightAPIResponse | { error: boolean; message: string; }): result is IFlightAPIResponse {
@@ -8,11 +9,17 @@ function isIFlightAPIResponse(result: IFlightAPIResponse | { error: boolean; mes
 }
 
 export function pollFirst20FlightDetails(timeInMilliseconds: number): Observable<IFlights> {
-    // const url = 'src/services/data.json';
+    const localStorageKey = `pollFirst20FlightDetails:${timeInMilliseconds}`;
+    const cachedResponse = localStorage.getItem(localStorageKey);
+    if (cachedResponse) {
+        const cachedFlights = JSON.parse(cachedResponse);
+        return of(cachedFlights);
+    }
+
     return timer(0, 16000).pipe(
+        take(10),
         concatMap(() =>
             fromFetch(`${BASE_URL}${timeInMilliseconds}`).pipe(
-                // from(fetch(url)).pipe(
                 switchMap((response) => {
                     return (response.ok) ?
                         response.json() as Promise<IFlightAPIResponse>//[Zod](https://github.com/colinhacks/zod#basic-usage)
@@ -48,9 +55,12 @@ export function pollFirst20FlightDetails(timeInMilliseconds: number): Observable
                             })
                         }
 
+                        localStorage.setItem(localStorageKey, JSON.stringify(flights));
+
                         return flights;
                     }
                     else {
+                        
                         return {
                             flights: []
                         }
