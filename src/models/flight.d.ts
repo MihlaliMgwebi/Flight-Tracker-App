@@ -1,18 +1,10 @@
-
+// src / flight.d.ts
 export interface IFlightAPIResponse {
     time: number,
-    states: IFlight[] | null;
+    states: (boolean | string | number | number[])[][];//check preview in netwrok tab
 }
-
-// [Extend interfaces](https://www.typescriptlang.org/docs/handbook/interfaces.html#extending-interfaces)
-//     interface IMap {
-//     icao24: string;
-//     longitude: number | null;
-//     latitude: number | null;
-// }
-
-
-interface IFlight {//extends IMap {
+interface IFlight {
+    [key: string]: string | null | number | boolean | number[] | undefined;
     icao24: string;
     callsign: string | null;
     origin_country: string;
@@ -32,8 +24,6 @@ interface IFlight {//extends IMap {
     position_source: number | null;
     category?: number
 }
-
 export interface IFlights {
     flights: IFlight[] | null;
 }
-

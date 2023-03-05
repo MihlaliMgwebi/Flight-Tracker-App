@@ -22,7 +22,16 @@ I made a typo amd realised that if I use the wrong numeric index, I could get th
 
 Opensky won't send me an email or call me if they update their API and numeric indexes refer to other flight details because added or changed properties.
 
-## 4. How to store API response in seperate interfaces: Map and Flight (extention of Map)
+## 4. Subscriptions instead of function calls
+
+I was calling a function so that the value emitted by the obseravble could be passed as a parameter. This defeats the purpose of the observable.
+
+## 5. TS does not know the type of my API call response object
+
+My api call response object had the possibility to come back as either of 2 types:
+A. IFlightAPIResponse - an interface that defines a response object returned by some flight API with a property called states.
+OR
+B. { error: boolean; message: string; } - an object with two properties: error and message, used to represent an error response.
 
 ### Action and Result.
 
@@ -37,6 +46,22 @@ Recalled indexable types from documentation and implemented as advised.= with re
 ## 3. String based indexing
 
 MDN(https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_Accessors) and AirBNB(https://github.com/airbnb/javascript#objects) say that string-based indexing is more flexible and more reliable when properties are added or changed.
+
+## 4. Using rjxs operators
+
+I set up a stream using the fromEvent function from the rxjs library.
+The fromEvent stream is set up to listen for input events on a specific HTML input element, obtained using the getTimeHTMLInputElement() function.
+The map operator is then applied to the stream to transform the events emitted by the fromEvent observable.
+The map takes the Event object emitted by the fromEvent observable, casts it to an HTMLInputElement, and retrieves the current value of the input element using the .value property.
+This stream can be subscribed to in order to receive and use the input value in an API call or other operations.
+
+## 5. User Defined Type Guard Function and TS predicates
+
+The purpose of the function is to check whether the result parameter is of type IFlightAPIResponse and return a boolean value that indicates the result of this check.
+
+The 'result is IFlightAPIResponse' syntax is used to define a type predicate that TypeScript can use to narrow down the type of the result parameter within the function. This predicate indicates that if the condition within the function's body is true, then result is of type IFlightAPIResponse.
+
+In this case, the function checks if the result parameter has a property called states using the Object.keys() method. If the states property exists, the function returns true, indicating that result is of type IFlightAPIResponse.
 
 ### Learning
 
@@ -57,3 +82,16 @@ Using numeric indexing can make sense in specific situations where the data bein
 Using numeric indexing on an object built off an API response can be problematic because it assumes that the object's properties have a fixed and predictable order, which may not always be the case.
 
 Latsly, numeric indexing can make the code harder to read and maintain.
+
+## 4. Rxjs Operator combinations
+
+I can use a combination of operators to form one line of code that emits exactly what I want.
+
+## 5 Benefits of UDT Guard Function
+
+By using this type guard function, I can use the result parameter in a type-safe manner within the rest of my code. If the function returns true, TypeScript will treat result as of type IFlightAPIResponse and allow me to access its properties without any compilation errors. If the function returns false, TypeScript will treat result as the error object type and allow me to access its error and message properties instead.
+
+HELP:
+
+- Clean up subscriptions
+- Map won't bloody hide
