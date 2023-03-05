@@ -90,7 +90,6 @@ function createFlightSummaryCollapsibleButton(flight: IFlight): HTMLButtonElemen
 function createFlightDetailsCard(flight: IFlight) {
     const flightDetailsCard = document.createElement("div");
     flightDetailsCard.id = `flight__details-${flight.icao24}`;
-    // flightDetailsCard.className = `flight__details hide`;
     Object.entries(getFlightSVGAndTextandUnits()).forEach((entry) => {
         const [flightDetail, flightDetailSVGAndTextandUnits] = entry;
         const flightDetailsSVG = document.createElement("p");
