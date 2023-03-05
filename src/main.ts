@@ -3,7 +3,6 @@ import { IFlight, IFlights } from './models/flight';
 import { pollFirst20FlightDetails } from './services/api.service';
 import { createOneFlightSummaryAndDetailsContainer, defaultDateTimeInputMinDateToTomorrow, hideSpinner, showSpinner } from './services/dom.service';
 import { createLeafletMapWithMarkers, leafletMap } from './services/map.service';
-import './style.css';
 import { Utils } from './utils';
 
 export const setUpDomWhenPageLoadedOrReloaded$ = fromEvent(window, 'load');
