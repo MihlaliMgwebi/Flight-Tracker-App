@@ -38,12 +38,12 @@ function createFlightSummaryCollapsibleButton(flight: IFlight): HTMLButtonElemen
     const flightSummaryCollapsibleButton = document.createElement("button");
     const flightSummaryCollapsibleButtonId = `flight__summary--collapsible-${flight.icao24}`;
     flightSummaryCollapsibleButton.id = flightSummaryCollapsibleButtonId;
-    flightSummaryCollapsibleButton.classList.add("flight__summary--collapsible", "bg-custom", "grey", "w-full", "border-none", "p-4", "border", "border-custom-darkGrey", "border-b-1")
+    flightSummaryCollapsibleButton.classList.add("flight__summary--collapsible", "bg-custom-grey", "w-full", "border-none", "p-4", "border", "border-custom-darkGrey", "border-b-1")
     flightSummaryCollapsibleButton.innerHTML = `Flight ${flight.callsign} from ${flight.origin_country}`;
     flightSummaryCollapsibleButton.addEventListener("click", (event) => {
         const button: HTMLButtonElement = event.target as HTMLButtonElement;
         button?.classList.toggle("active");
-        button.nextElementSibling?.classList.toggle("hide");
+        button.nextElementSibling?.classList.toggle("hidden");
         if (flight && flight.icao24 != null)
             selectedFlightStream$.next(flight.icao24)
     });
@@ -55,14 +55,16 @@ function createFlightSummaryCollapsibleButton(flight: IFlight): HTMLButtonElemen
 function createFlightDetailsCard(flight: IFlight) {
     const flightDetailsCard = document.createElement("div");
     flightDetailsCard.id = `flight__details-${flight.icao24}`;
-    flightDetailsCard.className = "flex gap-4"
+    flightDetailsCard.classList.add("flex", "flex-col", "items-center", "bg-custom-lightGrey", "p-2", "hidden");
     Object.entries(getFlightSVGAndTextandUnits()).forEach((entry) => {
         const [flightDetail, flightDetailSVGAndTextandUnits] = entry;
         const flightDetailsSVG = document.createElement("p");
+        flightDetailsSVG.classList.add("p-2")
         flightDetailsSVG.innerHTML = flightDetailSVGAndTextandUnits.svg;
         const flightDetailsTextAndUnits = document.createElement("p");
         flightDetailsTextAndUnits.innerHTML = `${flightDetailSVGAndTextandUnits.text} ${flight[flightDetail]} ${flightDetailSVGAndTextandUnits.units}`; //add data
         const flightDetails = document.createElement("div");
+        flightDetails.classList.add("flex", "gap-4")
         flightDetails.id = `flight__detail-${flight[flightDetail]}`;
         flightDetails.appendChild(flightDetailsSVG);
         flightDetails.appendChild(flightDetailsTextAndUnits);

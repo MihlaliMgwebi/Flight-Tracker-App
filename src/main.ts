@@ -61,11 +61,11 @@ allFlightsStream$.pipe(
         //hide all cards
         const allFlightsDetailsCards = document.getElementsByClassName(`flight__details`);
         Array.from(allFlightsDetailsCards).forEach(card => {
-          if (!card.classList.contains('hide'))
-            card.classList.add('hide');
+          if (!card.classList.contains('hidden'))
+            card.classList.add('hidden');
         })
         // show selected card
-        selectedFlightDetailsCard.classList.remove('hide')
+        selectedFlightDetailsCard.classList.remove('hidden')
       }
     }
   });
