@@ -20,6 +20,8 @@ setUpDomWhenPageLoadedOrReloaded$.subscribe(_ => {
 // STEP 2:  Emit date time inputted
 dateTimePickerOnInput$.subscribe((event: Event) => {
   const dateTimePicker = event.target as HTMLInputElement;
+  const leafletMapContainer = document.getElementById('app-main__map')
+  leafletMapContainer?.classList.remove('invisible')
   if (dateTimePicker && dateTimePicker.id === 'time-input__input-value') {
     const dateTime: string = dateTimePicker.value;
     dateTimeInMillisecondsStream$.next(dateTime)
