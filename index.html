@@ -45,14 +45,18 @@
     <div class="app-main__spinner" id="app-main__spinner"></div>
     <main id="app-main" class="app-main text-custom-darkGrey
       row-start-2 col-start-1 row-span-10 col-span-12
-      m-4
-      rounded-tl-2xl rounded-tr-2xl 
+      m-4 rounded-tl-2xl rounded-tr-2xl 
+      lg:flex lg:flex-row-reverse
       ">
-      <div class="app-main__map 
-      h-72 invisible
+      <div class="app-main__map  invisible
+      h-72 w-full 
+      md:full 
+      lg:w-full lg:h-full
       rounded-tl-2xl rounded-tr-2xl" id="app-main__map"></div>
-      <div class="app-main__flights
-      " id="app-main__flights">
+      <div id="app-main__flights" class="app-main__flights
+      w-full 
+      md:full md:flex md:flex-wrap 
+      lg:w-96">
       </div>
     </main>
   </div>

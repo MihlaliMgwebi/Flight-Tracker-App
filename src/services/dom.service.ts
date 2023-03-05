@@ -26,7 +26,7 @@ export function createOneFlightSummaryAndDetailsContainer(flight: IFlight): HTML
 
     // append flight summary and details to dom
     const flightSummaryAndDetailsContainer = document.createElement("div");
-    flightSummaryAndDetailsContainer.className = "app-main__flight";
+    flightSummaryAndDetailsContainer.className = "app-main__flight md:w-1/2 lg:w-full";
     flightSummaryAndDetailsContainer.appendChild(createFlightSummaryCollapsibleButton(flight));
     if (flight)
         flightSummaryAndDetailsContainer.appendChild(createFlightDetailsCard(flight));
