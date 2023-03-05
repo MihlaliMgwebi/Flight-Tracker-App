@@ -77,17 +77,22 @@ allFlightsStream$.subscribe((allFlights) => {
 
 // STEP 4: Render DOM
 allFlightsStream$.subscribe((allFlights) => {
-  const allFlightSummaryAndDetailsContainer: HTMLDivElement | HTMLElement | null = document.getElementById('app-main__flights');
-  if (allFlightSummaryAndDetailsContainer && allFlightSummaryAndDetailsContainer instanceof HTMLDivElement) {
-    if (allFlights)
-      return allFlights.flights?.map((flight) => {
-        allFlightSummaryAndDetailsContainer.appendChild(
-          createOneFlightSummaryAndDetailsContainer(flight)
-        )
-      })
+  const allFlightSummaryAndDetailsContainer = document.getElementById('app-main__flights');
+  if (allFlightSummaryAndDetailsContainer instanceof HTMLDivElement) {
+    // Remove all existing child nodes
+    while (allFlightSummaryAndDetailsContainer.firstChild) {
+      allFlightSummaryAndDetailsContainer.removeChild(allFlightSummaryAndDetailsContainer.firstChild);
+    }
+
+    // Add new flight summary and details containers
+    if (allFlights && allFlights.flights) {
+      allFlights.flights.forEach((flight) => {
+        const newFlightSummaryAndDetailsContainer = createOneFlightSummaryAndDetailsContainer(flight);
+        allFlightSummaryAndDetailsContainer.appendChild(newFlightSummaryAndDetailsContainer);
+      });
+    }
   }
-  return null;
-})
+});
 // STEP 6.3: Zoom to flight location on map
 zoomToPostitionOnMap$.subscribe((LatLngTuple) => {
   if (LatLngTuple?.latitude && LatLngTuple.longitude) {
