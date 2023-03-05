@@ -24,6 +24,7 @@ export function createLeafletMapWithMarkers(allFlights: IFlights) {
             if (flight.latitude && flight.longitude)
                 L.marker([flight.latitude, flight.longitude], {
                     icon: flight.on_ground ? arrivalIcon : departureIcon,
+                    alt: `Flight ${flight.callsign} from ${flight.origin_country}`
                 })
                     .addTo(leafletMap)
                     .bindPopup(
