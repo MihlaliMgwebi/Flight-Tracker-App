@@ -13,9 +13,9 @@
   <link href="/src/style.css" rel="stylesheet">
 </head>
 
-<body class="h-screen bg-custom-blue">
+<body class="h-screen bg-custom-blue m-0">
   <!-- B__E--M e.g container-dropdown__button--hover -->
-  <div id="app">
+  <div id="app" class="border-custom-blue text-custom-darkGrey h-100 grid grid-cols-12 grid-rows-12">
     <header class="app-header">
       <img class="app-header__logo" src="./assets/logo-500x500-png.png" alt="logo unavailable">
       <div class="app-header__time-input" id="time-input__input">
@@ -23,7 +23,7 @@
         <input id="time-input__input-value" type="datetime-local" name="time-input__input-value" required />
       </div>
     </header>
-    <main class="app-main">
+    <main class="app-main grid grid-cols-12 grid-rows-12">
       <div class="app-main__text" id="app-main__text">
         <h1>TM FIT</h1>
         <h2>Track My Flights In Time</h2>
