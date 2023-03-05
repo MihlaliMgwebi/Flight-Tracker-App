@@ -21,7 +21,7 @@ export function defaultDateTimeInputMinDateToTomorrow(): void {
 // STEP 4.1: Call function to render both button and card
 export function createOneFlightSummaryAndDetailsContainer(flight: IFlight): HTMLDivElement {
     // hide text
-    const landingPageText = document.getElementById("dateTimeInMillisecondsStream")
+    const landingPageText = document.getElementById("app-main__text")
     landingPageText?.classList.add("hidden")
 
     // append flight summary and details to dom
