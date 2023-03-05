@@ -8,3 +8,11 @@
     font-size: 1rem;
   }
 }
+
+[aria-expanded="false"]::after {
+  content: " +";
+}
+
+[aria-expanded="true"]::after {
+  content: " -";
+}
