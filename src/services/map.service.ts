@@ -3,16 +3,16 @@ import 'leaflet/dist/leaflet.css';
 import { zoomToPostitionOnMap$ } from '../main';
 import { IFlights } from '../models/flight';
 
-const arrivalIcon = L.icon({
-    iconUrl: "assets/airplane-arrival.svg",
+const arrivalIcon: L.Icon = L.icon({
+    iconUrl: "./assets/airplane-arrival.svg",
     iconSize: [30, 30],
 });
-const departureIcon = L.icon({
-    iconUrl: "assets/airplane-departure.svg",
+const departureIcon: L.Icon = L.icon({
+    iconUrl: "./assets/airplane-departure.svg",
     iconSize: [30, 30],
 });
 
-export const leafletMap = L.map('app-main__map').setView([51.505, -0.09], 2);
+export const leafletMap: L.Map = L.map('app-main__map').setView([51.505, -0.09], 2);
 export function createLeafletMapWithMarkers(allFlights: IFlights) {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, '

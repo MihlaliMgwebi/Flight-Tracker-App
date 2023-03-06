@@ -1,12 +1,12 @@
-import { BehaviorSubject, combineLatestWith, filter, fromEvent, map, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatestWith, filter, fromEvent, map, switchMap, tap } from 'rxjs';
 import { IFlight, IFlights } from './models/flight';
 import { pollFirst20FlightDetails } from './services/api.service';
-import { createOneFlightSummaryAndDetailsContainer, defaultDateTimeInputMinDateToTomorrow, hideSpinner, showSpinner } from './services/dom.service';
+import { createOneFlightSummaryAndDetailsContainer, defaultDateTimeInputMinDateToTomorrow, hideSpinner, showLeafletMap, showSpinner } from './services/dom.service';
 import { createLeafletMapWithMarkers, leafletMap } from './services/map.service';
 import { Utils } from './utils';
 
-export const setUpDomWhenPageLoadedOrReloaded$ = fromEvent(window, 'load');
-export const dateTimePickerOnInput$ = fromEvent(document, 'input');
+export const setUpDomWhenPageLoadedOrReloaded$: Observable<Event> = fromEvent(window, 'load');
+export const dateTimePickerOnInput$: Observable<Event> = fromEvent(document, 'input');
 export const dateTimeInMillisecondsStream$: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>('');
 export const selectedFlightStream$: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>('');
 export const allFlightsStream$: BehaviorSubject<IFlights | undefined> = new BehaviorSubject<IFlights | undefined>(undefined);
@@ -19,9 +19,7 @@ setUpDomWhenPageLoadedOrReloaded$.subscribe(_ => {
 
 // STEP 2:  Emit date time inputted
 dateTimePickerOnInput$.subscribe((event: Event) => {
-  const dateTimePicker = event.target as HTMLInputElement;
-  const leafletMapContainer = document.getElementById('app-main__map')
-  leafletMapContainer?.classList.remove('invisible')
+  const dateTimePicker: HTMLInputElement = event.target as HTMLInputElement;
   if (dateTimePicker && dateTimePicker.id === 'time-input__input-value') {
     const dateTime: string = dateTimePicker.value;
     dateTimeInMillisecondsStream$.next(dateTime)
@@ -34,8 +32,8 @@ dateTimeInMillisecondsStream$.pipe(
     return (dateTime === undefined) ? "" : dateTime;
   }),
   filter((dateTime) => dateTime !== ""),
-  map((dateTime) => Utils.convertDateTimeToLocalUnixTimestampInSeconds(dateTime)),
   tap(() => showSpinner()),
+  map((dateTime) => Utils.convertDateTimeToLocalUnixTimestampInSeconds(dateTime)),
   switchMap((dateTimeInMilliseconds) => pollFirst20FlightDetails(dateTimeInMilliseconds)),
   tap(() => hideSpinner()),
 ).subscribe((flightDetails) => allFlightsStream$.next(flightDetails))
@@ -58,10 +56,10 @@ allFlightsStream$.pipe(
     if (selectedFlight) {
       zoomToPostitionOnMap$.next({ latitude: selectedFlight?.latitude, longitude: selectedFlight?.longitude })
 
-      const selectedFlightDetailsCard = document.getElementById(`flight__details-${selectedFlight?.icao24}`);
+      const selectedFlightDetailsCard: HTMLElement | null = document.getElementById(`flight__details-${selectedFlight?.icao24}`);
       if (selectedFlightDetailsCard instanceof HTMLDivElement) {
         //hide all cards
-        const allFlightsDetailsCards = document.getElementsByClassName(`flight__details`);
+        const allFlightsDetailsCards: HTMLCollectionOf<Element> | null = document.getElementsByClassName(`flight__details`);
         Array.from(allFlightsDetailsCards).forEach(eachFlightsDetailsCards => {
           eachFlightsDetailsCards.classList.add('hidden')
         })
@@ -78,19 +76,28 @@ allFlightsStream$.subscribe((allFlights) => {
 
 // STEP 4: Render DOM
 allFlightsStream$.subscribe((allFlights) => {
-  const allFlightSummaryAndDetailsContainer = document.getElementById('app-main__flights');
+  const allFlightSummaryAndDetailsContainer: HTMLElement | null = document.getElementById('app-main__flights');
   if (allFlightSummaryAndDetailsContainer instanceof HTMLDivElement) {
     // Remove all existing child nodes
     while (allFlightSummaryAndDetailsContainer.firstChild) {
       allFlightSummaryAndDetailsContainer.removeChild(allFlightSummaryAndDetailsContainer.firstChild);
     }
 
-    // Add new flight summary and details containers
+    // Show map and Add new flight summary and details containers
     if (allFlights && allFlights.flights) {
+      showLeafletMap()
       allFlights.flights.forEach((flight) => {
-        const newFlightSummaryAndDetailsContainer = createOneFlightSummaryAndDetailsContainer(flight);
+        const newFlightSummaryAndDetailsContainer: HTMLElement | null = createOneFlightSummaryAndDetailsContainer(flight);
         allFlightSummaryAndDetailsContainer.appendChild(newFlightSummaryAndDetailsContainer);
       });
+    }
+    else {
+      const errorHandlingMessage: HTMLParagraphElement = document.createElement("p")
+      errorHandlingMessage?.classList.add("text-3xl", "block", "my-4", "font-bold", "underline")
+      errorHandlingMessage.innerHTML = "No Flights Available"
+
+      const landingPageText: HTMLElement | null = document.getElementById("app-main__text")
+      landingPageText?.appendChild(errorHandlingMessage)
     }
   }
 });
