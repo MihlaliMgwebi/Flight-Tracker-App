@@ -4,11 +4,11 @@ import { zoomToPostitionOnMap$ } from '../main';
 import { IFlights } from '../models/flight';
 
 const arrivalIcon = L.icon({
-    iconUrl: "assets/airplane-arrival.svg",
+    iconUrl: "./assets/airplane-arrival.svg",
     iconSize: [30, 30],
 });
 const departureIcon = L.icon({
-    iconUrl: "assets/airplane-departure.svg",
+    iconUrl: "./assets/airplane-departure.svg",
     iconSize: [30, 30],
 });
 

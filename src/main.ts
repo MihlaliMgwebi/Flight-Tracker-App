@@ -36,7 +36,6 @@ dateTimeInMillisecondsStream$.pipe(
   map((dateTime) => Utils.convertDateTimeToLocalUnixTimestampInSeconds(dateTime)),
   switchMap((dateTimeInMilliseconds) => pollFirst20FlightDetails(dateTimeInMilliseconds)),
   tap(() => hideSpinner()),
-  tap(() => showLeafletMap()),
 ).subscribe((flightDetails) => allFlightsStream$.next(flightDetails))
 
 // STEP 5: When click on button, display flight details in card and zoom to location on map
@@ -84,12 +83,21 @@ allFlightsStream$.subscribe((allFlights) => {
       allFlightSummaryAndDetailsContainer.removeChild(allFlightSummaryAndDetailsContainer.firstChild);
     }
 
-    // Add new flight summary and details containers
+    // Show map and Add new flight summary and details containers
     if (allFlights && allFlights.flights) {
+      showLeafletMap()
       allFlights.flights.forEach((flight) => {
         const newFlightSummaryAndDetailsContainer = createOneFlightSummaryAndDetailsContainer(flight);
         allFlightSummaryAndDetailsContainer.appendChild(newFlightSummaryAndDetailsContainer);
       });
+    }
+    else {
+      const errorHandlingMessage = document.createElement("p")
+      errorHandlingMessage?.classList.add("text-3xl", "block", "my-4", "font-bold", "underline")
+      errorHandlingMessage.innerHTML = "No Flights Available"
+
+      const landingPageText = document.getElementById("app-main__text")
+      landingPageText?.appendChild(errorHandlingMessage)
     }
   }
 });

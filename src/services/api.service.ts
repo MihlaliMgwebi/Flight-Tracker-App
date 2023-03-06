@@ -53,19 +53,18 @@ export function pollFirst20FlightDetails(timeInMilliseconds: number): Observable
                         localStorage.setItem(localStorageKey, JSON.stringify(flights));
                         return flights;
                     }
-                    else {
+                    else { // if error mesage
                         if (cachedResponse) {
                             try {
                                 const cachedFlights = JSON.parse(cachedResponse);
                                 return cachedFlights;
                             } catch (e) {
-                                //console.error("Failed to parse cached response", e);
                                 const message: string = `Failed to parse cached response: ${e}`;
                                 console.error(message)
                             }
                         }
                         const emptyObject: IFlights = { flights: [] };
-                        const message: string = `No flights available:${result.message}`;
+                        const message: string = `No flights available: ${result.message}`;
                         console.error(message);
                         return emptyObject;
                     }
