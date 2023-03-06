@@ -2,27 +2,27 @@ import { Observable, concatMap, map, of, switchMap, take, timer } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { IFlight, IFlightAPIResponse, IFlights } from '../models/flight';
 
-const BASE_URL = "https://opensky-network.org/api/states/all?extended=1&time=";
+const BASE_URL: string = "https://opensky-network.org/api/states/all?extended=1&time=";
 
 function isIFlightAPIResponse(result: IFlightAPIResponse | { error: boolean; message: string; }): result is IFlightAPIResponse {
     return Object.keys(result).includes("states")
 }
 
 export function pollFirst20FlightDetails(timeInMilliseconds: number): Observable<IFlights> {
-    const localStorageKey = `pollFirst20FlightDetails:${timeInMilliseconds}`;
-    const cachedResponse = localStorage.getItem(localStorageKey);
+    const localStorageKey: string = `pollFirst20FlightDetails:${timeInMilliseconds}`;
+    const cachedResponse: string | null = localStorage.getItem(localStorageKey);
 
     return timer(0, 16000).pipe(
         take(10),
         concatMap(() =>
             fromFetch(`${BASE_URL}${timeInMilliseconds}`).pipe(
-                switchMap((response) => {
+                switchMap((response: Response) => {
                     return (response.ok) ?
                         response.json() as Promise<IFlightAPIResponse>//[Zod](https://github.com/colinhacks/zod#basic-usage)
                         :
                         of({ error: true, message: `Error ${response.status}` });
                 }),
-                map((result) => {
+                map((result: IFlightAPIResponse | { error: boolean; message: string; }) => {
                     if (isIFlightAPIResponse(result)) { //[User Defined Type Guard](https://stackoverflow.com/questions/12789231/class-type-check-in-typescript/40718205#40718205)
                         const flights: IFlights =
                         {
@@ -56,7 +56,7 @@ export function pollFirst20FlightDetails(timeInMilliseconds: number): Observable
                     else { // if error mesage
                         if (cachedResponse) {
                             try {
-                                const cachedFlights = JSON.parse(cachedResponse);
+                                const cachedFlights: IFlights = JSON.parse(cachedResponse);
                                 return cachedFlights;
                             } catch (e) {
                                 const message: string = `Failed to parse cached response: ${e}`;
